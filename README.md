@@ -402,7 +402,7 @@
     public static void getDeviceAlarm(ClientCore clientCore,String sDevId,final String client_token)
 ```
 
-#5.设备控制模块接口（com.Player.Core.PlayCore）
+# 5.设备控制模块接口（com.Player.Core.PlayCore）
 
 ## 设备播放参数初始化
 ```

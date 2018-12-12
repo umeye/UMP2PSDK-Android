@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/llr_show_trans"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlTitle" >
+
+        <ImageView
+            android:id="@+id/imgLive"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:layout_margin="5dp"
+            android:background="#e0000000"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tvwRec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/rlTitle"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text=".REC"
+            android:textColor="#ff0000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_state"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llr_show_trans"
+        android:layout_margin="5dp"
+        android:text="hhhhh"
+        android:textColor="#000000" />
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp" >
+
+        <ImageButton
+            android:id="@+id/btnUp"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_up_0" />
+
+        <ImageButton
+            android:id="@+id/btnRight"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_right_0" />
+
+        <ImageButton
+            android:id="@+id/btnLeft"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_left_0" />
+
+        <ImageButton
+            android:id="@+id/btnDown"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_down_0" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:padding="15dp" >
+
+        <Button
+            android:id="@+id/btnPlay"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/live_play_selector" />
+
+        <Button
+            android:id="@+id/btnPause"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/live_pause_selector" />
+
+        <Button
+            android:id="@+id/btnSnap"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/live_snap_selector" />
+
+        <Button
+            android:id="@+id/btnVideo"
+            style="@style/new_cloud_button_style"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/live_record_selector" />
+    </RelativeLayout>
+
+</RelativeLayout>

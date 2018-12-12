@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wifi_dialog_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wifi_dialog_top"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/wifi_dialog_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/wifi_dialog_top_wifi"
+            android:gravity="center"
+            android:text="@string/wifi_synac_to_device"
+            android:textColor="@color/front_white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input_bg" >
+
+        <EditText
+            android:id="@+id/wifi_enter_ssid"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/wifi_enter_ssid"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:textColor="@color/front_input" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/wifi_logo_ssid" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/input_bg" >
+
+        <EditText
+            android:id="@+id/wifi_enter_pass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/wifi_enter_pass"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:textColor="@color/front_input" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/wifi_logo_password" />
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/ck_show_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="25dp"
+        android:text="@string/wifi_show_pass"
+        android:textColor="@color/front_black"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:id="@+id/show_selecter_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp" >
+
+        <Button
+            android:id="@+id/btn_async_cancel"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_cancel"
+            android:text="@string/negative"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_async_sure"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_sure"
+            android:text="@string/positive"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,2228 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>body {
+  max-width: 980px;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headerlink {
+  font: normal 400 16px fontawesome-mini;
+  vertical-align: middle;
+  margin-left: -16px;
+  float: left;
+  display: inline-block;
+  text-decoration: none;
+  opacity: 0;
+  color: #333;
+}
+
+.markdown-body .headerlink:focus {
+  outline: none;
+}
+
+.markdown-body h1 .headerlink {
+  margin-top: 0.8rem;
+}
+
+.markdown-body h2 .headerlink,
+.markdown-body h3 .headerlink {
+  margin-top: 0.6rem;
+}
+
+.markdown-body h4 .headerlink {
+  margin-top: 0.2rem;
+}
+
+.markdown-body h5 .headerlink,
+.markdown-body h6 .headerlink {
+  margin-top: 0;
+}
+
+.markdown-body .headerlink:hover,
+.markdown-body h1:hover .headerlink,
+.markdown-body h2:hover .headerlink,
+.markdown-body h3:hover .headerlink,
+.markdown-body h4:hover .headerlink,
+.markdown-body h5:hover .headerlink,
+.markdown-body h6:hover .headerlink {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px fontawesome-mini;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\e157';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><style>/*github*/
+.codehilite {background-color:#fff;color:#333333;}
+.codehilite .hll {background-color:#ffffcc;}
+.codehilite .c{color:#999988;font-style:italic}
+.codehilite .err{color:#a61717;background-color:#e3d2d2}
+.codehilite .k{font-weight:bold}
+.codehilite .o{font-weight:bold}
+.codehilite .cm{color:#999988;font-style:italic}
+.codehilite .cp{color:#999999;font-weight:bold}
+.codehilite .c1{color:#999988;font-style:italic}
+.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
+.codehilite .gd{color:#000000;background-color:#ffdddd}
+.codehilite .ge{font-style:italic}
+.codehilite .gr{color:#aa0000}
+.codehilite .gh{color:#999999}
+.codehilite .gi{color:#000000;background-color:#ddffdd}
+.codehilite .go{color:#888888}
+.codehilite .gp{color:#555555}
+.codehilite .gs{font-weight:bold}
+.codehilite .gu{color:#800080;font-weight:bold}
+.codehilite .gt{color:#aa0000}
+.codehilite .kc{font-weight:bold}
+.codehilite .kd{font-weight:bold}
+.codehilite .kn{font-weight:bold}
+.codehilite .kp{font-weight:bold}
+.codehilite .kr{font-weight:bold}
+.codehilite .kt{color:#445588;font-weight:bold}
+.codehilite .m{color:#009999}
+.codehilite .s{color:#dd1144}
+.codehilite .n{color:#333333}
+.codehilite .na{color:teal}
+.codehilite .nb{color:#0086b3}
+.codehilite .nc{color:#445588;font-weight:bold}
+.codehilite .no{color:teal}
+.codehilite .ni{color:purple}
+.codehilite .ne{color:#990000;font-weight:bold}
+.codehilite .nf{color:#990000;font-weight:bold}
+.codehilite .nn{color:#555555}
+.codehilite .nt{color:navy}
+.codehilite .nv{color:teal}
+.codehilite .ow{font-weight:bold}
+.codehilite .w{color:#bbbbbb}
+.codehilite .mf{color:#009999}
+.codehilite .mh{color:#009999}
+.codehilite .mi{color:#009999}
+.codehilite .mo{color:#009999}
+.codehilite .sb{color:#dd1144}
+.codehilite .sc{color:#dd1144}
+.codehilite .sd{color:#dd1144}
+.codehilite .s2{color:#dd1144}
+.codehilite .se{color:#dd1144}
+.codehilite .sh{color:#dd1144}
+.codehilite .si{color:#dd1144}
+.codehilite .sx{color:#dd1144}
+.codehilite .sr{color:#009926}
+.codehilite .s1{color:#dd1144}
+.codehilite .ss{color:#990073}
+.codehilite .bp{color:#999999}
+.codehilite .vc{color:teal}
+.codehilite .vg{color:teal}
+.codehilite .vi{color:teal}
+.codehilite .il{color:#009999}
+.codehilite .gc{color:#999;background-color:#EAF2F5}
+</style><title>UMEYE SDK API Android</title></head><body><article class="markdown-body"><div class="toc">
+<ul>
+<li><a href="#1">1.版本记录</a></li>
+<li><a href="#2">2.宏定义</a><ul>
+<li><a href="#_1">用户模块错误码定义</a></li>
+<li><a href="#_2">设备控制模块错误码定义</a></li>
+<li><a href="#_3">语言类型定义</a></li>
+<li><a href="#_4">节点类型定义</a></li>
+<li><a href="#_5">设备类型定义</a></li>
+<li><a href="#_6">设备连接方式定义</a></li>
+</ul>
+</li>
+<li><a href="#3sdk">3.SDK启动模块</a><ul>
+<li><a href="#complayerwebwebsocketclientcore">初始化启动参数（com.Player.web.websocket.ClientCore）</a></li>
+<li><a href="#sdkcomplayerwebwebsocketclientcorehandler">启动sdk（com.Player.web.websocket.ClientCore）(此为异步方法，需等待handler 数据响应成功，方可进行用户系统操作，和设备模块操作)</a></li>
+</ul>
+</li>
+<li><a href="#4comexampleumeyesdkapiwebsdkapi">4.用户系统模块（com.example.umeyesdk.api.WebSdkApi）</a><ul>
+<li><a href="#_7">注册</a></li>
+<li><a href="#_8">登录</a></li>
+<li><a href="#_9">注销</a></li>
+<li><a href="#-">忘记密码-发送邮件到注册邮箱</a></li>
+<li><a href="#_10">修改密码</a></li>
+<li><a href="#_11">获取设备列表</a></li>
+<li><a href="#_12">增加设备</a></li>
+<li><a href="#_13">修改设备</a></li>
+<li><a href="#_14">删除设备</a></li>
+<li><a href="#_15">删除设备集合</a></li>
+<li><a href="#_16">查询报警记录</a></li>
+<li><a href="#_17">删除全部报警记录</a></li>
+<li><a href="#id">删除指定id报警记录</a></li>
+<li><a href="#_18">设置用户推送</a></li>
+<li><a href="#playnode">设备服务器进行布防（主要用于免登陆情况下设备布防，其实也是通过参数组成playnode中的连接参数）</a></li>
+<li><a href="#_19">设备服务器进行布防（主要用于登陆情况下设备布放）</a></li>
+<li><a href="#_20">查询设备报警状态</a></li>
+</ul>
+</li>
+<li><a href="#5complayercoreplayercore">5.设备控制模块接口（com.Player.Core.PlayerCore）</a><ul>
+<li><a href="#_21">设备播放参数初始化</a></li>
+<li><a href="#_22">开始播放</a></li>
+<li><a href="#_23">停止播放</a></li>
+<li><a href="#_24">获取设备播放状态</a></li>
+<li><a href="#_25">云台控制</a></li>
+<li><a href="#_26">本地录像</a></li>
+<li><a href="#_27">本地抓拍</a></li>
+<li><a href="#_28">设置设备报警检测状态</a></li>
+<li><a href="#_29">获取设备报警检测状态</a></li>
+</ul>
+</li>
+<li><a href="#6complayercoreplayerclient">6.设备设置相关接口（com.Player.Core.PlayerClient）</a><ul>
+<li><a href="#_30">定制接口</a></li>
+<li><a href="#_31">人脸识别模块</a><ul>
+<li><a href="#_32">获取图片对比信息</a></li>
+<li><a href="#_33">获取抓拍对比信息</a></li>
+<li><a href="#_34">获取图片</a></li>
+<li><a href="#_35">添加图片</a></li>
+<li><a href="#_36">删除图片</a></li>
+<li><a href="#_37">人脸推送获取</a></li>
+<li><a href="#_38">人脸推送设置</a></li>
+<li><a href="#_39">人脸参数获取</a></li>
+<li><a href="#_40">人脸参数设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="1">1.版本记录<a class="headerlink" href="#1" title="Permanent link"></a></h1>
+<table>
+<thead>
+<tr>
+<th>文档版本</th>
+<th>版本说明</th>
+<th>修改人</th>
+<th>修改时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0.2</td>
+<td>增加删除设备集合功能接口说明，并且增加添加设备接口字段</td>
+<td>欧阳彬</td>
+<td>2018-11-27</td>
+</tr>
+<tr>
+<td>1.0.1</td>
+<td>增加云台控制、录像、本地抓拍功能接口说明</td>
+<td>王伏</td>
+<td>2018-08-20</td>
+</tr>
+<tr>
+<td>1.0.0</td>
+<td>初版</td>
+<td>王伏</td>
+<td>2018-7-4</td>
+</tr>
+</tbody>
+</table>
+<h1 id="2">2.宏定义<a class="headerlink" href="#2" title="Permanent link"></a></h1>
+<h2 id="_1">用户模块错误码定义<a class="headerlink" href="#_1" title="Permanent link"></a></h2>
+<p>错误码的定义应尽量兼容HTTP状态码，可以根据具体接口的需要进行扩展。</p>
+<table>
+<thead>
+<tr>
+<th>错误码</th>
+<th>HTTP状态码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>HTTP_OK</td>
+<td>处理成功</td>
+</tr>
+<tr>
+<td>400</td>
+<td>HTTP_BAD_REQUEST</td>
+<td>无效的请求,缺少参数</td>
+</tr>
+<tr>
+<td>401</td>
+<td>HTTP_UNAUTHORIZED</td>
+<td>该用户在其他地方登入,当前登录失效</td>
+</tr>
+<tr>
+<td>403</td>
+<td>HTTP_FORBIDDEN</td>
+<td>请求非法,比如:登录密码恢复出厂设置的时候,请求的用户没有在该手机登录过，删除分享</td>
+</tr>
+<tr>
+<td>404</td>
+<td>HTTP_NOT_FOUND</td>
+<td>请求没找到；一般是指客户端的请求在服务端找不到相应的处理函数。例如：(1)不支持请求中指定的功能消息编号处理</td>
+</tr>
+<tr>
+<td>405</td>
+<td>HTTP_NOT_ALLOWED</td>
+<td>请求不被允许；表示客户端没有足够权限，导致请求的消息内容，服务器不允许执行；例如：(1)客户端在请求该消息之前，没有登录成功</td>
+</tr>
+<tr>
+<td>406</td>
+<td>HTTP_NOT_ACCEPTABLE</td>
+<td>请求不被接受；一般是指客户端请求不被服务端接受处理；例如：(1)登录时传入的用户名和/或密码不正确</td>
+</tr>
+<tr>
+<td>409</td>
+<td>HTTP_CONFLICT</td>
+<td>请求发生冲突，数据库中已存在，比如用户已注册，设备id已添加</td>
+</tr>
+<tr>
+<td>426</td>
+<td>HTTP_UPGRADE_REQUIRED</td>
+<td>客户端需要升级</td>
+</tr>
+<tr>
+<td>429</td>
+<td>HTTP_TOO_MANY_REQUESTS</td>
+<td>请求次数太多,比如意见反馈只能1个小时一次</td>
+</tr>
+<tr>
+<td>451</td>
+<td>HTTP_ILLEGAL</td>
+<td>非法访问；表示客户端发送的是非法请求；例如：(1)客户端发送的会话ID不正确</td>
+</tr>
+<tr>
+<td>500</td>
+<td>HTTP_INTERNAL_SERVER_ERROR</td>
+<td>服务器错误,比如:数据库操作错误</td>
+</tr>
+<tr>
+<td>501</td>
+<td>HTTP_METHOD_NOT_IMPLEMENTED</td>
+<td>指定方法未实现</td>
+</tr>
+<tr>
+<td>502</td>
+<td>HTTP_BAD_GATEWAY</td>
+<td>无效的网关</td>
+</tr>
+<tr>
+<td>503</td>
+<td>HTTP_SERVICE_UNAVAILABLE</td>
+<td>服务不可用</td>
+</tr>
+<tr>
+<td>504</td>
+<td>HTTP_GATEWAY_TIMEOUT</td>
+<td>网关超时</td>
+</tr>
+<tr>
+<td>505</td>
+<td>HTTP_VERSION_NOT_SUPPORTED</td>
+<td>该版本不受支持</td>
+</tr>
+<tr>
+<td>507</td>
+<td>HTTP_INSUFFICIENT_STORAGE</td>
+<td>无效的存储空间，或者存储空间不足</td>
+</tr>
+<tr>
+<td>508</td>
+<td>HTTP_NO_ACTIVA_USER</td>
+<td>账号未激活</td>
+</tr>
+<tr>
+<td>509</td>
+<td>HTTP_DISABLE_USER</td>
+<td>账号停用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">设备控制模块错误码定义<a class="headerlink" href="#_2" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>错误码</th>
+<th>状态码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td>连接中</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>播放中</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>连接失败</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>停止中</td>
+</tr>
+<tr>
+<td>-102</td>
+<td></td>
+<td>密码错误</td>
+</tr>
+<tr>
+<td>-101</td>
+<td></td>
+<td>用户名错误</td>
+</tr>
+<tr>
+<td>-111</td>
+<td></td>
+<td>权限不够</td>
+</tr>
+<tr>
+<td>0</td>
+<td></td>
+<td>准备就绪</td>
+</tr>
+<tr>
+<td>10</td>
+<td></td>
+<td>缓冲中</td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td>停止</td>
+</tr>
+<tr>
+<td>其他</td>
+<td></td>
+<td>连接失败</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">语言类型定义<a class="headerlink" href="#_3" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>详细说明</th>
+<th align="center">版本号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>英文</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>2</td>
+<td>简体</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>3</td>
+<td>繁体</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>4</td>
+<td>德文</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>5</td>
+<td>法文</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>6</td>
+<td>葡萄牙</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>7</td>
+<td>俄文</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>8</td>
+<td>意大利</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>9</td>
+<td>土耳其</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>10</td>
+<td>波兰</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>11</td>
+<td>阿拉伯</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>12</td>
+<td>波斯语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>13</td>
+<td>捷克语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>14</td>
+<td>丹麦语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>15</td>
+<td>芬兰语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>16</td>
+<td>希腊语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>17</td>
+<td>荷兰语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>18</td>
+<td>挪威语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>19</td>
+<td>西班牙语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>20</td>
+<td>瑞典语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>21</td>
+<td>葡萄牙语-巴西</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>22</td>
+<td>印度语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>23</td>
+<td>日本</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>24</td>
+<td>韩语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>25</td>
+<td>泰语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>26</td>
+<td>越南语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>27</td>
+<td>希伯来语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>28</td>
+<td>罗马尼亚语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>29</td>
+<td>匈牙利语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>30</td>
+<td>印度尼西亚语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>31</td>
+<td>乌克兰语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>32</td>
+<td>马来语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>33</td>
+<td>菲律宾语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>34</td>
+<td>立陶宛语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>35</td>
+<td>柬埔寨语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>36</td>
+<td>孟加拉语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>37</td>
+<td>南非语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>38</td>
+<td>冰岛语</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>39</td>
+<td>白俄罗斯语</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">节点类型定义<a class="headerlink" href="#_4" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>详细说明</th>
+<th align="center">版本号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>目录</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>监控设备</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>监控设备通道</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>已过时</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>智能家居设备</td>
+<td align="center">3.0.0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>智能家居设备通道</td>
+<td align="center">3.0.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">设备类型定义<a class="headerlink" href="#_5" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>详细说明</th>
+<th align="center">版本号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>监控设备：DVR、NVR</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>监控设备通道</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>智能家居设备-开关</td>
+<td align="center">3.0.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>智能家居通道-开关通道</td>
+<td align="center">3.0.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">设备连接方式定义<a class="headerlink" href="#_6" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>详细说明</th>
+<th align="center">版本号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>IP/域名直连</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>流媒体</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>P2P云</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>云流媒体</td>
+<td align="center">1.0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>未知</td>
+<td align="center">1.0</td>
+</tr>
+</tbody>
+</table>
+<h1 id="3sdk">3.SDK启动模块<a class="headerlink" href="#3sdk" title="Permanent link"></a></h1>
+<h2 id="complayerwebwebsocketclientcore">初始化启动参数（com.Player.web.websocket.ClientCore）<a class="headerlink" href="#complayerwebwebsocketclientcore" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>   /**
+     * @brief 设置连接的服务器信息（Set up server information ）
+     * 
+     * @param context
+     *            上下文 （Context）
+     * @param aHost
+     *            服务器地址（Server）
+     * @param aPort
+     *            服务器端口 （Port）
+     * @param aClientId
+     *            客户端唯一标识码 （Client unique identification code ）
+     * @param aLangId
+     *            客户端语言（language ）
+     * @param aCustomFlag
+     *            客户端定制标识码（Client custom identification code ）
+     * @param aClientVer
+     *            客户端版本号 （Client version）
+     * @param aClientTime
+     *            客户端当前时间 （ Client current，可为空字符串
+     * @param sBackDoMainIp  
+     *          域名解析失败采用的备用ip，可为空值，可为空字符串
+     */
+    public void setupHost(Context context, String aHost, int aPort,
+            String aClientId, int aLangId, String aCustomFlag,
+            String aClientVer, String aClientTime,String sBackDoMainIp)
+
+
+    /**
+     * @brief 服务器是否支持免登陆报警
+     */
+    public static boolean isSuportLocalAlarmPush = false;
+
+    /**
+     * @brief 是否启用WebSocket
+     * 
+     */
+    public static boolean isWebSocket = false;
+</pre></div>
+
+<h2 id="sdkcomplayerwebwebsocketclientcorehandler">启动sdk（com.Player.web.websocket.ClientCore）(此为异步方法，需等待handler 数据响应成功，方可进行用户系统操作，和设备模块操作)<a class="headerlink" href="#sdkcomplayerwebwebsocketclientcorehandler" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @brief 优先选择用户选择的服务器（Preference server for user selection ）
+     * 
+     * @param con
+     * @param handler
+     */
+    public void getCurrentBestServer(Context con, final Handler handler)
+</pre></div>
+
+<h1 id="4comexampleumeyesdkapiwebsdkapi">4.用户系统模块（com.example.umeyesdk.api.WebSdkApi）<a class="headerlink" href="#4comexampleumeyesdkapiwebsdkapi" title="Permanent link"></a></h1>
+<h2 id="_7">注册<a class="headerlink" href="#_7" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param aUserId       用户ID 24位 , 限定字母，数字，下划线
+     * @param aPassword     密码   20位 , 限定字母，数字，下划线
+     * @param user_email    邮箱   32位 , 合法邮箱 
+     * @param nickName      昵称   32位 , 限定英文，数字，下划线  
+     * @param user_phone    手机号码 32位 , 限定数字
+     * @param user_id_card  用户身份证id 24位
+     */
+    public static void registeredUser(final Context context,
+            final ClientCore clientCore, String aUserId, String aPassword,
+            String user_email, String nickName, String user_phone,
+            String user_id_card)
+</pre></div>
+
+<h2 id="_8">登录<a class="headerlink" href="#_8" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param userName  用户ID, 24位, 限定字母，数字，下划线
+     * @param password  密码, 20位, 限定字母，数字，下划线
+     **/
+    public static void loginServerAtUserId(final Context context,
+            final ClientCore clientCore, String userName, String password,
+            final Handler handler)
+</pre></div>
+
+<h2 id="_9">注销<a class="headerlink" href="#_9" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param disableAlarm  是否取消报警推送
+     * @param handler
+     */
+    public static void logoutServer(final Activity activity,
+            final ClientCore clientCore, int disableAlarm)
+</pre></div>
+
+<h2 id="-">忘记密码-发送邮件到注册邮箱<a class="headerlink" href="#-" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param user_id   需要重置密码的用户名
+     * @param language  发送邮件的语言，具体参考文档语言宏定义
+     */
+    public static void resetUserPassword(final Context context,
+            final ClientCore clientCore, String user_id, int language)
+</pre></div>
+
+<h2 id="_10">修改密码<a class="headerlink" href="#_10" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param oldPassword   旧密码，20位 , 限定字母，数字，下划线
+     * @param newPassword   新密码，20位 , 限定字母，数字，下划线
+     */
+    public static void modifyUserPassword(final Context context,
+            final ClientCore clientCore, String oldPassword, String newPassword)
+</pre></div>
+
+<h2 id="_11">获取设备列表<a class="headerlink" href="#_11" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param parent_node_id    父节点ID
+     * @param page_index        分页功能，指定从第几页开始，是可选的，默认不分页；
+     * @param page_size         分页功能，每页返回的记录数，是可选的，默认不分页；
+     */
+    public static void getNodeList(final Context context,
+            final ClientCore clientCore, String parent_node_id, int page_index,
+            int page_size, final Handler handler)
+</pre></div>
+
+<h2 id="_12">增加设备<a class="headerlink" href="#_12" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param node_name         名称 28位， 限定中文，字母，数字，下划线  
+     * @param parent_node_id    父节点ID
+     * @param node_type         节点类型 : 0表示目录节点、1表示设备节点、2表示摄像机节点
+     * @param conn_mode         连接模式 ：参见设备连接模式定义
+     * @param vendor_id         厂商ID，当node_type不为0的时候是必须的，取值1009。
+     * @param dev_umid          设备umid 28位，限定字母，数字，下划线        
+     * @param dev_addr          设备IP或者域名
+     * @param dev_port          设备端口 umsp协议默认5800
+     * @param dev_user          设备用户名 60位，限制字母，数字，下划线
+     * @param dev_passwd        设备密码 60位，限制字母，数字，下划线
+     * @param dev_ch_num        设备通道数 dvr/nvr通道数
+     * @param dev_ch_no         设备通道号 node_type为2时有效，添加dvr/nvr指定的通道号
+     * @param dev_stream_no     设备请求码流 0:主码流，1，子码流
+     * @param only_umid         设备UMID是否做唯一检查
+     * @param limit_appid       是否只允许本APP厂家的设备才能添加
+     */
+    public static void addNodeInfo(final Context context,
+            final ClientCore clientCore, String node_name, String parent_node_id,
+            int node_type, int conn_mode, int vendor_id, String dev_umid,
+            String dev_addr, int dev_port, String dev_user, String dev_passwd,
+            int dev_ch_num, int dev_ch_no, int dev_stream_no, int only_umid, int limit_appid,
+            final Handler handler)
+</pre></div>
+
+<h2 id="_13">修改设备<a class="headerlink" href="#_13" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param node_id       节点ID
+     * @param node_name     名称 28位 限定中文，字母，数字，下划线 
+     * @param dev_umid      设备umid 28位 限定字母，数字，下划线
+     * @param dev_addr      设备IP地址/域名
+     * @param dev_port      设备端口
+     * @param dev_user      设备用户名     60位 限定字母，数字，下划线 
+     * @param dev_passwd    设备密码          
+     * @param dev_ch_no     摄像机节点才有效， nvr/dvr的通道号 0开始
+     * @param dev_stream_no 码流  0 主码流 1子码流
+     */
+    public static void modifyNodeInfo(final Context context,
+            final ClientCore clientCore, String node_id, String node_name,
+            int node_type, int vendor_id, String dev_umid, String dev_addr,
+            int dev_port, String dev_user, String dev_passwd, int dev_ch_no,
+            int dev_stream_no, final Handler handler)
+</pre></div>
+
+<h2 id="_14">删除设备<a class="headerlink" href="#_14" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param node_id     节点ID
+     * @param node_type   节点类型            
+     * @param id_type     ID类型，0：用户id,1:设备组id,2:授权设备，默认填写0
+     */
+    public static void deleteNodeInfo(final Context context,
+            final ClientCore clientCore, String node_id, int node_type,
+            int id_type, final Handler handler)
+</pre></div>
+
+<h2 id="_15">删除设备集合<a class="headerlink" href="#_15" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param node_ids     节点ID集合
+     * @param node_type   节点类型            
+     * @param id_type     ID类型，0：用户id,1:设备组id,2:授权设备，默认填写0
+     */
+    public static void deleteNodeInfos(final Context context,
+            final ClientCore clientCore, String[] node_ids, int node_type,
+            int id_type, final Handler handler)
+</pre></div>
+
+<h2 id="_16">查询报警记录<a class="headerlink" href="#_16" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    public static void queryAlarmList(ClientCore clientCore)
+</pre></div>
+
+<h2 id="_17">删除全部报警记录<a class="headerlink" href="#_17" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    public static void deleteAllAlarm(ClientCore clientCore)
+</pre></div>
+
+<h2 id="id">删除指定id报警记录<a class="headerlink" href="#id" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param alarms_ids alarm_ids 报警id数组
+     */
+    public static void deleteAlarmByIds(ClientCore clientCore,String[] alarm_ids)
+</pre></div>
+
+<h2 id="_18">设置用户推送<a class="headerlink" href="#_18" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param enable_push， 启用或禁用推送，1 表示启用，0 表示禁用，是必须的，
+     * @param client_lang   客户端语言，参见语言宏定义
+     * @param client_token  个推给出的clientId
+     * @param disable_push_other_users   是否禁止向相同客户端ID 或客户端Token的其它用户进行推送，1表示禁止，0表示允许；
+     * @param unread_count  把推送的未读记录数设置为指定的值。默认置0
+     */
+    public static void setUserPush(ClientCore clientCore,int enable_push, int client_lang,
+            String client_token, int disable_push_other_users,int unread_count)
+</pre></div>
+
+<h2 id="playnode">设备服务器进行布防（主要用于免登陆情况下设备布防，其实也是通过参数组成playnode中的连接参数）<a class="headerlink" href="#playnode" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param opCode        操作码，1 表示布防/布防通知，2 表示撤防，3 表示取消布防通知
+     * @param client_token  个推clientId
+     * @param alarm_events  布防事件类型数组，参见事件类型宏定义
+     * @param devName       设备名称
+     * @param devUmid       设备umid
+     * @param devUser       设备用户名
+     * @param devPassword   设备密码
+     * @param iChNo         设备通道号 
+     */
+
+    public static void setDeviceAlarm(ClientCore clientCore,final int opCode,String client_token,int [] alarm_events,
+            String devName, String devUmid, String devUser, String devPassword,
+            int iChNo)
+</pre></div>
+
+<h2 id="_19">设备服务器进行布防（主要用于登陆情况下设备布放）<a class="headerlink" href="#_19" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * 设备端服务器进行布防(主用于登录模式下进行服务器布放)
+     * @param playNode      播放节点数据
+     * @param opCode        为1时布防 为2时撤防 为4撤销所有设备布防
+     * @param client_token  个推的client_id
+     * @param alarm_events  报警事件类型，参见报警类型宏定义
+     */
+    public static void setDeviceAlarm(ClientCore clientCore, PlayNode node, final int opCode,String client_token,int [] alarm_events)
+</pre></div>
+
+<h2 id="_20">查询设备报警状态<a class="headerlink" href="#_20" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @param sDevId       设备id playNode.node.sdevId  或者 devItemInfo.dev_id
+     * @param client_token 个推clientId
+     */
+    public static void getDeviceAlarm(ClientCore clientCore,String sDevId,final String client_token)
+</pre></div>
+
+<h1 id="5complayercoreplayercore">5.设备控制模块接口（com.Player.Core.PlayerCore）<a class="headerlink" href="#5complayercoreplayercore" title="Permanent link"></a></h1>
+<h2 id="_21">设备播放参数初始化<a class="headerlink" href="#_21" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * 初始化参数
+     * @param tmpDeviceNo        连接参数
+     * @param tmpMediaStreamType 码流设置， 0：为主码流，1：为辅码流，-1：账户登录、免登陆添加时默认的码流（umid直连默认辅码流）
+     * @param ImageViewObj       显示ImageVIew
+     */
+    public void InitParam(String tmpDeviceNo,int tmpMediaStreamType,ImageView ImageViewObj)
+</pre></div>
+
+<h2 id="_22">开始播放<a class="headerlink" href="#_22" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>   public boolean Play()   
+</pre></div>
+
+<h2 id="_23">停止播放<a class="headerlink" href="#_23" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * 耗时任务，建议子线程执行
+     */
+   public boolean Stop()   
+</pre></div>
+
+<h2 id="_24">获取设备播放状态<a class="headerlink" href="#_24" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * 获取当前的播放状态，具体状态值参考播放状态码宏定义
+     */
+   public int PlayCoreGetCameraPlayerState()   
+</pre></div>
+
+<h2 id="_25">云台控制<a class="headerlink" href="#_25" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @brief 停止
+     */
+    public static final byte CORE_MD_STOP = 0; // 停止
+    /**
+     * @brief 左
+     */
+    public static final byte CORE_MD_LEFT = 11; // 左
+    /**
+     * @brief 右
+     */
+    public static final byte CORE_MD_RIGHT = 12; // 右
+    /**
+     * @brief 上
+     */
+    public static final byte CORE_MD_UP = 9; // 上
+    /**
+     * @brief 下
+     */
+    public static final byte CORE_MD_DOWN = 10; // 下
+    /**
+     * @brief 左上
+     */
+    public static final byte CORE_UP_LEFT = 35; // 左上
+    /**
+     * @brief 右上
+     */
+    public static final byte CORE_UP_RIGHT = 36; // 右上
+    /**
+     * @brief 左下
+     */
+    public static final byte CORE_DOWN_LEFT = 37; // 左下
+    /**
+     * @brief 右下
+     */
+    public static final byte CORE_DOWN_RIGHT = 38; // 右下
+    /**
+     * @brief 拉近
+     */
+    public static final byte CORE_ZOOMIN = 6; // 拉近
+    /**
+     * @brief 拉远
+     */
+    public static final byte CORE_ZOOMOUT = 5;// 拉远
+    /**
+     * @brief 焦距+
+     */
+    public static final byte CORE_FOCUSIN = 7;// 焦距+
+    /**
+     * @brief 焦距减
+     */
+    public static final byte CORE_FOCUSOUT = 8;// 焦距减
+    /**
+     * @brief 光圈+
+     */
+    public static final byte CORE_CircleIN = 13; // 光圈+
+    /**
+     * @brief光圈-
+     */
+    public static final byte CORE_CircleOUT = 14;// 光圈-
+
+    /**
+     * @brief 云台控制
+     * 
+     * @param PtzCmd    云台命令
+     * @param PtzData   云台数据
+     */
+     public void SetPtz(int PtzCmd, int PtzData)
+</pre></div>
+
+<h2 id="_26">本地录像<a class="headerlink" href="#_26" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @brief 本地录像状态
+     */
+    public boolean GetIsSnapVideo()
+
+    /**
+     * @brief 设置本地录像路径
+     */
+    public void SetVideoPath(String TempVIDEO_PATH)
+
+    /**
+     * @brief 开启、关闭 本地录像状态
+     * 
+     * @param SnapVideo 开启/关闭本地录像
+     */
+    public void SetSnapVideo(boolean SnapVideo)
+
+
+    /**
+     示例代码：
+     先预判当前player的本地录像状态，如果为正在录像，则只能执行停止录像，如果为非录像状态，就设置本地录像存放的路径，并调用开始录像
+    */
+    if (player.GetIsSnapVideo()) {
+        player.SetSnapVideo(false);
+    } else {
+        player.SetVideoPath(videoDir);
+        player.SetSnapVideo(true);
+    }
+</pre></div>
+
+<h2 id="_27">本地抓拍<a class="headerlink" href="#_27" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @brief 设置图片路径
+     */
+    public void SetAlbumPath(String TempALBUM_PATH)
+
+    /**
+     * @brief 抓拍
+     * 
+     */
+    player.SetSnapPicture(true);
+
+
+    //示例代码
+    player.SetAlbumPath(videoDir);
+    player.SetSnapPicture(true);
+</pre></div>
+
+<h2 id="_28">设置设备报警检测状态<a class="headerlink" href="#_28" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @brief 设置移动侦测报警参数，
+     * @param DeviceNo 连接参数 PlayNode.connparm
+     * @param joCfgObj 输入参数 具体参数类 TAlarmMotionDetect 对象，TAlarmMotionDetect.bIfEnable 标志设备是否开启报警检测
+     * @return 返回0表示成功，其它表示失败
+     */
+    public int CameraSetAlarmMotion(String DeviceNo, TAlarmMotionDetect joCfgObj)   
+</pre></div>
+
+<h2 id="_29">获取设备报警检测状态<a class="headerlink" href="#_29" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /**
+     * @brief 获取移动侦测报警参数，返回0表示成功，其它表示失败
+     * @param DeviceNo      连接参数  playNode.connParm
+     * @param joCfgObj      预先实例化一个，获取成功后，对象中存在数值，TAlarmMotionDetect.bIfEnable 标志设备是否开启报警检测
+     * @Tip   示例： TAlarmMotionDetect alarmMotion = new TAlarmMotionDetect();
+     *         int ret= CameraGetAlarmMotion( DeviceNo, alarmMotion);
+     *         if(ret==0){ //成功 }else{ //失败 }
+     */
+    public int CameraGetAlarmMotion(String DeviceNo, TAlarmMotionDetect joCfgObj)
+</pre></div>
+
+<h1 id="6complayercoreplayerclient">6.设备设置相关接口（com.Player.Core.PlayerClient）<a class="headerlink" href="#6complayercoreplayerclient" title="Permanent link"></a></h1>
+<h2 id="_30">定制接口<a class="headerlink" href="#_30" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>    /*
+    定制透明通道
+    */
+    public CFResponse CallCustomFuncExExHaveConnect(String DeviceNo, int command, byte[] inputData)
+</pre></div>
+
+<h2 id="_31">人脸识别模块<a class="headerlink" href="#_31" title="Permanent link"></a></h2>
+<h3 id="_32">获取图片对比信息<a class="headerlink" href="#_32" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    /*图片对比信息*/
+     public UserImgCompareInfo JLImageCompareInfo(int dataHandler,int length)
+</pre></div>
+
+<h3 id="_33">获取抓拍对比信息<a class="headerlink" href="#_33" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    /*图片抓拍信息*/
+     public UserImgSnapImgInfo JLImageSnapInfo(int dataHandler,int length)
+</pre></div>
+
+<h3 id="_34">获取图片<a class="headerlink" href="#_34" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    先获取所有图片索引列表，再通过单个索引列表获取图片
+     /**
+      * 获取用户图片列表
+      * */
+     public ArrayList&lt;UserImgStruct&gt; getAllUserImg(String conn_parm,int type)
+
+     /**
+      * 获取具体图片信息
+      **/
+     public Bitmap getUserImgByIndex(String conn_parm,UserImgStruct userImgStruct)
+</pre></div>
+
+<h3 id="_35">添加图片<a class="headerlink" href="#_35" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>     /**
+      * 添加黑白名单图片
+      * */
+     public int addUserImg(String conn_parm,AddImgStruct addImgStruct,String url)
+</pre></div>
+
+<h3 id="_36">删除图片<a class="headerlink" href="#_36" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>     /**
+      * 删除图片
+      */
+
+     public int deleteUserImg(String conn_parm,DelImgStruct delImgStruct)
+</pre></div>
+
+<h3 id="_37">人脸推送获取<a class="headerlink" href="#_37" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据获取，command:65791
+    请求：
+    {
+        &quot;Name&quot;:&quot;SmartFace.Push&quot;
+    }
+    返回：
+    {
+        &quot;SmartFace.Push&quot;: {
+            &quot;PushEnable&quot;: 0,
+            &quot;BPushEnable&quot;: 0,
+            &quot;WPushEnable&quot;: 0,
+            &quot;NWPushEnable&quot;: 0
+        },
+        &quot;Name&quot;: &quot;SmartFace.Push&quot;,
+        &quot;Ret&quot;: 100
+    }
+    PushEnable：消息推送总开关使能，如果APP不设置设备该参数，忽略；
+    BPushEnable：黑名单消息推送，0关闭，1打开；
+    WPushEnable：白名单消息推送，0关闭，1打开；
+    NWPushEnable：非白名单消息推送，0关闭，1打开
+</pre></div>
+
+<h3 id="_38">人脸推送设置<a class="headerlink" href="#_38" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据设置，command:65790
+    请求：
+    {
+        &quot;SmartFace.Push&quot;: {
+            &quot;PushEnable&quot;: 0,
+            &quot;BPushEnable&quot;: 0,
+            &quot;WPushEnable&quot;: 0,
+            &quot;NWPushEnable&quot;: 0
+        },
+        &quot;Name&quot;: &quot;SmartFace.Push&quot;
+    }
+    返回：
+    {
+        &quot;Name&quot;: &quot;SmartFace.Push&quot;,
+        &quot;Ret&quot;: 100
+    }
+</pre></div>
+
+<h3 id="_39">人脸参数获取<a class="headerlink" href="#_39" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据获取，command:65791
+
+    请求：
+    {
+        &quot;Name&quot;:&quot;SmartFace.Param&quot;
+    }
+    返回：
+    {
+        &quot;SmartFace.Param&quot;: {
+            &quot;FaceSize&quot;: 80,
+            &quot;SnapMode&quot;: 2,
+            &quot;TrackFrameNum&quot;: 3,
+            &quot;SnapNum&quot;: 1,
+            &quot;IntervalTime&quot;: 1,
+            &quot;IntervalFrame&quot;: 2,
+            &quot;IntervalSnapNum&quot;: 3,
+            &quot;GateIntervalFrame&quot;: 10,
+            &quot;Similarity&quot;: 80,
+            &quot;CompareMode&quot;: 1,
+            &quot;CompareCount&quot;: 3
+        },
+        &quot;Name&quot;: &quot;SmartFace.Param&quot;,
+        &quot;Ret&quot;: 100
+    }
+    FaceSize：人脸最小识别像素（30-300）
+
+    SnapMode：抓拍模式（0-5） 0=离开后抓拍（距离优先），1=快速抓拍，2=间隔抓拍（以秒为单位），3=间隔抓拍（以帧为单位），4=单人模式,5=离开后抓拍（质量优先）
+
+    SnapNum：最大抓拍次数（1-3），对应 离开后抓拍（距离优先）和 离开后抓拍（质量优先）
+
+    TrackFrameNum：快速抓拍帧数（10-1500），对应快速抓拍
+
+    IntervalTime：间隔时间（1-30s），对应间隔抓拍（以秒为单位）
+    IntervalFrame：间隔帧数（10-1500），对应间隔抓拍（以帧为单位）
+    IntervalSnapNum：抓拍次数(0-20),0=持续抓拍，1-20是对应抓拍次数，对应 应间隔抓拍（以帧为单位）和 间隔抓拍（以秒为单位）
+
+    GateIntervalFrame：间隔帧数（10-1500），对应单人模式
+
+    Similarity：比对相似度（0-100）
+    CompareMode：识别模式：0=次数识别，1=一直识别
+    CompareCount：识别次数（1-10），对应次数识别模式
+</pre></div>
+
+<h3 id="_40">人脸参数设置<a class="headerlink" href="#_40" title="Permanent link"></a></h3>
+<div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据获取，command:65790
+    请求：
+    {
+        &quot;SmartFace.Param&quot;: {
+            &quot;FaceSize&quot;: 80,
+            &quot;SnapMode&quot;: 2,
+            &quot;TrackFrameNum&quot;: 3,
+            &quot;SnapNum&quot;: 1,
+            &quot;IntervalTime&quot;: 1,
+            &quot;IntervalFrame&quot;: 2,
+            &quot;IntervalSnapNum&quot;: 3,
+            &quot;GateIntervalFrame&quot;: 10,
+            &quot;Similarity&quot;: 80,
+            &quot;CompareMode&quot;: 1,
+            &quot;CompareCount&quot;: 3
+        },
+        &quot;Name&quot;: &quot;SmartFace.Param&quot;
+    }
+    返回：
+    {
+        &quot;Name&quot;: &quot;SmartFace.Param&quot;,
+        &quot;Ret&quot;: 100
+    }
+</pre></div></article></body></html>

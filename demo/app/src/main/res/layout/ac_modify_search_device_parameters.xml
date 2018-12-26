@@ -1,0 +1,194 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_color"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/top_backgroud"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="@color/front_white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/layout_old_pass"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_bg_selecter"
+            android:visibility="gone" >
+
+            <EditText
+                android:id="@+id/et1"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:inputType="text"
+                android:paddingLeft="115dp"
+                android:textColor="@color/front_input" />
+
+            <TextView
+                android:id="@+id/textShow1"
+                      android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+  
+                android:textColor="@color/front_input"
+                android:textSize="16sp"
+                android:text="@string/old_password" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dhcp"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_bg_selecter"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/wifi_auto_get_ip"
+                android:textColor="@color/front_input"
+                android:textSize="16sp" />
+
+            <ToggleButton
+                android:id="@+id/toggle_dhcp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ck_toggle"
+                android:textOff=""
+                android:textOn="" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_content"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_bg_selecter" >
+
+            <EditText
+                android:id="@+id/et"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:inputType="text"
+                android:paddingLeft="115dp"
+                android:textColor="@color/front_input" />
+
+            <TextView
+                android:id="@+id/textShow"
+              android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="@color/front_input"
+                android:textSize="16sp"
+                android:text="@string/user_alias" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_mask"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_bg_selecter"
+            android:visibility="gone" >
+
+            <EditText
+                android:id="@+id/et2"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:inputType="text"
+                android:paddingLeft="115dp"
+                android:textColor="@color/front_input" />
+
+            <TextView
+                android:id="@+id/textShow2"
+                     android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="@color/front_input"
+                android:textSize="16sp"
+                android:text="@string/search_netmask" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_gateway"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_bg_selecter"
+            android:visibility="gone" >
+
+            <EditText
+                android:id="@+id/et3"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:inputType="text"
+                android:paddingLeft="115dp"
+                android:textColor="@color/front_input" />
+
+            <TextView
+                android:id="@+id/textShow3"
+             android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/front_input"
+                android:textSize="16sp"
+                android:text="@string/search_getway" />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/front_black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</LinearLayout>

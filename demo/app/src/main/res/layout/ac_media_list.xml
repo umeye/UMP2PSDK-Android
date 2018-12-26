@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white" >
+
+    <!-- 标题部分 -->
+
+    <RelativeLayout
+        android:id="@+id/llTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top_backgroud"
+        android:padding="5dip" >
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="51dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn"
+            android:textColor="#fff"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="51dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:shadowColor="#0f0f0f"
+            android:shadowDx="-1.5"
+            android:shadowDy="-1.5"
+            android:shadowRadius="1.0"
+            android:text="@string/main_category_video"
+            android:textColor="@color/front_white"
+            android:textSize="@dimen/middle" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="60dip"
+            android:layout_height="29dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_history_new"
+            android:text="@string/delete"
+            android:textColor="#fff"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="60dip"
+            android:layout_height="29dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_history_new"
+            android:text="@string/edit"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnFinish"
+            android:layout_width="60dip"
+            android:layout_height="29dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_history_new"
+            android:text="@string/delete"
+            android:textColor="#fff"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" >
+
+        <CheckBox
+            android:id="@+id/cbxSelectedAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/selectorAll"
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/bottom"
+        android:layout_below="@id/llTitle"
+        android:divider="@color/list_seperator_gray"
+        android:dividerHeight="1dp" />
+
+</RelativeLayout>

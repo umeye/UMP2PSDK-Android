@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="2dp" >
+
+    <ImageView
+        android:id="@+id/imgCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/camera_online"
+        android:contentDescription="@string/Imsi"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/imgArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/item_arrow"
+        android:contentDescription="@string/Imsi" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@id/imgArrow"
+        android:background="@drawable/list_menu_add" />
+
+    <RelativeLayout
+        android:id="@+id/rlInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@id/btn_add"
+        android:layout_toRightOf="@id/imgCamera" >
+
+        <TextView
+            android:id="@+id/tvCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="namsss"
+            android:textColor="#666666"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCaption"
+            android:singleLine="true"
+            android:text="namsss"
+            android:textColor="@color/front_input"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

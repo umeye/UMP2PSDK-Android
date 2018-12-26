@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="enter_user_name">Input your User name</string>
+    <string name="clearLog">Clear Log</string>
+    <string name="login_mode">User Login</string>
+    <string name="local_mode">Local Mode</string>
+    <string name="umid_connect_mode">UMID Connect</string>
+    <string name="hint_password">Password</string>
+    <string name="login_success">Login Success</string>
+    <string name="NPC_D_MPI_MON_ERROR_USER_PWD_ERROR"> User name or password error </string>
+</resources>

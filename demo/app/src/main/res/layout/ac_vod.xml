@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#333333" >
+
+    <!-- 标题部分 -->
+
+    <RelativeLayout
+        android:id="@+id/rlTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top_backgroud"
+        android:padding="5dip" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="40dip"
+            android:layout_height="32dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:shadowColor="#0f0f0f"
+            android:shadowDx="-1.5"
+            android:shadowDy="-1.5"
+            android:shadowRadius="1.0"
+            android:textColor="@color/front_white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBottom"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/playview_tool_bar_bg" >
+
+        <LinearLayout
+            android:id="@+id/layout_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="5dp"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnBackward"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/back_btn"
+                
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/playview_puase"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/playview_play" />
+
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/playview_stop_all" />
+
+            <Button
+                android:id="@+id/btnForward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_btn"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlControl"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/rlBottom"
+        android:layout_below="@id/rlTitle" >
+
+        <LinearLayout
+            android:id="@+id/rlState"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/remote_seek_bg"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tvState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00/00:00"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/tvState"
+                    android:gravity="center"
+                    android:text="00:00/00:00"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/sbProgress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:maxHeight="8dp"
+                android:minHeight="8dp"
+                android:thumb="@layout/thumb"
+                android:thumbOffset="2dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgVod"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/rlState"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
+
+</RelativeLayout>

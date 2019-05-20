@@ -558,22 +558,25 @@ public class PlayActivity extends Activity implements OnTouchListener,
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 
 			isRun = false;
-			if (showProgress == null) {
-				showProgress = new ShowProgress(this);
+//			if (showProgress == null) {
+//				showProgress = new ShowProgress(this);
+//
+//			}
+//			showProgress.show();
+//			new Thread(new Runnable() {
+//
+//				@Override
+//				public void run() {
+//					// TODO Auto-generated method stub
 
-			}
-			showProgress.show();
-			new Thread(new Runnable() {
+//			playClient.PlayerClient_RTS_DestroyClient();
+			playClient.PlayerClient_RTS_DestroyCamera();
+			finish();
 
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-
-					playClient.PlayerClient_RTS_DestroyClient();
-					handler.sendEmptyMessage(DESTORY_CILENT);
-
-				}
-			}).start();
+//					handler.sendEmptyMessage(DESTORY_CILENT);
+//
+//				}
+//			}).start();
 			return true;
 
 		}

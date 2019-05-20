@@ -636,7 +636,7 @@ public class WebSdkApi {
 								   int client_lang, String client_token, int disable_push_other_users,
 								   int unread_count) {
 		clientCore.setUserPush(enable_push, client_lang, client_token,
-				disable_push_other_users, unread_count, "", "", new Handler() {
+				disable_push_other_users, unread_count, new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;

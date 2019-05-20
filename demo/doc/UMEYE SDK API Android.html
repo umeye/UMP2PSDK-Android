@@ -1068,6 +1068,7 @@ body .markdown-body
 </ul>
 </li>
 <li><a href="#3sdk">3.SDK启动模块</a><ul>
+<li><a href="#httpscomplayerwebwebsocketclientcore">（可选）设置是否为Https访问（com.Player.web.websocket.ClientCore）</a></li>
 <li><a href="#complayerwebwebsocketclientcore">初始化启动参数（com.Player.web.websocket.ClientCore）</a></li>
 <li><a href="#sdkcomplayerwebwebsocketclientcorehandler">启动sdk（com.Player.web.websocket.ClientCore）(此为异步方法，需等待handler 数据响应成功，方可进行用户系统操作，和设备模块操作)</a></li>
 </ul>
@@ -1653,6 +1654,19 @@ body .markdown-body
 </tbody>
 </table>
 <h1 id="3sdk">3.SDK启动模块<a class="headerlink" href="#3sdk" title="Permanent link"></a></h1>
+<h2 id="httpscomplayerwebwebsocketclientcore">（可选）设置是否为Https访问（com.Player.web.websocket.ClientCore）<a class="headerlink" href="#httpscomplayerwebwebsocketclientcore" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>   /**
+     *
+     * @param certInputStream
+     *         证书文件的输入流
+     *         如：
+     *         InputStream certInputStream = new BufferedInputStream(getAssets().open(&quot;test.crt&quot;));
+     */
+    public static void setHttps(InputStream certInputStream) {
+        ClientCore.setHttps(certInputStream);
+    }
+</pre></div>
+
 <h2 id="complayerwebwebsocketclientcore">初始化启动参数（com.Player.web.websocket.ClientCore）<a class="headerlink" href="#complayerwebwebsocketclientcore" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>   /**
      * @brief 设置连接的服务器信息（Set up server information ）
@@ -1861,6 +1875,30 @@ body .markdown-body
      */
     public static void setUserPush(ClientCore clientCore,int enable_push, int client_lang,
             String client_token, int disable_push_other_users,int unread_count)
+
+
+     /**
+     * @param enable_push， 启用或禁用推送，1 表示启用，0 表示禁用，是必须的，
+     * @param client_lang   客户端语言，参见语言宏定义
+     * @param client_token  个推给出的clientId
+     * @param disable_push_other_users   是否禁止向相同客户端ID 或客户端Token的其它用户进行推送，1表示禁止，0表示允许；
+     * @param unread_count  把推送的未读记录数设置为指定的值。默认置0
+     * @param param_type
+     *            额外推送的参数类型，是必须的，传空表示默认使用透传，有url，intent 等（按个推文档增 加）；
+     * @param param_content
+     *            额外推送的参数内容，是必须的，跟据类型的变化，例如：当param_type传intent 类型参数时，固定
+     *            下面的参数“intent
+     *            :#Intent;launchFlags=0x10000000;package=com.pp.yl;component
+     *            ={包名
+     *            }/com.quvii.bell.activity.LoadingActivity;i.DevChNo={DevChNo
+     *            };s.DevUmid={DevUmid};i.AlarmEvent={AlarmEvent};end”，
+     *            有其他的参数按规定拼装；当param_type传的是url 类型参数时，参数内容为：http://www.xxx.com。
+     * @param platform_flag
+     *            推送平台(取值为以下其中之一)
+     *            getui xg fcm
+     */
+    public static void setUserPush(ClientCore clientCore,int enable_push, int client_lang,
+            String client_token, int disable_push_other_users,int unread_count,String param_type, String param_content,String platform_flag)
 </pre></div>
 
 <h2 id="playnode">设备服务器进行布防（主要用于免登陆情况下设备布防，其实也是通过参数组成playnode中的连接参数）<a class="headerlink" href="#playnode" title="Permanent link"></a></h2>

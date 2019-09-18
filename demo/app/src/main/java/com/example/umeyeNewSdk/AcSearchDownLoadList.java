@@ -170,7 +170,7 @@ public class AcSearchDownLoadList extends Activity {
 				playerDownFileCore = new PlayerDownFileCore(Constants.UMID,
 						Constants.user, Constants.password);
 				// 传入需要下载的文件名，大小
-				int ret = playerDownFileCore.StartDownFileByUMID(
+				long ret = playerDownFileCore.StartDownFileByUMID(
 						tVideoFile.FileName, tVideoFile.nFileSize);
 				if (ret != 0) {
 					int trydowntime = 0;

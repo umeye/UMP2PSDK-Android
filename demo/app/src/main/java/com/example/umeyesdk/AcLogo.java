@@ -45,7 +45,7 @@ public class AcLogo extends Activity {
 			startActivity(new Intent(AcLogo.this, AcSelectMode.class));
 			finish();
 		} else {
-			ClientCore.isKeDaDev=true;
+			ClientCore.isKeDaDev=false;
 			if (!PermissionUtils.checkStoragePermission(this)) {
 				PermissionUtils.verifyStoragePermissions(this, 1);
 			} else {

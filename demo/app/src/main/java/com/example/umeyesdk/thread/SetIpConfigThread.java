@@ -37,7 +37,7 @@ public class SetIpConfigThread extends Thread {
 	@Override
 	public void run() {
 		Log.d("setWifiInfo", devIpInfo.toString());
-		int ret = 0;
+		long ret = 0;
 		ret = pc.CameraSetIpConfig(umid, userName, password, devIpInfo);
 		if (ret > 0) {
 			handler.sendEmptyMessage(SET_OK);

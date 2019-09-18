@@ -30,7 +30,8 @@ public class AlarmUtils {
 	public static void openPush(final Context context) {
 		// XGPushConfig.enableDebug(this, true);
 
-		PushManager.getInstance().initialize(context);
+		PushManager.getInstance().initialize(context, DemoPushService.class);
+		PushManager.getInstance().registerPushIntentService(context.getApplicationContext(),DemoIntentService.class);
 
 	}
 

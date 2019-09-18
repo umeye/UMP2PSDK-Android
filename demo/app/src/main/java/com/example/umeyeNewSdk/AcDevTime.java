@@ -143,7 +143,7 @@ public class AcDevTime extends Activity implements OnClickListener {
 			@Override
 			public void run() {
 				PlayerClient playerClient = appMain.getPlayerclient();
-				int ret = playerClient.CameraSetDevTime(Constants.UMID,
+				long ret = playerClient.CameraSetDevTime(Constants.UMID,
 						Constants.user, Constants.password, tDateTime);
 				if (ret>0) {
 					LogOut.d("CameraGetDevTime", "CameraGetDevTime:"

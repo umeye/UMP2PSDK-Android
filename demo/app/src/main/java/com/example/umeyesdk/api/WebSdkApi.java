@@ -30,6 +30,7 @@ public class WebSdkApi {
 
 
 
+
 	/**
 	 *
 	 * @param certInputStream
@@ -48,7 +49,6 @@ public class WebSdkApi {
 	/**
 	 * 登陆
 	 *
-	 * @param pc
 	 * @param userName
 	 *            用户ID 必填 24位 , 限定字母，数字，下划线 必填
 	 * @param password
@@ -86,7 +86,6 @@ public class WebSdkApi {
 	/**
 	 * 注册账户
 	 *
-	 * @param pc
 	 * @param aUserId
 	 *            用户ID 必填 24位 , 限定字母，数字，下划线
 	 * @param aPassword
@@ -133,10 +132,8 @@ public class WebSdkApi {
 	/**
 	 * 注销
 	 *
-	 * @param pc
 	 * @param disableAlarm
 	 *            是否取消报警推送
-	 * @param handler
 	 */
 	public static void logoutServer(final ClientCore clientCore,
 									int disableAlarm) {
@@ -162,7 +159,6 @@ public class WebSdkApi {
 	/**
 	 * 修改密码
 	 *
-	 * @param pc
 	 * @param oldPassword
 	 *            20位 , 限定字母，数字，下划线 旧密码
 	 * @param newPassword
@@ -197,7 +193,6 @@ public class WebSdkApi {
 	/**
 	 * 发送重置密码邮件
 	 *
-	 * @param pc
 	 * @param user_id
 	 *            需要重置密码的用户名
 	 * @param language
@@ -233,7 +228,6 @@ public class WebSdkApi {
 	/**
 	 * 获取设备列表
 	 *
-	 * @param pc
 	 * @param parent_node_id
 	 *            父节点ID
 	 * @param page_index
@@ -275,7 +269,6 @@ public class WebSdkApi {
 	/**
 	 * 添加设备节点
 	 *
-	 * @param pc
 	 * @param node_name
 	 *            长度 28 限定中文，字母，数字，下划线 名称
 	 * @param parent_node_id
@@ -353,7 +346,6 @@ public class WebSdkApi {
 	/**
 	 * 删除设备
 	 *
-	 * @param pc
 	 * @param node_id
 	 *            节点ID
 	 * @parm node_type 节点类型
@@ -390,7 +382,6 @@ public class WebSdkApi {
 	/**
 	 * 修改设备
 	 *
-	 * @param pc
 	 * @param node_id
 	 *            节点ID
 	 * @param node_name
@@ -535,7 +526,7 @@ public class WebSdkApi {
 	/**
 	 * 删除指定id报警记录
 	 *
-	 * @param alarms_ids
+	 * @param alarm_ids
 	 *            alarmid 数组
 	 */
 
@@ -564,7 +555,6 @@ public class WebSdkApi {
 	/**
 	 * 根据客户端定制标识获取服务器列表
 	 *
-	 * @param pc
 	 */
 	public static void getServerList(final Context context,
 									 final ClientCore clientCore) {
@@ -764,7 +754,7 @@ public class WebSdkApi {
 	/**
 	 * 设备端服务器进行布防(主用于登录模式下进行服务器布放)
 	 *
-	 * @param playNode
+	 * @param node
 	 *            播放节点数据
 	 * @param opCode
 	 *            为1时布防 为2时撤防 为4撤销所有设备布防
@@ -867,8 +857,11 @@ public class WebSdkApi {
 	/**
 	 * umid直连 设备通道参数
 	 *
-	 * @param clientCore
-	 * @param node
+	 * @param devName
+	 * @param devUmid
+	 * @param devUser
+	 * @param devPassword
+	 * @param iChNo
 	 * @return
 	 */
 	public static P2pConnectInfo createConnectInfo1(ClientCore clientCore,
@@ -891,7 +884,6 @@ public class WebSdkApi {
 	/**
 	 * 免登录报警 设备通道参数
 	 *
-	 * @param clientCore
 	 * @param node
 	 * @return
 	 */

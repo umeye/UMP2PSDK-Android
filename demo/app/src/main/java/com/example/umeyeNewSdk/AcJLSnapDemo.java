@@ -105,7 +105,7 @@ public class AcJLSnapDemo extends Activity{
 		player.setP2pPortDataCallback(new OnP2PDataListener() {//设置回调数据
 
 			@Override
-			public void callBackData(int camrea, int function, int pData, int size) {
+			public void callBackData(long camrea, int function, long pData, int size) {
 				Log.i(TAG,"camrea->" + camrea +  " function->" + function + " size is->"  + size);
 				switch (function){
 					case NPC_D_UMSP_CUSTOM_FUNCID_CMP_DATA://转对比数据结构体
@@ -139,7 +139,7 @@ public class AcJLSnapDemo extends Activity{
 
 
 			@Override
-			public void callBackDataEx(int i, int i1, byte[] bytes, int i2) {
+			public void callBackDataEx(long i, int i1, byte[] bytes, int i2) {
 
 			}
 		});

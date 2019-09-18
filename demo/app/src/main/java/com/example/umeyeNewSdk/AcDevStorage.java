@@ -26,8 +26,6 @@ import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.ShowProgress;
 
 public class AcDevStorage extends Activity implements OnClickListener {
-	private static final int SET_OK = 0;
-	private static final int SET_FALL = 1;
 	private static final int GET_FAILED = 2;
 	private static final int GET_SUCCEES = 3;
 	private static final int SEND_EMPTY = 4;
@@ -52,17 +50,6 @@ public class AcDevStorage extends Activity implements OnClickListener {
 
 			super.handleMessage(msg);
 			switch (msg.what) {
-
-				case SET_OK:
-					int seiral1 = msg.arg1;
-					logTextView.append(String.format(
-							getString(R.string.dev_storage_format_s), seiral1));
-					break;
-				case SET_FALL:
-					int seiral2= msg.arg1;
-					logTextView.append(String.format(
-							getString(R.string.dev_storage_format_f), seiral2));
-					break;
 				case GET_SUCCEES:
 					setText();
 					break;
@@ -145,7 +132,7 @@ public class AcDevStorage extends Activity implements OnClickListener {
 				for (int i = 0; i < tDevStorageInfo.tDevSdardInfo.length; i++) {
 					iserial[i] = tDevStorageInfo.tDevSdardInfo[i].iSerialNo;
 				}
-				int ret;
+				long ret;
 				try {
 					ret = playerClient.CameraFormateStorage(Constants.UMID,
 							Constants.user, Constants.password,

@@ -11,15 +11,29 @@ android {
         abortOnError false
     }
 
-    compileSdkVersion 23
+    compileSdkVersion 28
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.example.umeyesdk"
-        minSdkVersion 11
-        targetSdkVersion 23
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
+        ndk {
+            abiFilters 'armeabi','armeabi-v7a', 'arm64-v8a'
+        }
+
+        manifestPlaceholders = [
+
+
+                GETUI_APP_ID    : "jnKZojcjpx6u2UdTOyG9xA",
+                GETUI_APP_KEY   : "cHcXRJYlAA8X21dF8Bg7M8",
+                GETUI_APP_SECRET: "Kv0n85EpxF69jTniSQ0ru4",
+
+        ]
+
     }
     buildTypes {
         release {
@@ -31,11 +45,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:23.0.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation files('libs/fastjson-1.1.43.android.jar')
     implementation files('libs/NewLivePlayer-new.jar')
     implementation files('libs/WebSocket.jar')
     implementation files('libs/SmartLink.jar')
-    implementation files('libs/GetuiSDK2.9.0.0.jar')
+    implementation 'com.getui:sdk:2.13.3.0'
 }

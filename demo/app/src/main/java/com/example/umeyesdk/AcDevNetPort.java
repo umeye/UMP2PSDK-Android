@@ -22,7 +22,7 @@ public class AcDevNetPort extends Activity {
 	String serverIP = "119.29.237.152";
 	String umid = "umksk8k2c799";// //xmumh9ckm0mu //umkss83g7brx
 	TextView textshow;
-	int clientHandle = 0;
+	long clientHandle = 0;
 	int port1 = 0;
 
 	@Override

@@ -841,7 +841,7 @@ body .markdown-body
     inset 0 -12px 0 rgba(0, 0, 0, .05);
 }
 
-/* Multimarkdown Critic Blocks */
+/* MultiMarkdown Critic Blocks */
 .markdown-body .critic_mark {
   background: #ff0;
 }
@@ -992,7 +992,7 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*github*/
+</style><style>/*GitHub*/
 .codehilite {background-color:#fff;color:#333333;}
 .codehilite .hll {background-color:#ffffcc;}
 .codehilite .c{color:#999988;font-style:italic}
@@ -1068,55 +1068,58 @@ body .markdown-body
 </ul>
 </li>
 <li><a href="#3sdk">3.SDK启动模块</a><ul>
-<li><a href="#httpscomplayerwebwebsocketclientcore">（可选）设置是否为Https访问（com.Player.web.websocket.ClientCore）</a></li>
+<li><a href="#httpscomplayerwebwebsocketclientcore">设置是否为Https访问（com.Player.web.websocket.ClientCore）</a></li>
 <li><a href="#complayerwebwebsocketclientcore">初始化启动参数（com.Player.web.websocket.ClientCore）</a></li>
 <li><a href="#sdkcomplayerwebwebsocketclientcorehandler">启动sdk（com.Player.web.websocket.ClientCore）(此为异步方法，需等待handler 数据响应成功，方可进行用户系统操作，和设备模块操作)</a></li>
 </ul>
 </li>
 <li><a href="#4comexampleumeyesdkapiwebsdkapi">4.用户系统模块（com.example.umeyesdk.api.WebSdkApi）</a><ul>
-<li><a href="#_7">注册</a></li>
-<li><a href="#_8">登录</a></li>
-<li><a href="#_9">注销</a></li>
+<li><a href="#_7">发送短信</a></li>
+<li><a href="#_8">注册</a></li>
+<li><a href="#_9">登录</a></li>
+<li><a href="#_10">注销</a></li>
 <li><a href="#-">忘记密码-发送邮件到注册邮箱</a></li>
-<li><a href="#_10">修改密码</a></li>
-<li><a href="#_11">获取设备列表</a></li>
-<li><a href="#_12">增加设备</a></li>
-<li><a href="#_13">修改设备</a></li>
-<li><a href="#_14">删除设备</a></li>
-<li><a href="#_15">删除设备集合</a></li>
-<li><a href="#_16">查询报警记录</a></li>
-<li><a href="#_17">删除全部报警记录</a></li>
+<li><a href="#_11">修改密码</a></li>
+<li><a href="#_12">获取设备列表</a></li>
+<li><a href="#_13">查询设备分享信息</a></li>
+<li><a href="#_14">增加设备</a></li>
+<li><a href="#_15">修改设备</a></li>
+<li><a href="#_16">修改设备节点顺序号</a></li>
+<li><a href="#_17">删除设备</a></li>
+<li><a href="#_18">删除设备集合</a></li>
+<li><a href="#_19">查询报警记录</a></li>
+<li><a href="#_20">删除全部报警记录</a></li>
 <li><a href="#id">删除指定id报警记录</a></li>
-<li><a href="#_18">设置用户推送</a></li>
+<li><a href="#_21">设置用户推送</a></li>
 <li><a href="#playnode">设备服务器进行布防（主要用于免登陆情况下设备布防，其实也是通过参数组成playnode中的连接参数）</a></li>
-<li><a href="#_19">设备服务器进行布防（主要用于登陆情况下设备布放）</a></li>
-<li><a href="#_20">查询设备报警状态</a></li>
+<li><a href="#_22">设备服务器进行布防（主要用于登陆情况下设备布放）</a></li>
+<li><a href="#_23">查询设备报警状态</a></li>
 </ul>
 </li>
 <li><a href="#5complayercoreplayercore">5.设备控制模块接口（com.Player.Core.PlayerCore）</a><ul>
-<li><a href="#_21">设备播放参数初始化</a></li>
-<li><a href="#_22">开始播放</a></li>
-<li><a href="#_23">停止播放</a></li>
-<li><a href="#_24">获取设备播放状态</a></li>
-<li><a href="#_25">云台控制</a></li>
-<li><a href="#_26">本地录像</a></li>
-<li><a href="#_27">本地抓拍</a></li>
-<li><a href="#_28">设置设备报警检测状态</a></li>
-<li><a href="#_29">获取设备报警检测状态</a></li>
+<li><a href="#_24">设备播放参数初始化</a></li>
+<li><a href="#_25">开始播放</a></li>
+<li><a href="#_26">停止播放</a></li>
+<li><a href="#_27">获取设备播放状态</a></li>
+<li><a href="#_28">云台控制</a></li>
+<li><a href="#_29">本地录像</a></li>
+<li><a href="#_30">本地抓拍</a></li>
+<li><a href="#_31">设置设备报警检测状态</a></li>
+<li><a href="#_32">获取设备报警检测状态</a></li>
 </ul>
 </li>
 <li><a href="#6complayercoreplayerclient">6.设备设置相关接口（com.Player.Core.PlayerClient）</a><ul>
-<li><a href="#_30">定制接口</a></li>
-<li><a href="#_31">人脸识别模块</a><ul>
-<li><a href="#_32">获取图片对比信息</a></li>
-<li><a href="#_33">获取抓拍对比信息</a></li>
-<li><a href="#_34">获取图片</a></li>
-<li><a href="#_35">添加图片</a></li>
-<li><a href="#_36">删除图片</a></li>
-<li><a href="#_37">人脸推送获取</a></li>
-<li><a href="#_38">人脸推送设置</a></li>
-<li><a href="#_39">人脸参数获取</a></li>
-<li><a href="#_40">人脸参数设置</a></li>
+<li><a href="#_33">定制接口</a></li>
+<li><a href="#_34">人脸识别模块</a><ul>
+<li><a href="#_35">获取图片对比信息</a></li>
+<li><a href="#_36">获取抓拍对比信息</a></li>
+<li><a href="#_37">获取图片</a></li>
+<li><a href="#_38">添加图片</a></li>
+<li><a href="#_39">删除图片</a></li>
+<li><a href="#_40">人脸推送获取</a></li>
+<li><a href="#_41">人脸推送设置</a></li>
+<li><a href="#_42">人脸参数获取</a></li>
+<li><a href="#_43">人脸参数设置</a></li>
 </ul>
 </li>
 </ul>
@@ -1134,6 +1137,12 @@ body .markdown-body
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>1.0.3</td>
+<td>增加修改设备节点顺序号，查询分享设备信息接口说明</td>
+<td>欧阳彬</td>
+<td>2019-11-12</td>
+</tr>
 <tr>
 <td>1.0.2</td>
 <td>增加删除设备集合功能接口说明，并且增加添加设备接口字段</td>
@@ -1265,6 +1274,31 @@ body .markdown-body
 <td>509</td>
 <td>HTTP_DISABLE_USER</td>
 <td>账号停用</td>
+</tr>
+<tr>
+<td>510</td>
+<td></td>
+<td>超过最大限制</td>
+</tr>
+<tr>
+<td>511</td>
+<td></td>
+<td>邮箱地址错误</td>
+</tr>
+<tr>
+<td>512</td>
+<td></td>
+<td>登录密码错误</td>
+</tr>
+<tr>
+<td>513</td>
+<td></td>
+<td>权限不够</td>
+</tr>
+<tr>
+<td>514</td>
+<td></td>
+<td>验证码错误</td>
 </tr>
 </tbody>
 </table>
@@ -1654,9 +1688,9 @@ body .markdown-body
 </tbody>
 </table>
 <h1 id="3sdk">3.SDK启动模块<a class="headerlink" href="#3sdk" title="Permanent link"></a></h1>
-<h2 id="httpscomplayerwebwebsocketclientcore">（可选）设置是否为Https访问（com.Player.web.websocket.ClientCore）<a class="headerlink" href="#httpscomplayerwebwebsocketclientcore" title="Permanent link"></a></h2>
+<h2 id="httpscomplayerwebwebsocketclientcore">设置是否为Https访问（com.Player.web.websocket.ClientCore）<a class="headerlink" href="#httpscomplayerwebwebsocketclientcore" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>   /**
-     *
+     * 在应用启动前调用，建议在application的onCreate使用
      * @param certInputStream
      *         证书文件的输入流
      *         如：
@@ -1718,9 +1752,19 @@ body .markdown-body
 </pre></div>
 
 <h1 id="4comexampleumeyesdkapiwebsdkapi">4.用户系统模块（com.example.umeyesdk.api.WebSdkApi）<a class="headerlink" href="#4comexampleumeyesdkapiwebsdkapi" title="Permanent link"></a></h1>
-<h2 id="_7">注册<a class="headerlink" href="#_7" title="Permanent link"></a></h2>
+<h2 id="_7">发送短信<a class="headerlink" href="#_7" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>/**
+     *
+     * @param type 类型，1：找回密码，2：注册， 3：激活通知，4：服务器运维 ，5：报警信息
+     * @param phone_num 接收推送短信的手机号码
+     * @param phone_areacode 国家手机编码，如86
+     */
+    public static void sendSMS(final ClientCore clientCore, int type, String phone_num, String phone_areacode, final Handler handler)
+</pre></div>
+
+<h2 id="_8">注册<a class="headerlink" href="#_8" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
-     * @param aUserId       用户ID 24位 , 限定字母，数字，下划线
+     * @param aUserId       用户ID 24位 , 限定字母，数字，下划线。 若是手机号，为区号（如86）+号码）
      * @param aPassword     密码   20位 , 限定字母，数字，下划线
      * @param user_email    邮箱   32位 , 合法邮箱 
      * @param nickName      昵称   32位 , 限定英文，数字，下划线  
@@ -1731,11 +1775,41 @@ body .markdown-body
             final ClientCore clientCore, String aUserId, String aPassword,
             String user_email, String nickName, String user_phone,
             String user_id_card)
+
+
+
+    /**
+     * 给短信验证码注册用
+     *
+     *
+     * @brief 注册 （Register）
+     *
+     * @param aUserId 
+     *            用户id，必填（Necessary）若是手机号，为区号（如86）+号码）
+     * @param aPassword
+     *            用户密码，必填（Necessary）
+     * @param user_email
+     *            邮箱，必填（Necessary）
+     * @param nickName
+     *            昵称，选填（Unnecessary）
+     * @param user_phone
+     *            电话，选填（Unnecessary）
+     * @param user_id_card
+     *            身份证，选填（Unnecessary）
+     * @param email_active
+     *            是否需要邮箱激活，默认为0:不需要邮箱激活，1:需要邮箱激活,2:需要发送注册成功通知邮件，3:需要手机验证码验证
+     * @param code
+     *            验证码
+     */
+    public void registeredUser(final Context context,
+                               final ClientCore clientCore, String aUserId, String aPassword,
+                               String user_email, String nickName, String user_phone,
+                               String user_id_card, int email_active,String code) 
 </pre></div>
 
-<h2 id="_8">登录<a class="headerlink" href="#_8" title="Permanent link"></a></h2>
+<h2 id="_9">登录<a class="headerlink" href="#_9" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
-     * @param userName  用户ID, 24位, 限定字母，数字，下划线
+     * @param userName  用户ID, 24位, 限定字母，数字，下划线。 若是手机号，为区号（如86）+号码）
      * @param password  密码, 20位, 限定字母，数字，下划线
      **/
     public static void loginServerAtUserId(final Context context,
@@ -1743,7 +1817,7 @@ body .markdown-body
             final Handler handler)
 </pre></div>
 
-<h2 id="_9">注销<a class="headerlink" href="#_9" title="Permanent link"></a></h2>
+<h2 id="_10">注销<a class="headerlink" href="#_10" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param disableAlarm  是否取消报警推送
      * @param handler
@@ -1761,16 +1835,28 @@ body .markdown-body
             final ClientCore clientCore, String user_id, int language)
 </pre></div>
 
-<h2 id="_10">修改密码<a class="headerlink" href="#_10" title="Permanent link"></a></h2>
+<h2 id="_11">修改密码<a class="headerlink" href="#_11" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
+     * 账号修改密码
      * @param oldPassword   旧密码，20位 , 限定字母，数字，下划线
      * @param newPassword   新密码，20位 , 限定字母，数字，下划线
      */
     public static void modifyUserPassword(final Context context,
             final ClientCore clientCore, String oldPassword, String newPassword)
+
+    /**
+     * 手机号发送短信修改密码
+     * @param userName 手机号
+     * @param oldPassword 旧密码，20位 , 限定字母，数字，下划线
+     * @param ver_code 验证码
+     * @param newPassword 新密码，20位 , 限定字母，数字，下划线
+     */
+    public void modifyUserPassword(final Context context,
+                                   final ClientCore clientCore, String userName, String oldPassword,String ver_code,
+                                   String newPassword)
 </pre></div>
 
-<h2 id="_11">获取设备列表<a class="headerlink" href="#_11" title="Permanent link"></a></h2>
+<h2 id="_12">获取设备列表<a class="headerlink" href="#_12" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param parent_node_id    父节点ID
      * @param page_index        分页功能，指定从第几页开始，是可选的，默认不分页；
@@ -1779,12 +1865,43 @@ body .markdown-body
     public static void getNodeList(final Context context,
             final ClientCore clientCore, String parent_node_id, int page_index,
             int page_size, final Handler handler)
+
+
+
+    /**
+     * 获取设备列表
+     * 
+     * 
+     * @param isLocalList
+     *   *        是不是本地设备列表
+     * @param parent_node_id
+     *            父节点ID
+     * @param page_index
+     *            分页功能，指定从第几页开始，是可选的，默认不分页；
+     * @param page_size
+     *            分页功能，每页返回的记录数，是可选的，默认不分页；
+     * @param handler
+     */
+    public static void getNodeList(final Context context,
+                                   final ClientCore clientCore, boolean isLocalList, final String parent_node_id,
+                                   int page_index, int page_size, final Handler handler)        
 </pre></div>
 
-<h2 id="_12">增加设备<a class="headerlink" href="#_12" title="Permanent link"></a></h2>
+<h2 id="_13">查询设备分享信息<a class="headerlink" href="#_13" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>   /**
+     *  查询设备分享信息
+     *
+     * @param dev_id
+     *             设备id
+     * @param handler
+     */
+    public void getDevShareInfo(final ClientCore clientCore, String dev_id, final Handler handler)
+</pre></div>
+
+<h2 id="_14">增加设备<a class="headerlink" href="#_14" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param node_name         名称 28位， 限定中文，字母，数字，下划线  
-     * @param parent_node_id    父节点ID
+     * @param parent_node_id    父节点ID, 当没有父节点可以传空字符串
      * @param node_type         节点类型 : 0表示目录节点、1表示设备节点、2表示摄像机节点
      * @param conn_mode         连接模式 ：参见设备连接模式定义
      * @param vendor_id         厂商ID，当node_type不为0的时候是必须的，取值1009。
@@ -1807,7 +1924,7 @@ body .markdown-body
             final Handler handler)
 </pre></div>
 
-<h2 id="_13">修改设备<a class="headerlink" href="#_13" title="Permanent link"></a></h2>
+<h2 id="_15">修改设备<a class="headerlink" href="#_15" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param node_id       节点ID
      * @param node_name     名称 28位 限定中文，字母，数字，下划线 
@@ -1828,7 +1945,18 @@ body .markdown-body
             int dev_stream_no, String custom_param,int update_channelname, final Handler handler)
 </pre></div>
 
-<h2 id="_14">删除设备<a class="headerlink" href="#_14" title="Permanent link"></a></h2>
+<h2 id="_16">修改设备节点顺序号<a class="headerlink" href="#_16" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>/**
+     *
+     * @param node_id
+     *              结点ID
+     * @param node_order
+     *              结点顺序号
+     */
+    public void modifyDevNodeOrder(final Context context, final ClientCore clientCore, String node_id, int node_order)
+</pre></div>
+
+<h2 id="_17">删除设备<a class="headerlink" href="#_17" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param node_id     节点ID
      * @param node_type   节点类型            
@@ -1839,7 +1967,7 @@ body .markdown-body
             int id_type, final Handler handler)
 </pre></div>
 
-<h2 id="_15">删除设备集合<a class="headerlink" href="#_15" title="Permanent link"></a></h2>
+<h2 id="_18">删除设备集合<a class="headerlink" href="#_18" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param node_ids     节点ID集合
      * @param node_type   节点类型            
@@ -1850,11 +1978,11 @@ body .markdown-body
             int id_type, final Handler handler)
 </pre></div>
 
-<h2 id="_16">查询报警记录<a class="headerlink" href="#_16" title="Permanent link"></a></h2>
+<h2 id="_19">查询报警记录<a class="headerlink" href="#_19" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    public static void queryAlarmList(ClientCore clientCore)
 </pre></div>
 
-<h2 id="_17">删除全部报警记录<a class="headerlink" href="#_17" title="Permanent link"></a></h2>
+<h2 id="_20">删除全部报警记录<a class="headerlink" href="#_20" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    public static void deleteAllAlarm(ClientCore clientCore)
 </pre></div>
 
@@ -1865,7 +1993,7 @@ body .markdown-body
     public static void deleteAlarmByIds(ClientCore clientCore,String[] alarm_ids)
 </pre></div>
 
-<h2 id="_18">设置用户推送<a class="headerlink" href="#_18" title="Permanent link"></a></h2>
+<h2 id="_21">设置用户推送<a class="headerlink" href="#_21" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param enable_push， 启用或禁用推送，1 表示启用，0 表示禁用，是必须的，
      * @param client_lang   客户端语言，参见语言宏定义
@@ -1875,30 +2003,6 @@ body .markdown-body
      */
     public static void setUserPush(ClientCore clientCore,int enable_push, int client_lang,
             String client_token, int disable_push_other_users,int unread_count)
-
-
-     /**
-     * @param enable_push， 启用或禁用推送，1 表示启用，0 表示禁用，是必须的，
-     * @param client_lang   客户端语言，参见语言宏定义
-     * @param client_token  个推给出的clientId
-     * @param disable_push_other_users   是否禁止向相同客户端ID 或客户端Token的其它用户进行推送，1表示禁止，0表示允许；
-     * @param unread_count  把推送的未读记录数设置为指定的值。默认置0
-     * @param param_type
-     *            额外推送的参数类型，是必须的，传空表示默认使用透传，有url，intent 等（按个推文档增 加）；
-     * @param param_content
-     *            额外推送的参数内容，是必须的，跟据类型的变化，例如：当param_type传intent 类型参数时，固定
-     *            下面的参数“intent
-     *            :#Intent;launchFlags=0x10000000;package=com.pp.yl;component
-     *            ={包名
-     *            }/com.quvii.bell.activity.LoadingActivity;i.DevChNo={DevChNo
-     *            };s.DevUmid={DevUmid};i.AlarmEvent={AlarmEvent};end”，
-     *            有其他的参数按规定拼装；当param_type传的是url 类型参数时，参数内容为：http://www.xxx.com。
-     * @param platform_flag
-     *            推送平台(取值为以下其中之一)
-     *            getui xg fcm
-     */
-    public static void setUserPush(ClientCore clientCore,int enable_push, int client_lang,
-            String client_token, int disable_push_other_users,int unread_count,String param_type, String param_content,String platform_flag)
 </pre></div>
 
 <h2 id="playnode">设备服务器进行布防（主要用于免登陆情况下设备布防，其实也是通过参数组成playnode中的连接参数）<a class="headerlink" href="#playnode" title="Permanent link"></a></h2>
@@ -1918,7 +2022,7 @@ body .markdown-body
             int iChNo)
 </pre></div>
 
-<h2 id="_19">设备服务器进行布防（主要用于登陆情况下设备布放）<a class="headerlink" href="#_19" title="Permanent link"></a></h2>
+<h2 id="_22">设备服务器进行布防（主要用于登陆情况下设备布放）<a class="headerlink" href="#_22" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * 设备端服务器进行布防(主用于登录模式下进行服务器布放)
      * @param playNode      播放节点数据
@@ -1929,7 +2033,7 @@ body .markdown-body
     public static void setDeviceAlarm(ClientCore clientCore, PlayNode node, final int opCode,String client_token,int [] alarm_events)
 </pre></div>
 
-<h2 id="_20">查询设备报警状态<a class="headerlink" href="#_20" title="Permanent link"></a></h2>
+<h2 id="_23">查询设备报警状态<a class="headerlink" href="#_23" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @param sDevId       设备id playNode.node.sdevId  或者 devItemInfo.dev_id
      * @param client_token 个推clientId
@@ -1938,7 +2042,7 @@ body .markdown-body
 </pre></div>
 
 <h1 id="5complayercoreplayercore">5.设备控制模块接口（com.Player.Core.PlayerCore）<a class="headerlink" href="#5complayercoreplayercore" title="Permanent link"></a></h1>
-<h2 id="_21">设备播放参数初始化<a class="headerlink" href="#_21" title="Permanent link"></a></h2>
+<h2 id="_24">设备播放参数初始化<a class="headerlink" href="#_24" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * 初始化参数
      * @param tmpDeviceNo        连接参数
@@ -1948,25 +2052,25 @@ body .markdown-body
     public void InitParam(String tmpDeviceNo,int tmpMediaStreamType,ImageView ImageViewObj)
 </pre></div>
 
-<h2 id="_22">开始播放<a class="headerlink" href="#_22" title="Permanent link"></a></h2>
+<h2 id="_25">开始播放<a class="headerlink" href="#_25" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>   public boolean Play()   
 </pre></div>
 
-<h2 id="_23">停止播放<a class="headerlink" href="#_23" title="Permanent link"></a></h2>
+<h2 id="_26">停止播放<a class="headerlink" href="#_26" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * 耗时任务，建议子线程执行
      */
    public boolean Stop()   
 </pre></div>
 
-<h2 id="_24">获取设备播放状态<a class="headerlink" href="#_24" title="Permanent link"></a></h2>
+<h2 id="_27">获取设备播放状态<a class="headerlink" href="#_27" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * 获取当前的播放状态，具体状态值参考播放状态码宏定义
      */
    public int PlayCoreGetCameraPlayerState()   
 </pre></div>
 
-<h2 id="_25">云台控制<a class="headerlink" href="#_25" title="Permanent link"></a></h2>
+<h2 id="_28">云台控制<a class="headerlink" href="#_28" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @brief 停止
      */
@@ -2037,7 +2141,7 @@ body .markdown-body
      public void SetPtz(int PtzCmd, int PtzData)
 </pre></div>
 
-<h2 id="_26">本地录像<a class="headerlink" href="#_26" title="Permanent link"></a></h2>
+<h2 id="_29">本地录像<a class="headerlink" href="#_29" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @brief 本地录像状态
      */
@@ -2068,7 +2172,7 @@ body .markdown-body
     }
 </pre></div>
 
-<h2 id="_27">本地抓拍<a class="headerlink" href="#_27" title="Permanent link"></a></h2>
+<h2 id="_30">本地抓拍<a class="headerlink" href="#_30" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @brief 设置图片路径
      */
@@ -2086,7 +2190,7 @@ body .markdown-body
     player.SetSnapPicture(true);
 </pre></div>
 
-<h2 id="_28">设置设备报警检测状态<a class="headerlink" href="#_28" title="Permanent link"></a></h2>
+<h2 id="_31">设置设备报警检测状态<a class="headerlink" href="#_31" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @brief 设置移动侦测报警参数，
      * @param DeviceNo 连接参数 PlayNode.connparm
@@ -2096,7 +2200,7 @@ body .markdown-body
     public int CameraSetAlarmMotion(String DeviceNo, TAlarmMotionDetect joCfgObj)   
 </pre></div>
 
-<h2 id="_29">获取设备报警检测状态<a class="headerlink" href="#_29" title="Permanent link"></a></h2>
+<h2 id="_32">获取设备报警检测状态<a class="headerlink" href="#_32" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /**
      * @brief 获取移动侦测报警参数，返回0表示成功，其它表示失败
      * @param DeviceNo      连接参数  playNode.connParm
@@ -2109,25 +2213,25 @@ body .markdown-body
 </pre></div>
 
 <h1 id="6complayercoreplayerclient">6.设备设置相关接口（com.Player.Core.PlayerClient）<a class="headerlink" href="#6complayercoreplayerclient" title="Permanent link"></a></h1>
-<h2 id="_30">定制接口<a class="headerlink" href="#_30" title="Permanent link"></a></h2>
+<h2 id="_33">定制接口<a class="headerlink" href="#_33" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>    /*
     定制透明通道
     */
     public CFResponse CallCustomFuncExExHaveConnect(String DeviceNo, int command, byte[] inputData)
 </pre></div>
 
-<h2 id="_31">人脸识别模块<a class="headerlink" href="#_31" title="Permanent link"></a></h2>
-<h3 id="_32">获取图片对比信息<a class="headerlink" href="#_32" title="Permanent link"></a></h3>
+<h2 id="_34">人脸识别模块<a class="headerlink" href="#_34" title="Permanent link"></a></h2>
+<h3 id="_35">获取图片对比信息<a class="headerlink" href="#_35" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    /*图片对比信息*/
      public UserImgCompareInfo JLImageCompareInfo(int dataHandler,int length)
 </pre></div>
 
-<h3 id="_33">获取抓拍对比信息<a class="headerlink" href="#_33" title="Permanent link"></a></h3>
+<h3 id="_36">获取抓拍对比信息<a class="headerlink" href="#_36" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    /*图片抓拍信息*/
      public UserImgSnapImgInfo JLImageSnapInfo(int dataHandler,int length)
 </pre></div>
 
-<h3 id="_34">获取图片<a class="headerlink" href="#_34" title="Permanent link"></a></h3>
+<h3 id="_37">获取图片<a class="headerlink" href="#_37" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    先获取所有图片索引列表，再通过单个索引列表获取图片
      /**
       * 获取用户图片列表
@@ -2140,14 +2244,14 @@ body .markdown-body
      public Bitmap getUserImgByIndex(String conn_parm,UserImgStruct userImgStruct)
 </pre></div>
 
-<h3 id="_35">添加图片<a class="headerlink" href="#_35" title="Permanent link"></a></h3>
+<h3 id="_38">添加图片<a class="headerlink" href="#_38" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>     /**
       * 添加黑白名单图片
       * */
      public int addUserImg(String conn_parm,AddImgStruct addImgStruct,String url)
 </pre></div>
 
-<h3 id="_36">删除图片<a class="headerlink" href="#_36" title="Permanent link"></a></h3>
+<h3 id="_39">删除图片<a class="headerlink" href="#_39" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>     /**
       * 删除图片
       */
@@ -2155,7 +2259,7 @@ body .markdown-body
      public int deleteUserImg(String conn_parm,DelImgStruct delImgStruct)
 </pre></div>
 
-<h3 id="_37">人脸推送获取<a class="headerlink" href="#_37" title="Permanent link"></a></h3>
+<h3 id="_40">人脸推送获取<a class="headerlink" href="#_40" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据获取，command:65791
     请求：
     {
@@ -2178,7 +2282,7 @@ body .markdown-body
     NWPushEnable：非白名单消息推送，0关闭，1打开
 </pre></div>
 
-<h3 id="_38">人脸推送设置<a class="headerlink" href="#_38" title="Permanent link"></a></h3>
+<h3 id="_41">人脸推送设置<a class="headerlink" href="#_41" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据设置，command:65790
     请求：
     {
@@ -2197,7 +2301,7 @@ body .markdown-body
     }
 </pre></div>
 
-<h3 id="_39">人脸参数获取<a class="headerlink" href="#_39" title="Permanent link"></a></h3>
+<h3 id="_42">人脸参数获取<a class="headerlink" href="#_42" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据获取，command:65791
 
     请求：
@@ -2241,7 +2345,7 @@ body .markdown-body
     CompareCount：识别次数（1-10），对应次数识别模式
 </pre></div>
 
-<h3 id="_40">人脸参数设置<a class="headerlink" href="#_40" title="Permanent link"></a></h3>
+<h3 id="_43">人脸参数设置<a class="headerlink" href="#_43" title="Permanent link"></a></h3>
 <div class="codehilite"><pre>    使用CallCustomFuncExExHaveConnect 使用json 传递数据获取，command:65790
     请求：
     {

@@ -14,6 +14,7 @@ import com.Player.web.request.P2pConnectInfo;
 import com.Player.web.response.DevState;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
+import com.Player.web.response.ResponseDevShareInfo;
 import com.Player.web.response.ResponseDevState;
 import com.Player.web.response.ResponseGetServerList;
 import com.Player.web.response.ResponseQueryAlarm;
@@ -50,7 +51,7 @@ public class WebSdkApi {
 	 * 登陆
 	 *
 	 * @param userName
-	 *            用户ID 必填 24位 , 限定字母，数字，下划线 必填
+	 *            用户ID 必填 24位 , 限定字母，数字，下划线 必填 若是手机号，为区号（如86）+号码）
 	 * @param password
 	 *            必填 密码 必填 20位 , 限定字母，数字，下划线
 	 **/
@@ -83,11 +84,49 @@ public class WebSdkApi {
 				});
 	}
 
+
+
+
+
+	/**
+	 *@brief 发送短信 （SendSMS）
+	 *
+	 * @param type 类型，1：找回密码，2：注册， 3：激活通知，4：服务器运维 ，5：报警信息
+	 * @param phone_num 接收推送短信的手机号码
+	 * @param phone_areacode 国家手机编码，如86
+	 */
+	public static void sendSMS(final ClientCore clientCore, int type, String phone_num, String phone_areacode, final Handler handler) {
+		clientCore.sendSMS(type,phone_num,phone_areacode,new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null && responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						handler.sendEmptyMessage(Constants.SEND_SMS_S);
+					} else {
+						Log.e(WebSdkApi, "发送验证码失败!code="
+								+ responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.SEND_SMS_F);
+					}
+				} else {
+					Log.e(WebSdkApi, "发送验证码失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.SEND_SMS_F);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+
+
+
 	/**
 	 * 注册账户
 	 *
 	 * @param aUserId
-	 *            用户ID 必填 24位 , 限定字母，数字，下划线
+	 *            用户ID 必填 24位 , 限定字母，数字，下划线 若是手机号，为区号（如86）+号码）
 	 * @param aPassword
 	 *            密码 必填 20位 , 限定字母，数字，下划线
 	 * @param user_email
@@ -129,6 +168,65 @@ public class WebSdkApi {
 				});
 	}
 
+
+	/**
+	 * 给短信验证码注册用
+	 *
+	 *
+	 *  注册 （Register）
+	 *
+	 * @param aUserId
+	 *            用户id，必填（Necessary） 若是手机号，为区号（如86）+号码）
+	 * @param aPassword
+	 *            用户密码，必填（Necessary）
+	 * @param user_email
+	 *            邮箱，必填（Necessary）
+	 * @param nickName
+	 *            昵称，选填（Unnecessary）
+	 * @param user_phone
+	 *            电话，选填（Unnecessary）
+	 * @param user_id_card
+	 *            身份证，选填（Unnecessary）
+	 * @param email_active
+	 *            是否需要邮箱激活，默认为0:不需要邮箱激活，1:需要邮箱激活,2:需要发送注册成功通知邮件，3:需要手机验证码验证
+	 * @param code
+	 *            验证码
+	 */
+	public void registeredUser(final Context context,
+							   final ClientCore clientCore, String aUserId, String aPassword,
+							   String user_email, String nickName, String user_phone,
+							   String user_id_card, int email_active,String code) {
+		clientCore.registeredUser(aUserId, aPassword, user_email, nickName,
+				user_phone, user_id_card, email_active, code, new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+						if (responseCommon != null && responseCommon.h != null) {
+							if (responseCommon.h.e == 200) {
+								Show.toast(context, "注册成功");
+							} else {
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
+							}
+
+						} else {
+							Log.e(WebSdkApi, "注册失败! error=" + msg.what);
+							Show.toast(context, "注册失败");
+						}
+						super.handleMessage(msg);
+					}
+
+				});
+
+
+	}
+
+
+
+
 	/**
 	 * 注销
 	 *
@@ -157,7 +255,7 @@ public class WebSdkApi {
 	}
 
 	/**
-	 * 修改密码
+	 *账号修改密码
 	 *
 	 * @param oldPassword
 	 *            20位 , 限定字母，数字，下划线 旧密码
@@ -189,6 +287,47 @@ public class WebSdkApi {
 		});
 
 	}
+
+
+
+
+	/**
+	 * 手机号发送短信修改密码
+	 *
+	 * @param userName 用户名
+	 * @param oldPassword 旧密码，20位 , 限定字母，数字，下划线
+	 * @param ver_code 验证码
+	 * @param newPassword 新密码，20位 , 限定字母，数字，下划线
+	 */
+	public void modifyUserPassword(final Context context,
+								   final ClientCore clientCore, String userName, String oldPassword,String ver_code,
+								   String newPassword) {
+		clientCore.modifyUserPassword(userName, oldPassword, ver_code, newPassword, new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null && responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						Show.toast(context, "修改密码成功");
+					} else {
+						Log.e(WebSdkApi, "修改密码失败!code=" + responseCommon.h.e);
+						Show.toast(context, "修改密码失败");
+					}
+				} else {
+					Log.e(WebSdkApi, "修改密码失败! error=" + msg.what);
+					Show.toast(context, "修改密码失败");
+				}
+				super.handleMessage(msg);
+			}
+
+		});
+
+	}
+
+
+
 
 	/**
 	 * 发送重置密码邮件
@@ -266,13 +405,137 @@ public class WebSdkApi {
 				});
 	}
 
+
+
+
+	/**
+	 * 获取设备列表
+	 *
+	 *
+	 * @param isLocalList
+	 * 	 *        是不是本地设备列表
+	 * @param parent_node_id
+	 *            父节点ID
+	 * @param page_index
+	 *            分页功能，指定从第几页开始，是可选的，默认不分页；
+	 * @param page_size
+	 *            分页功能，每页返回的记录数，是可选的，默认不分页；
+	 * @param handler
+	 */
+	public static void getNodeList(final Context context,
+								   final ClientCore clientCore, boolean isLocalList, final String parent_node_id,
+								   int page_index, int page_size, final Handler handler) {
+		clientCore.getNodeList(isLocalList, parent_node_id, page_index, page_size,
+				new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+						ResponseDevList responseDevList = (ResponseDevList) msg.obj;
+						if (responseDevList != null
+								&& responseDevList.h != null) {
+							if (responseDevList.h.e == 200) {
+								handler.sendMessage(Message.obtain(handler,
+										Constants.GET_DEVLIST_S,
+										responseDevList));
+							} else {
+								Log.e(WebSdkApi, "获取设备列表失败!code="
+										+ responseDevList.h.e);
+								handler.sendEmptyMessage(Constants.GET_DEVLIST_F);
+							}
+						} else {
+							Log.e(WebSdkApi, "获取设备列表失败! error=" + msg.what);
+							handler.sendEmptyMessage(Constants.GET_DEVLIST_F);
+						}
+						super.handleMessage(msg);
+					}
+				});
+	}
+
+
+
+
+
+
+	/**
+	 *  查询设备分享信息
+	 *
+	 * @param dev_id
+	 *             设备id
+	 * @param handler
+	 */
+	public void getDevShareInfo(final ClientCore clientCore, String dev_id, final Handler handler) {
+		clientCore.getDevShareInfo(dev_id, new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseDevShareInfo responseDevShareInfo = (ResponseDevShareInfo) msg.obj;
+				if (responseDevShareInfo != null
+						&& responseDevShareInfo.h != null) {
+					if (responseDevShareInfo.h.e == 200) {
+						handler.sendMessage(Message.obtain(handler,
+								Constants.GET_SHARE_INFO_S,
+								responseDevShareInfo));
+					} else {
+						Log.e(WebSdkApi, "获取分享信息失败!code="
+								+ responseDevShareInfo.h.e);
+						handler.sendEmptyMessage(Constants.GET_SHARE_INFO_F);
+					}
+				} else {
+					Log.e(WebSdkApi, "获取分享信息失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.GET_SHARE_INFO_F);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+
+
+
+
+	/**
+	 *  修改设备节点顺序号
+	 *
+	 * @param node_id
+	 *              结点ID
+	 * @param node_order
+	 *              结点顺序号
+	 */
+	public void modifyDevNodeOrder(final Context context, final ClientCore clientCore, String node_id, int node_order) {
+		clientCore.modifyDevNodeOrder(node_id, node_order, new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null && responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						Show.toast(context, "修改设备节点顺序成功！");
+					} else {
+						Log.e(WebSdkApi, "修改设备节点顺序失败!code=" + responseCommon.h.e);
+						Show.toast(context, "修改设备节点顺序失败");
+					}
+				} else {
+					Log.e(WebSdkApi, "修改设备节点顺序失败! error=" + msg.what);
+					Show.toast(context, "修改设备节点顺序失败");
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+
+
+
+
+
 	/**
 	 * 添加设备节点
 	 *
 	 * @param node_name
 	 *            长度 28 限定中文，字母，数字，下划线 名称
 	 * @param parent_node_id
-	 *            父节点ID
+	 *            父节点ID, 当没有父节点可以传空字符串
 	 * @param node_type
 	 *            节点类型 : 0表示目录节点、1表示设备节点、2表示摄像机节点；当为添加子节点时，通道号为0
 	 * @param conn_mode
@@ -400,6 +663,10 @@ public class WebSdkApi {
 	 *            摄像机节点才有效， nvr/dvr的通道号
 	 * @param dev_stream_no
 	 *            码流
+	 *  @param custom_param
+	 *           自定义厂家参数
+	 * @update_channelname
+	 *          是否需要同步更新设备通道名称,默认1
 	 * @param handler
 	 */
 	public static void modifyNodeInfo(final Context context,

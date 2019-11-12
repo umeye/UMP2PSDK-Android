@@ -80,6 +80,10 @@ public class Constants {
 	public final static int QUERY_ALARM_F = -13;// 查询报警失败
 	public final static int MODIFY_DEV_NUM_S = 14;// 修改设备成功
 	public final static int MODIFY_DEV_NUM_F = -14;// 修改设备失败
+	public final static int SEND_SMS_S = 15;//发送验证码成功
+	public final static int SEND_SMS_F = -15;//发送验证码失败
+    public final static int GET_SHARE_INFO_S = 16;// 获取分享信息失败
+    public final static int GET_SHARE_INFO_F = -16;// 获取分享信息成功
 	// public static final byte NEW_DATA = 0x11;
 	public static final byte DELETE_FAILED = 0x12;
 	public static final byte DELETE_SUCCEED = 0x13;

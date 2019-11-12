@@ -169,6 +169,72 @@ public class WebSdkApi {
 	}
 
 
+
+
+
+
+
+	/**
+	 * 给邮箱激活注册或发送注册成功通知邮件用
+	 *
+	 *
+	 * @brief 注册 （Register）
+	 *
+	 * @param aUserId
+	 *            用户id，必填（Necessary）
+	 * @param aPassword
+	 *            用户密码，必填（Necessary）
+	 * @param user_email
+	 *            邮箱，必填（Necessary）
+	 * @param nickName
+	 *            昵称，选填（Unnecessary）
+	 * @param user_phone
+	 *            电话，选填（Unnecessary）
+	 * @param user_id_card
+	 *            身份证，选填（Unnecessary）
+	 * @param email_active
+	 *            是否需要邮箱激活，默认为0:不需要邮箱激活，1:需要邮箱激活,2:需要发送注册成功通知邮件，3:需要手机验证码验证
+	 *  @param client_lang
+	 * 	        邮箱链接语言类型
+	 * @return
+	 */
+	public static void registeredUser(final Context context,
+							   final ClientCore clientCore, String aUserId, String aPassword,
+							   String user_email, String nickName, String user_phone,
+							   String user_id_card, int email_active, int client_lang) {
+		clientCore.registeredUser(aUserId, aPassword, user_email, nickName,
+				user_phone, user_id_card, email_active, client_lang, new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+						if (responseCommon != null && responseCommon.h != null) {
+							if (responseCommon.h.e == 200) {
+								Show.toast(context, "注册成功");
+							} else {
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
+							}
+
+						} else {
+							Log.e(WebSdkApi, "注册失败! error=" + msg.what);
+							Show.toast(context, "注册失败");
+						}
+						super.handleMessage(msg);
+					}
+
+				});
+
+
+	}
+
+
+
+
+
+
 	/**
 	 * 给短信验证码注册用
 	 *

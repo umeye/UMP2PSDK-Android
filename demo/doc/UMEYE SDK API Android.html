@@ -1833,7 +1833,7 @@ body .markdown-body
      * @param code
      *            验证码
      */
-    public void registeredUser(final Context context,
+    public static void registeredUser(final Context context,
                                final ClientCore clientCore, String aUserId, String aPassword,
                                String user_email, String nickName, String user_phone,
                                String user_id_card, int email_active,String code) 
@@ -1883,7 +1883,7 @@ body .markdown-body
      * @param ver_code 验证码
      * @param newPassword 新密码，20位 , 限定字母，数字，下划线
      */
-    public void modifyUserPassword(final Context context,
+    public static void modifyUserPassword(final Context context,
                                    final ClientCore clientCore, String userName, String oldPassword,String ver_code,
                                    String newPassword)
 </pre></div>
@@ -1927,7 +1927,7 @@ body .markdown-body
      *             设备id
      * @param handler
      */
-    public void getDevShareInfo(final ClientCore clientCore, String dev_id, final Handler handler)
+    public static void getDevShareInfo(final ClientCore clientCore, String dev_id, final Handler handler)
 </pre></div>
 
 <h2 id="_14">增加设备<a class="headerlink" href="#_14" title="Permanent link"></a></h2>
@@ -1985,7 +1985,7 @@ body .markdown-body
      * @param node_order
      *              结点顺序号
      */
-    public void modifyDevNodeOrder(final Context context, final ClientCore clientCore, String node_id, int node_order)
+    public static void modifyDevNodeOrder(final Context context, final ClientCore clientCore, String node_id, int node_order)
 </pre></div>
 
 <h2 id="_17">删除设备<a class="headerlink" href="#_17" title="Permanent link"></a></h2>

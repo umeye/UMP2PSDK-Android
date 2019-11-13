@@ -258,7 +258,7 @@ public class WebSdkApi {
 	 * @param code
 	 *            验证码
 	 */
-	public void registeredUser(final Context context,
+	public static void registeredUser(final Context context,
 							   final ClientCore clientCore, String aUserId, String aPassword,
 							   String user_email, String nickName, String user_phone,
 							   String user_id_card, int email_active,String code) {
@@ -365,7 +365,7 @@ public class WebSdkApi {
 	 * @param ver_code 验证码
 	 * @param newPassword 新密码，20位 , 限定字母，数字，下划线
 	 */
-	public void modifyUserPassword(final Context context,
+	public static void modifyUserPassword(final Context context,
 								   final ClientCore clientCore, String userName, String oldPassword,String ver_code,
 								   String newPassword) {
 		clientCore.modifyUserPassword(userName, oldPassword, ver_code, newPassword, new Handler() {
@@ -530,7 +530,7 @@ public class WebSdkApi {
 	 *             设备id
 	 * @param handler
 	 */
-	public void getDevShareInfo(final ClientCore clientCore, String dev_id, final Handler handler) {
+	public static void getDevShareInfo(final ClientCore clientCore, String dev_id, final Handler handler) {
 		clientCore.getDevShareInfo(dev_id, new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
@@ -568,7 +568,7 @@ public class WebSdkApi {
 	 * @param node_order
 	 *              结点顺序号
 	 */
-	public void modifyDevNodeOrder(final Context context, final ClientCore clientCore, String node_id, int node_order) {
+	public static void modifyDevNodeOrder(final Context context, final ClientCore clientCore, String node_id, int node_order) {
 		clientCore.modifyDevNodeOrder(node_id, node_order, new Handler(){
 			@Override
 			public void handleMessage(Message msg) {

@@ -84,6 +84,8 @@ public class Constants {
 	public final static int SEND_SMS_F = -15;//发送验证码失败
     public final static int GET_SHARE_INFO_S = 16;// 获取分享信息失败
     public final static int GET_SHARE_INFO_F = -16;// 获取分享信息成功
+	public final static int REFRESH_SESSION_S = 17;// 刷新session失败
+	public final static int REFRESH_SESSION_F = -17;// 刷新session成功
 	// public static final byte NEW_DATA = 0x11;
 	public static final byte DELETE_FAILED = 0x12;
 	public static final byte DELETE_SUCCEED = 0x13;

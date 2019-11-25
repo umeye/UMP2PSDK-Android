@@ -19,6 +19,7 @@ import com.Player.web.response.ResponseDevState;
 import com.Player.web.response.ResponseGetServerList;
 import com.Player.web.response.ResponseQueryAlarm;
 import com.Player.web.response.ResponseQueryAlarmSettings;
+import com.Player.web.response.ResponseRefreshSession;
 import com.Player.web.response.ServerListInfo;
 import com.Player.web.websocket.ClientCore;
 import com.example.umeyesdk.entity.PlayNode;
@@ -294,7 +295,7 @@ public class WebSdkApi {
 
 
 	/**
-	 * 注销
+	 * 登出
 	 *
 	 * @param disableAlarm
 	 *            是否取消报警推送
@@ -302,6 +303,34 @@ public class WebSdkApi {
 	public static void logoutServer(final ClientCore clientCore,
 									int disableAlarm) {
 		clientCore.logoutServer(disableAlarm, new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null && responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						Log.e(WebSdkApi, "登出成功!code=" + responseCommon.h.e);
+					} else {
+						Log.e(WebSdkApi, "登出失败!code=" + responseCommon.h.e);
+					}
+
+				} else {
+					Log.e(WebSdkApi, "登出失败! error=" + msg.what);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+
+
+
+	/**
+	 * 注销账号
+	 *
+	 */
+	public static void logoutUserAccount(final ClientCore clientCore) {
+		clientCore.logoutUserAccount(new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
@@ -319,6 +348,41 @@ public class WebSdkApi {
 			}
 		});
 	}
+
+
+	/**
+	 * 刷新session
+	 *
+	 * @param handler
+	 */
+	public static void refreshSession(final ClientCore clientCore, final Handler handler) {
+		clientCore.refreshSession(new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseRefreshSession responseRefreshSession = (ResponseRefreshSession) msg.obj;
+				if (responseRefreshSession != null && responseRefreshSession.h != null) {
+					if (responseRefreshSession.h.e == 200) {
+						handler.sendMessage(Message.obtain(handler,
+								Constants.REFRESH_SESSION_S,
+								responseRefreshSession));
+					} else {
+						Log.e(WebSdkApi, "刷新session失败!code=" + responseRefreshSession.h.e);
+						handler.sendEmptyMessage(Constants.REFRESH_SESSION_F);
+					}
+
+				} else {
+					Log.e(WebSdkApi, "刷新session失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.REFRESH_SESSION_F);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+
+
+
 
 	/**
 	 *账号修改密码

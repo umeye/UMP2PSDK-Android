@@ -12,6 +12,7 @@ import com.Player.Source.TAlarmSetInfor;
 import com.Player.Source.TDevNodeInfor;
 import com.Player.web.request.P2pConnectInfo;
 import com.Player.web.response.DevState;
+import com.Player.web.response.ResponseAddNode;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.response.ResponseDevShareInfo;
@@ -703,26 +704,32 @@ public class WebSdkApi {
 	 *            设备通道号 node_type为2时有效，添加dvr/nvr指定的通道号
 	 * @param dev_stream_no
 	 *            设备请求码流 0:主码流，1，子码流
+	 * @param only_umid
+	 *            设备id是不是唯一用户添加
+	 * @param limit_appid
+	 *            是否只允许本APP厂家的设备才能添加
+	 * @param custom_param
+	 *            自定义参数
 	 * @param handler
 	 */
 	public static void addNodeInfo(final Context context,
 								   final ClientCore clientCore, String node_name, String parent_node_id,
 								   int node_type, int conn_mode, int vendor_id, String dev_umid,
 								   String dev_addr, int dev_port, String dev_user, String dev_passwd,
-								   int dev_ch_num, int dev_ch_no, int dev_stream_no, int only_umid,int limit_appid,
+								   int dev_ch_num, int dev_ch_no, int dev_stream_no, int only_umid,int limit_appid,String custom_param,
 								   final Handler handler) {
 		clientCore.addNodeInfo(node_name, parent_node_id, node_type, conn_mode,
 				vendor_id, dev_umid, dev_addr, dev_port, dev_user, dev_passwd,
-				dev_ch_num, dev_ch_no, dev_stream_no, only_umid, limit_appid, new Handler() {
+				dev_ch_num, dev_ch_no, dev_stream_no, only_umid, limit_appid, custom_param, new Handler() {
 
 					@Override
 					public void handleMessage(Message msg) {
-						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
-						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+						ResponseAddNode responseAddNode = (ResponseAddNode) msg.obj;
+						if (responseAddNode != null && responseAddNode.h != null) {
+							if (responseAddNode.h.e == 200) {
 								handler.sendEmptyMessage(Constants.ADD_DEV_S);
 							} else {
-								Log.e(WebSdkApi, "添加设备失败!code="	+ responseCommon.h.e);
+								Log.e(WebSdkApi, "添加设备失败!code="	+ responseAddNode.h.e);
 								handler.sendEmptyMessage(Constants.ADD_DEV_F);
 							}
 						} else {

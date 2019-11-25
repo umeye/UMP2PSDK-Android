@@ -44,7 +44,7 @@ public class MoreFuncDialog extends AlertDialog.Builder {
 						WebSdkApi.addNodeInfo(activity, clientCore,
 								String.valueOf(System.currentTimeMillis()), "", 1, 2, 1009,
 								Constants.UMID, "", 0, Constants.user,
-								Constants.password, 8, 0, 1, 0,0,handler);
+								Constants.password, 8, 0, 1, 0,0,"",handler);
 						break;
 					case 1:
 						// 重新获取列表

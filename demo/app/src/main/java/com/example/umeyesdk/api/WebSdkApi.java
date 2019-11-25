@@ -779,6 +779,45 @@ public class WebSdkApi {
 
 	}
 
+
+
+	/**
+	 * 删除多个设备
+	 *
+	 * @param node_ids
+	 *            节点ID数组
+	 * @parm node_type 节点类型
+	 * @param id_type
+	 *            ID类型，0：用户id,1:设备组id,2:授权设备，默认填写0
+	 * @param handler
+	 */
+	public static void deleteNodeInfos(final ClientCore clientCore, String[] node_ids, int node_type, int id_type, final Handler handler) {
+		clientCore.deleteNodeInfos(node_ids, node_type, id_type, new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null && responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						handler.sendEmptyMessage(Constants.DELETE_DEV_S);
+					} else {
+						Log.e(WebSdkApi, " 删除设备设备失败!code=" + responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.DELETE_DEV_F);
+					}
+				} else {
+					Log.e(WebSdkApi, " 删除设备设备失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.DELETE_DEV_F);
+				}
+				super.handleMessage(msg);
+			}
+
+		});
+	}
+
+
+
+
+
 	/**
 	 * 修改设备
 	 *

@@ -116,3 +116,21 @@
 -keep class com.stream.FileDownloadParser {
    public *;
 }
+
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }
+
+
+-keep class com.tool.websocket.** { *; }
+-keep class com.macrovideo.smartlink.** { *; }
+
+
+#个推
+-dontwarn com.igexin.**
+-keep class com.igexin.** { *; }
+-keep class org.json.** { *; }
+
+#云存储加密ESEncAndDec，不需要用到不用加
+-keep class com.cryptlib.tool.** { *; }
+-keep class org.json.simple.** { *; }
+-keep class net.sourceforge.zbar.** { *; }

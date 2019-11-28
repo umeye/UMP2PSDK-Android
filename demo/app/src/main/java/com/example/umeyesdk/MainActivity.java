@@ -350,7 +350,13 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		// TODO Auto-generated method stub
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 			if (!TextUtils.isEmpty(currentDVR) && !"0".equals(currentDVR)) {
-				showChannleList("0");
+//				showChannleList("0");
+
+				nodeList.clear();
+				nodeList = appMain.getDvrAndCamera();
+				adapter.setNodeList(nodeList);
+				adapter.notifyDataSetChanged();
+
 				return true;
 			} else {
 				// 注销登录

@@ -21,6 +21,7 @@ import com.Player.web.response.ResponseGetServerList;
 import com.Player.web.response.ResponseQueryAlarm;
 import com.Player.web.response.ResponseQueryAlarmSettings;
 import com.Player.web.response.ResponseRefreshSession;
+import com.Player.web.response.ResponseResetPwd;
 import com.Player.web.response.ServerListInfo;
 import com.Player.web.websocket.ClientCore;
 import com.example.umeyesdk.entity.PlayNode;
@@ -476,12 +477,12 @@ public class WebSdkApi {
 			@Override
 			public void handleMessage(Message msg) {
 				// TODO Auto-generated method stub
-				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
-				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+				ResponseResetPwd responseResetPwd = (ResponseResetPwd) msg.obj;
+				if (responseResetPwd != null && responseResetPwd.h != null) {
+					if (responseResetPwd.h.e == 200) {
 						Show.toast(context, "发送重置密码成功，稍后请查收！");
 					} else {
-						Log.e(WebSdkApi, "发送重置密码失败!code=" + responseCommon.h.e);
+						Log.e(WebSdkApi, "发送重置密码失败!code=" + responseResetPwd.h.e);
 						Show.toast(context, "发送重置密码失败");
 					}
 				} else {

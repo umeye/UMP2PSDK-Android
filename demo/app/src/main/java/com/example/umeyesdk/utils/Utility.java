@@ -24,6 +24,11 @@ import android.util.Log;
 
 public class Utility {
 
+	/**
+	 * 具体参考 doc的[语言类型定义]
+	 * @param con
+	 * @return
+	 */
 	public static boolean isZh(Context con) {
 		Locale locale = con.getResources().getConfiguration().locale;
 		String language = locale.getLanguage();
@@ -32,6 +37,25 @@ public class Utility {
 		else
 			return false;
 	}
+	/**
+	 * 具体参考 doc的[语言类型定义]
+	 * @param con
+	 * @return
+	 */
+	public static int isZhCNorWTorOthers(Context con) {
+		Locale locale = con.getResources().getConfiguration().locale;
+		String language = locale.getLanguage();
+		String country = locale.getCountry();
+		if (language.endsWith("zh")) {
+			if(country.toUpperCase().endsWith("CN")) {
+				return 2;
+			} else {
+				return 3;
+			}
+		} else
+			return 1;
+	}
+
 
 	public static void Logout(Activity c)// 注销行为
 	{

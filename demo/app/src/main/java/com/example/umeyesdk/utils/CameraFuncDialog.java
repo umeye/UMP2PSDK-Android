@@ -21,7 +21,7 @@ import com.getui.demo.AlarmUtils;
  *
  * @author Administrator
  */
-public class CameraFuncDialog extends AlertDialog.Builder {
+public class CameraFuncDialog extends AlertDialog.Builder  {
     ClientCore clientCore;
     Activity activity;
     PlayNode node;

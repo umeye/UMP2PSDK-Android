@@ -32,6 +32,7 @@ import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.adpter.DeviceManagerAdapter;
 import com.example.umeyesdk.api.WebSdkApi;
 import com.example.umeyesdk.entity.PlayNode;
+import com.example.umeyesdk.utils.CameraFuncDialog;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.MoreFuncDialog;
 import com.example.umeyesdk.utils.Show;
@@ -49,6 +50,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 	AppMain appMain;
 	ResponseDevList responseDevList;
 	MoreFuncDialog moreFuncDialog;
+	CameraFuncDialog cameraFuncDialog;
 	/**
 	 * 用Handler来更新UI
 	 */
@@ -205,11 +207,15 @@ public class MainActivity extends Activity implements OnItemClickListener,
 
 			return;
 		} else {
+
+			if (cameraFuncDialog == null) {
+				cameraFuncDialog = new CameraFuncDialog(this, clientCore, node, handler);
+			}
+			cameraFuncDialog.setTitle(R.string.function);
+			cameraFuncDialog.show();
+
 			// node.isCamera()
-			// 如果是通道节点，就进入播放页面
-			Intent intent = new Intent(context, PlayActivity.class);
-			intent.putExtra("id", node.connecParams);
-			startActivity(intent);
+
 		}
 	}
 
@@ -291,7 +297,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 				// }
 				// }).uploadDone();
 
-				if (moreFuncDialog == null) {
+				if(moreFuncDialog == null) {
 					moreFuncDialog = new MoreFuncDialog(this, clientCore, handler);
 				}
 				moreFuncDialog.setTitle(R.string.more);
@@ -352,6 +358,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 			if (!TextUtils.isEmpty(currentDVR) && !"0".equals(currentDVR)) {
 //				showChannleList("0");
 
+				currentDVR = "0";
 				nodeList.clear();
 				nodeList = appMain.getDvrAndCamera();
 				adapter.setNodeList(nodeList);

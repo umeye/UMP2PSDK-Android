@@ -40,6 +40,7 @@
     <string name="devicelist">设备列表</string>
     <string name="add_device">添加设备</string>
     <string name="more">更多</string>
+    <string name="function">功能</string>
     <string name="add_succeed">添加成功</string>
     <string name="add_failed">添加失败</string>
     <string name="delete_device">删除设备</string>

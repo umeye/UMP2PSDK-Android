@@ -1074,7 +1074,7 @@ public class WebSdkApi {
 	 * @param client_lang
 	 *            客户端语言，参见语言宏定义
 	 * @param client_token
-	 *            个推给出的clientId
+	 *            第三方推送如个推给出的clientId
 	 * @param disable_push_other_users
 	 *            是否禁止向相同客户端ID 或客户端Token的其它用户进行推送，1表示禁止，0表示允许；
 	 *
@@ -1152,6 +1152,13 @@ public class WebSdkApi {
 	 *            个推clientId
 	 * @param alarm_events
 	 *            布防事件类型数组，参考
+     * 1 设备故障
+     * 2 移动侦测
+     * 3 视频遮挡
+     * 4 视频丢失
+     * 5 探头报警
+     * 6 人体感应
+     *  ...
 	 * @param devName
 	 *            设备名称
 	 * @param devUmid
@@ -1206,6 +1213,13 @@ public class WebSdkApi {
 	 *            个推的client_id
 	 * @param alarm_events
 	 *            报警事件类型，参见报警类型宏定义
+     * 1 设备故障
+     * 2 移动侦测
+     * 3 视频遮挡
+     * 4 视频丢失
+     * 5 探头报警
+     * 6 人体感应
+     *  ...
 	 */
 	public static void setDeviceAlarm(ClientCore clientCore, PlayNode node,
 									  final int opCode, String client_token, int[] alarm_events) {
@@ -1242,7 +1256,7 @@ public class WebSdkApi {
 	 * @param sDevId
 	 *            设备id playNode.node.sdevId 或者 devItemInfo.dev_id
 	 * @param client_token
-	 *            个推clientId
+	 *            第三方推送如个推clientId
 	 */
 	public static void getDeviceAlarm(ClientCore clientCore, String sDevId,
 									  final String client_token) {
@@ -1260,7 +1274,7 @@ public class WebSdkApi {
 						TAlarmSetInfor alarmInfo = TAlarmSetInfor
 								.toTAlarmSetInfor(responseQueryAlarmSettings.b.devs[0]);
 						boolean isNotifyToPhone = false;
-						if (alarmInfo.bIfSetAlarm == 1) {
+						if (alarmInfo.bIfSetAlarm == 1) {//1是已布防
 							if (alarmInfo != null) {
 								if (alarmInfo != null
 										&& alarmInfo.notifies != null) {
@@ -1269,9 +1283,9 @@ public class WebSdkApi {
 												alarmInfo.notifies[i].notify_type
 														+ ","
 														+ alarmInfo.notifies[i].notify_param);
-										if (alarmInfo.notifies[i].notify_type == 1
+										if (alarmInfo.notifies[i].notify_type == 1//通知类型，1：手机推送
 												&& client_token
-												.equals(alarmInfo.notifies[i].notify_param)) {
+												.equals(alarmInfo.notifies[i].notify_param)) {//第三方推送id跟布防时候传的id是否相同
 											isNotifyToPhone = true;
 											break;
 										}
@@ -1282,7 +1296,7 @@ public class WebSdkApi {
 							isNotifyToPhone = false;
 						}
 						if (isNotifyToPhone) {
-							Log.e(WebSdkApi, "设备已设置设置推送");
+							Log.e(WebSdkApi, "设备已设置推送");
 						} else {
 							Log.e(WebSdkApi, "设备没有设置推送");
 						}

@@ -62,7 +62,6 @@ public class AcLogo extends Activity {
 		}
 
 
-
 	}
 
 	@Override

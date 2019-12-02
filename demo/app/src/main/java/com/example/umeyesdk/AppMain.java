@@ -47,7 +47,7 @@ public class AppMain extends Application {
 			}.start();
 		}
 
-		//设置登录账号已在其他地方登录的错误回调函数，可在baseActivity使用
+		//设置登录账号已在其他地方登录或者未登录的错误回调函数，可在baseActivity使用
 		ClientCore.getInstance().setIotTokenInvalidListener(new IoTTokenInvalidListener() {
 			@Override
 			public void onIoTTokenInvalid() {//线程回调，更新UI请用handler

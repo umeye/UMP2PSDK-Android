@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.Player.Core.PlayerClient;
 import com.Player.web.websocket.ClientCore;
+import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.example.umeyesdk.entity.PlayNode;
 
 public class AppMain extends Application {
@@ -45,6 +46,14 @@ public class AppMain extends Application {
 
 			}.start();
 		}
+
+		//设置登录账号已在其他地方登录的错误回调函数，可在baseActivity使用
+		ClientCore.getInstance().setIotTokenInvalidListener(new IoTTokenInvalidListener() {
+			@Override
+			public void onIoTTokenInvalid() {//线程回调，更新UI请用handler
+
+			}
+		});
 
 		super.onCreate();
 	}

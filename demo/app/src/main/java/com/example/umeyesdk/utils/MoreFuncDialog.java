@@ -52,7 +52,7 @@ public class MoreFuncDialog extends AlertDialog.Builder {
 						break;
 					case 2:
 						// 修改登录用户密码
-						WebSdkApi.modifyUserPassword(activity, clientCore, "1234","123456");
+						WebSdkApi.modifyUserPassword(activity, clientCore, "111111","111111");
 						break;
 					case 3:
 						// 发送重置密码到注册时所填的邮箱

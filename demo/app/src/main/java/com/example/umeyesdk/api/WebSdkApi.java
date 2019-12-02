@@ -1354,10 +1354,10 @@ public class WebSdkApi {
 					node.getDeviceId(), node.node.iConnMode);
 			if (info != null) {
 				p2pConnectInfo = new P2pConnectInfo();
-				p2pConnectInfo.umid = info.pDevId;
-				p2pConnectInfo.user = info.pDevUser;
-				p2pConnectInfo.passwd = info.pDevPwd;
-				p2pConnectInfo.dev_name = node.getName();
+				p2pConnectInfo.umid = info.pDevId;//umid
+				p2pConnectInfo.user = info.pDevUser;//用户名
+				p2pConnectInfo.passwd = info.pDevPwd;//密码
+				p2pConnectInfo.dev_name = node.getName();//设备名
 
 				/**
 				 * 免登陆模式下 node.node.sDevId是 String sDevId
@@ -1365,8 +1365,8 @@ public class WebSdkApi {
 				 * (String.valueOf(node.node.dwNodeId),info.pDevId, info.iChNo);
 				 */
 				String sDevId = node.node.sDevId;
-				p2pConnectInfo.dev_id = sDevId;
-				p2pConnectInfo.channel = info.iChNo;
+				p2pConnectInfo.dev_id = sDevId;//设备ID
+				p2pConnectInfo.channel = info.iChNo;//通道号
 			}
 		}
 		return p2pConnectInfo;

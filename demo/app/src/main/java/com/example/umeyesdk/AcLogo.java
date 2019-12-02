@@ -14,6 +14,7 @@ import android.util.Log;
 import com.Player.Source.LogOut;
 import com.Player.web.response.ResponseServer;
 import com.Player.web.websocket.ClientCore;
+import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyeNewSdk.AcSelectMode;
@@ -59,6 +60,9 @@ public class AcLogo extends Activity {
 			// clientCore.CLTStartClient("182.92.170.98", 8300);
 			// actionToLogin();
 		}
+
+
+
 	}
 
 	@Override

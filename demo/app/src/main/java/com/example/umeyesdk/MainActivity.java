@@ -21,6 +21,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.Player.Core.PlayerClient;
 import com.Player.Source.DevInfo;
 import com.Player.Source.TAlarmSetInfor;
@@ -165,7 +167,6 @@ public class MainActivity extends Activity implements OnItemClickListener,
 
 		initeView();
 		clientCore = ClientCore.getInstance();
-
 	}
 
 	void initeView() {

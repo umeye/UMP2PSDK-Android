@@ -170,6 +170,7 @@ public class AcSelectMode extends Activity {
 			}
 		};
 		super.onCreate(savedInstanceState);
+
 	}
 
 	/**

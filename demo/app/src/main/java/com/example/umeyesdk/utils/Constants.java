@@ -86,6 +86,12 @@ public class Constants {
     public final static int GET_SHARE_INFO_F = -16;// 获取分享信息成功
 	public final static int REFRESH_SESSION_S = 17;// 刷新session失败
 	public final static int REFRESH_SESSION_F = -17;// 刷新session成功
+	public final static int SEND_EMAIL_CODE_S = 18;//发送验证码成功
+	public final static int SEND_EMAIL_CODE_F = -18;//发送验证码失败
+	public final static int ADD_SHARE_S = 19;//添加分享成功
+	public final static int ADD_SHARE_F = -19;//添加分享失败
+	public final static int DELETE_SHARE_S = 20;//取消分享成功
+	public final static int DELETE_SHARE_F = -20;//取消分享失败
 	// public static final byte NEW_DATA = 0x11;
 	public static final byte DELETE_FAILED = 0x12;
 	public static final byte DELETE_SUCCEED = 0x13;

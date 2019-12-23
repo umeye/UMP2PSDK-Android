@@ -122,6 +122,36 @@ public class WebSdkApi {
 	}
 
 
+	/**
+	 *
+	 * @param user_id  接收验证码的邮箱
+	 * @param send_lang 英文不传或者传1 简体中文传2
+	 */
+	public static void sendEmailCode(final ClientCore clientCore, String user_id, int send_lang, final Handler handler) {
+		clientCore.sendEmailCode(user_id,send_lang,new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null && responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_S);
+					} else {
+						Log.e(WebSdkApi, "发送验证码失败!code="
+								+ responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_F);
+					}
+				} else {
+					Log.e(WebSdkApi, "发送验证码失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_F);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+
 
 
 
@@ -257,9 +287,9 @@ public class WebSdkApi {
 	 * @param user_id_card
 	 *            身份证，选填（Unnecessary）
 	 * @param email_active
-	 *            是否需要邮箱激活，默认为0:不需要邮箱激活，1:需要邮箱激活,2:需要发送注册成功通知邮件，3:需要手机验证码验证
+	 *            是否需要邮箱激活，默认为0:不需要邮箱激活，1:需要邮箱激活,2:需要发送注册成功通知邮件，3:需要手机验证码验证，4.需要邮箱验证码验证
 	 * @param code
-	 *            验证码
+	 *            email_active为3时候的手机号验证码或者为4时候的邮箱验证码
 	 */
 	public static void registeredUser(final Context context,
 							   final ClientCore clientCore, String aUserId, String aPassword,
@@ -619,6 +649,52 @@ public class WebSdkApi {
 				super.handleMessage(msg);
 			}
 		});
+	}
+
+
+	/**
+	 *
+	 * @param opcode 	 			操作码，1：新增，2：删除
+	 * @param share_type 	 			分享类型，0表示由系统分享，1表示用户分享
+	 * @param node_ids 	 			分享的设备节点ID数组
+	 *  @param to_userid 	 			分享的目标用户id，opcode是1时是必须的
+	 * @param dev_rights 	 			设备的权限数组，opcode是1时是必须的
+	 */
+	public static void addShareDevice(final ClientCore clientCore, final Handler handler, final int opcode, int share_type, List<String> node_ids, String to_userid, List<Integer> dev_rights) {
+		clientCore.addShareDevice(new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				if (responseCommon != null
+						&& responseCommon.h != null) {
+					if (responseCommon.h.e == 200) {
+						if(opcode == 1) {
+							handler.sendMessage(Message.obtain(handler,
+									Constants.ADD_SHARE_S,
+									responseCommon));
+						}else {
+							handler.sendMessage(Message.obtain(handler,
+									Constants.DELETE_SHARE_S,
+									responseCommon));
+						}
+
+					} else {
+						if(opcode == 1) {
+							handler.sendEmptyMessage(Constants.ADD_SHARE_F);
+						} else {
+							handler.sendEmptyMessage(Constants.DELETE_SHARE_F);
+						}
+					}
+				} else {
+					if(opcode == 1) {
+						handler.sendEmptyMessage(Constants.ADD_SHARE_F);
+					} else {
+						handler.sendEmptyMessage(Constants.DELETE_SHARE_F);
+					}
+				}
+				super.handleMessage(msg);
+			}
+		},opcode, share_type, node_ids, to_userid, dev_rights);
 	}
 
 

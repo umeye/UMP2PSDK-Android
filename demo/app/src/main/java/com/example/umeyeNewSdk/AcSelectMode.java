@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Player.Source.LogLisenter;
 import com.Player.Source.LogOut;
@@ -170,6 +171,10 @@ public class AcSelectMode extends Activity {
 			}
 		};
 		super.onCreate(savedInstanceState);
+
+
+
+
 
 	}
 

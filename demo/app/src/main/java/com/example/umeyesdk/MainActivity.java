@@ -30,6 +30,7 @@ import com.Player.web.response.DevItemInfo;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.websocket.ClientCore;
+import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.adpter.DeviceManagerAdapter;
 import com.example.umeyesdk.api.WebSdkApi;

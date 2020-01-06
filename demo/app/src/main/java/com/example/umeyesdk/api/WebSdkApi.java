@@ -324,6 +324,60 @@ public class WebSdkApi {
 
 
 
+
+
+
+	/**
+	 * 邮箱注册
+	 *
+	 * @param aUserId
+	 *            用户ID 必填 24位 , 邮箱
+	 * @param aPassword
+	 *            密码 必填 20位 , 限定字母，数字，下划线
+	 * @param nickName
+	 *            昵称 32位 , 限定英文，数字，下划线
+	 * @param user_phone
+	 *            手机号码 32位 , 限定数字
+	 * @param user_id_card
+	 *            用户身份证id 24位
+	 */
+	public static void registeredUser(final Context context, ClientCore clientCore, String aUserId, String user_phone, String aPassword,
+									  String nickName, String user_id_card) {
+		clientCore.registeredEmail(aUserId, aPassword, nickName,
+				user_phone, user_id_card, new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+						if (responseCommon != null && responseCommon.h != null) {
+							if (responseCommon.h.e == 200) {
+								Show.toast(context, "注册成功");
+							} else {
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
+							}
+
+						} else {
+							Log.e(WebSdkApi, "注册失败! error=" + msg.what);
+							Show.toast(context, "注册失败");
+						}
+						super.handleMessage(msg);
+					}
+
+				});
+
+
+	}
+
+
+
+
+
+
+
+
 	/**
 	 * 登出
 	 *

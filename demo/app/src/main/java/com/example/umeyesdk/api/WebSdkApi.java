@@ -126,9 +126,10 @@ public class WebSdkApi {
 	 *
 	 * @param user_id  接收验证码的邮箱
 	 * @param send_lang 英文不传或者传1 简体中文传2
+	 * @param ver_code_type 1：邮箱注册用户验证码、2：邮箱修改密码验证码
 	 */
-	public static void sendEmailCode(final ClientCore clientCore, String user_id, int send_lang, final Handler handler) {
-		clientCore.sendEmailCode(user_id,send_lang,new Handler(){
+	public static void sendEmailCode(final ClientCore clientCore, String user_id, int send_lang, int ver_code_type, final Handler handler) {
+		clientCore.sendEmailCode(user_id,send_lang,ver_code_type,new Handler(){
 
 			@Override
 			public void handleMessage(Message msg) {
@@ -269,34 +270,31 @@ public class WebSdkApi {
 
 
 	/**
-	 * 给短信验证码注册用
+	 * 手机号注册
 	 *
 	 *
-	 *  注册 （Register）
+	 *  @brief 注册 （Register）
 	 *
-	 * @param aUserId
-	 *            用户id，必填（Necessary） 若是手机号，为区号（如86）+号码）
+	 * @param phone_areacode
+	 *        区号，必填
+	 * @param phone
+	 *        手机号，必填
 	 * @param aPassword
 	 *            用户密码，必填（Necessary）
 	 * @param user_email
 	 *            邮箱，必填（Necessary）
 	 * @param nickName
 	 *            昵称，选填（Unnecessary）
-	 * @param user_phone
-	 *            电话，选填（Unnecessary）
 	 * @param user_id_card
 	 *            身份证，选填（Unnecessary）
-	 * @param email_active
-	 *            是否需要邮箱激活，默认为0:不需要邮箱激活，1:需要邮箱激活,2:需要发送注册成功通知邮件，3:需要手机验证码验证，4.需要邮箱验证码验证
 	 * @param code
-	 *            email_active为3时候的手机号验证码或者为4时候的邮箱验证码
+	 *            手机号验证码
 	 */
-	public static void registeredUser(final Context context,
-							   final ClientCore clientCore, String aUserId, String aPassword,
-							   String user_email, String nickName, String user_phone,
-							   String user_id_card, int email_active,String code) {
-		clientCore.registeredUser(aUserId, aPassword, user_email, nickName,
-				user_phone, user_id_card, email_active, code, new Handler() {
+	public static void registeredUser(final Context context, ClientCore clientCore, String phone_areacode, String phone, String aPassword,
+									  String user_email, String nickName,
+									  String user_id_card, String code) {
+		clientCore.registeredPhone(phone_areacode, phone, aPassword, user_email, nickName,
+				user_id_card, code, new Handler() {
 
 					@Override
 					public void handleMessage(Message msg) {
@@ -460,11 +458,13 @@ public class WebSdkApi {
 	 * @param oldPassword 旧密码，20位 , 限定字母，数字，下划线
 	 * @param ver_code 验证码
 	 * @param newPassword 新密码，20位 , 限定字母，数字，下划线
+	 * @param ver_code_mode_type
+	 *            验证码方式类型 ：1 短信修改密码验证码 2邮箱修改密码验证码
 	 */
 	public static void modifyUserPassword(final Context context,
 								   final ClientCore clientCore, String userName, String oldPassword,String ver_code,
-								   String newPassword) {
-		clientCore.modifyUserPassword(userName, oldPassword, ver_code, newPassword, new Handler() {
+								   String newPassword, int ver_code_mode_type) {
+		clientCore.modifyUserPassword(userName, oldPassword, ver_code, newPassword, ver_code_mode_type, new Handler() {
 
 			@Override
 			public void handleMessage(Message msg) {

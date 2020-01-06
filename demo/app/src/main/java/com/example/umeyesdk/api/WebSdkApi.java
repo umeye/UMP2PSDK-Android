@@ -126,7 +126,7 @@ public class WebSdkApi {
 	 *
 	 * @param email  接收验证码的邮箱
 	 * @param send_lang 英文不传或者传1 简体中文传2
-	 * @param type 0：原密码验证；1：邮箱注册用户验证码、2：邮箱修改密码验证码
+	 * @param type 邮箱验证码类型，1：邮箱注册用户验证码、2：邮箱修改密码验证码
 	 */
 	public static void sendEmailCode(final ClientCore clientCore, String email, int send_lang, int type, final Handler handler) {
 		clientCore.sendEmailCode(email,send_lang,type,new Handler(){
@@ -513,7 +513,7 @@ public class WebSdkApi {
 	 * @param ver_code 验证码
 	 * @param newPassword 新密码，20位 , 限定字母，数字，下划线
 	 * @param ver_type
-	 *            验证码方式类型 ：1 短信修改密码验证码 2邮箱修改密码验证码
+	 *            验证码方式类型 ：0：原密码验证；1 短信修改密码验证码验证 2邮箱修改密码验证码验证
 	 */
 	public static void modifyUserPassword(final Context context,
 								   final ClientCore clientCore, String userName, String oldPassword,String ver_code,

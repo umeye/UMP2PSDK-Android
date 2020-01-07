@@ -32,8 +32,12 @@ public class WebSdkApi {
 	public static final String WebSdkApi = "WebSdkApi";
 
 
-
-
+	/**
+	 * 无证书
+	 */
+	public static void setHttps() {
+		ClientCore.setHttps();
+	}
 
 	/**
 	 *
@@ -290,7 +294,7 @@ public class WebSdkApi {
 	 * @param code
 	 *            手机号验证码
 	 */
-	public static void registeredUser(final Context context, ClientCore clientCore, String phone_areacode, String phone, String aPassword,
+	public static void registeredPhone(final Context context, ClientCore clientCore, String phone_areacode, String phone, String aPassword,
 									  String user_email, String nickName,
 									  String user_id_card, String code) {
 		clientCore.registeredPhone(phone_areacode, phone, aPassword, user_email, nickName,
@@ -340,11 +344,13 @@ public class WebSdkApi {
 	 *            手机号码 32位 , 限定数字
 	 * @param user_id_card
 	 *            用户身份证id 24位
+	 * @param code
+	 *            邮箱验证码
 	 */
-	public static void registeredUser(final Context context, ClientCore clientCore, String aUserId, String user_phone, String aPassword,
-									  String nickName, String user_id_card) {
+	public static void registeredEmail(final Context context, ClientCore clientCore, String aUserId, String user_phone, String aPassword,
+									  String nickName, String user_id_card, String code) {
 		clientCore.registeredEmail(aUserId, aPassword, nickName,
-				user_phone, user_id_card, new Handler() {
+				user_phone, user_id_card, code, new Handler() {
 
 					@Override
 					public void handleMessage(Message msg) {

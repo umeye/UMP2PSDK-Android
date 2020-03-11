@@ -512,7 +512,7 @@ public class WebSdkApi {
 
 
 	/**
-	 * 手机号发送短信修改密码
+	 * 邮箱/手机号发送短信修改密码
 	 *
 	 * @param userName 用户名
 	 * @param oldPassword 旧密码，20位 , 限定字母，数字，下划线

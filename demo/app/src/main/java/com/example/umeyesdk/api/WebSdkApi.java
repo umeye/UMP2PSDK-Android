@@ -56,16 +56,17 @@ public class WebSdkApi {
 
 	/**
 	 * 登陆
-	 *
+	 * @param areaCode
+	 *            区号
 	 * @param userName
 	 *            用户ID 必填 24位 , 限定字母，数字，下划线 必填 若是手机号，为区号（如86）+号码）
 	 * @param password
 	 *            必填 密码 必填 20位 , 限定字母，数字，下划线
 	 **/
 	public static void loginServerAtUserId(final Context context,
-										   final ClientCore clientCore, String userName, String password,
+										   final ClientCore clientCore, String areaCode, String userName, String password,
 										   final Handler handler) {
-		clientCore.loginServerAtUserId(context, userName, password,
+		clientCore.loginServerAtUserId(context, areaCode, userName, password,
 				new Handler() {
 					@Override
 					public void handleMessage(Message msg) {

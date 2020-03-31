@@ -162,7 +162,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
             }
 
             @Override
-            public void onFrameSizeChanged(int i, int i1) {//分辨率改变，手势无效且恢复
+            public void onFrameSizeChanged(int i, int i1) {//分辨率改变，手势无效且恢复，i宽度，i1高度
                 if (img != null) {
                     deal = Imagedeal.getdeal(img);
                     deal.resetImageAndMatrix();

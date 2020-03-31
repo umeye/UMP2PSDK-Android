@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 改进版
+ * 改进版 新sdk播放界面代码，完全改善原来前人写的playerCore的停止函数必须要用户自己开线程的大坑
  */
 public class PlayActivity2 extends Activity implements OnTouchListener,
         OnClickListener {

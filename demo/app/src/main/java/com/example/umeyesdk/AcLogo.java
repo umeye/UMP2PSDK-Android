@@ -55,6 +55,10 @@ public class AcLogo extends Activity {
 				// 启动sdk
 
 				authUstServerAtUserId(clientCore);
+
+				if(BuildConfig.DEBUG) {
+					log();
+				}
 			}
 			// test();
 			// clientCore.CLTStartClient("182.92.170.98", 8300);
@@ -74,9 +78,41 @@ public class AcLogo extends Activity {
 					AlarmUtils.openPush(AcLogo.this);
 					// 启动sdk
 					authUstServerAtUserId(ClientCore.getInstance());
+
+					if(BuildConfig.DEBUG) {
+						log();
+					}
 				}
 		}
 	}
+
+
+	private void log() {
+
+		//打印手机系统信息 需申请READ_PHONE_STATE权限
+//		appMain.logSystemInfo(this);
+
+
+		/**
+		 * 若不继承UmeyeApplication，以下2段代码则改为自行调用WriteAllLogThread,WriteDeepLogThread
+		 */
+
+		/**
+		 * 打印并写底层日志信息
+		 * s logcat显示底层的tag名称，默认为WriteDeepLogThread
+		 * s1 日志写到手机的目录位置，默认为sdcard目录的deepLog文件夹
+		 * i logcat显示底层的log级别
+		 */
+		appMain.startLogDeepInfo("","",Log.DEBUG);
+		/**
+		 * 写所在进程的所有logcat信息
+		 * b true: 写所有进程信息 false: 写当前进程信息
+		 * s 日志写到手机的目录位置，默认为sdcard目录的allLog文件夹
+		 */
+		appMain.startLogAllInfos(true, "");
+	}
+
+
 
 	public void test() {
 		ClientCore clientCore = ClientCore.getInstance();

@@ -10,9 +10,10 @@ import android.util.Log;
 import com.Player.Core.PlayerClient;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
+import com.UmeyeApplication;
 import com.example.umeyesdk.entity.PlayNode;
 
-public class AppMain extends Application {
+public class AppMain extends UmeyeApplication {
 	public static final String FILTER = "com.example.umeyesdk.RefreshData";
 	private ClientCore pc;
 	private PlayerClient playerclient;
@@ -28,27 +29,28 @@ public class AppMain extends Application {
 		// 设置免登陆支持报警，如果服务器不支持，必须 设置ClientCore.isSuportLocalAlarmPush=false；
 		ClientCore.isSuportLocalAlarmPush = false; // 默认是不支持
 		playerclient = new PlayerClient();
-		if (!isRun) {
-			isRun = true;
-			new Thread() {
+//		if (!isRun) {
+//			isRun = true;
+//			new Thread() {
+//
+//				@Override
+//				public void run() {
+//
+//					while (isRun) {
+//						String log = pc.CLTLogData(100);
+//						if (!TextUtils.isEmpty(log)) {
+//							Log.d("WriteLogThread", log);
+//						}
+//					}
+//
+//				}
+//
+//			}.start();
+//		}
 
-				@Override
-				public void run() {
-
-					while (isRun) {
-						String log = pc.CLTLogData(100);
-						if (!TextUtils.isEmpty(log)) {
-							Log.d("WriteLogThread", log);
-						}
-					}
-
-				}
-
-			}.start();
-		}
 
 		//设置登录账号已在其他地方登录或者未登录的错误回调函数，可在baseActivity使用
-		ClientCore.getInstance().setIotTokenInvalidListener(new IoTTokenInvalidListener() {
+		pc.setIotTokenInvalidListener(new IoTTokenInvalidListener() {
 			@Override
 			public void onIoTTokenInvalid() {//线程回调，更新UI请用handler
 

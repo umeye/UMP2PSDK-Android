@@ -168,6 +168,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 
 		initeView();
 		clientCore = ClientCore.getInstance();
+
 	}
 
 	void initeView() {

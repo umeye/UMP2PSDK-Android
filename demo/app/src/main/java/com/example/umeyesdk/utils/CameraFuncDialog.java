@@ -12,6 +12,7 @@ import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseGetInfomation;
 import com.Player.web.websocket.ClientCore;
 import com.example.umeyesdk.PlayActivity;
+import com.example.umeyesdk.PlayActivity2;
 import com.example.umeyesdk.api.WebSdkApi;
 import com.example.umeyesdk.entity.PlayNode;
 import com.getui.demo.AlarmUtils;
@@ -46,7 +47,7 @@ public class CameraFuncDialog extends AlertDialog.Builder  {
                 switch (which) {
                     case 0:
                         // 如果是通道节点，就进入播放页面
-                        Intent intent = new Intent(activity, PlayActivity.class);
+                        Intent intent = new Intent(activity, PlayActivity2.class);
                         intent.putExtra("id", node.connecParams);
                         activity.startActivity(intent);
                         break;

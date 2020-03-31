@@ -23,6 +23,9 @@ import com.Player.Source.StopRecodeVideoListener;
 import com.mp4.maker.MP4make;
 import com.video.h264.DecodeDisplay;
 
+/**
+ * Yin
+ */
 public class PlayActivity extends Activity implements OnTouchListener,
 		OnClickListener {
 	// 云台控制命令

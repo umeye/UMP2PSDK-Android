@@ -100,6 +100,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".PlayActivity2"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".GlPlayActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -139,6 +143,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
+
           <activity
             android:name="com.example.umeyeNewSdk.AcJLSnapDemo"
             android:label="@string/app_name"

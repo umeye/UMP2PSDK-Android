@@ -57,7 +57,7 @@ public class WebSdkApi {
 	/**
 	 * 登陆
 	 * @param areaCode
-	 *            区号
+	 *            区号(当userName为手机号时，areaCode必填)
 	 * @param userName
 	 *            用户ID 必填 24位 , 限定字母，数字，下划线 必填 若是手机号，为区号（如86）+号码）
 	 * @param password

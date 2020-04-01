@@ -398,6 +398,8 @@ public class PlayActivity extends Activity implements OnTouchListener,
 		}
 	}
 
+
+
 	private void setWifi() {
 		// TODO Auto-generated method stub
 		new SetWifi(this, playClient, "E0008", "12345678").execute();

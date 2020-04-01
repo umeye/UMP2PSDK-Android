@@ -57,8 +57,8 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     private boolean isStopCloudCommand = false;
     private ImageButton btnUp, btnDown, btnLeft, btnRight, btnZoomIn,
             btnZoomOut, btnNear, btnFar, btnCircleAdd, btnCircleReduce,
-            btnTalk, btnSound;
-    private Button btnPlay, btnPause, btnSnap, btnVideo, btnQuality;
+            btnSound;
+    private Button btnPlay, btnPause, btnSnap, btnVideo, btnQuality, btnTalk;
     private boolean isRun = true;
     private Imagedeal deal;
     private MyGestureListener myGestureListener;
@@ -221,12 +221,14 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         btnSnap = (Button) findViewById(R.id.btnSnap);
         btnVideo = (Button) findViewById(R.id.btnVideo);
         btnQuality = (Button) findViewById(R.id.btnQuality);
+        btnTalk = findViewById(R.id.btnTalk);
 
         btnPlay.setOnClickListener(this);
         btnPause.setOnClickListener(this);
         btnSnap.setOnClickListener(this);
         btnVideo.setOnClickListener(this);
         btnQuality.setOnClickListener(this);
+        btnTalk.setOnClickListener(this);
         // 云台控制按钮
 
         btnUp = (ImageButton) findViewById(R.id.btnUp);
@@ -386,6 +388,15 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
             case R.id.btnQuality:
                 deal.resetImageAndMatrix();
                 setMediaStreamType();
+                break;
+            case R.id.btnTalk:
+                if (pc.GetIsPPT()) {
+                    pc.StopPPTAudio();
+                    btnTalk.setBackgroundResource(R.drawable.ch_talk);
+                } else {
+                    pc.StartPPTAudio();
+                    btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
+                }
                 break;
             default:
                 break;

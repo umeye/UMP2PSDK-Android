@@ -10,6 +10,8 @@
         android:orientation="vertical"
         android:padding="5dp" >
 
+
+
         <Button
             android:id="@+id/btn_photo"
             android:layout_width="fill_parent"

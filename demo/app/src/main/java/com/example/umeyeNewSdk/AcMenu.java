@@ -65,6 +65,10 @@ public class AcMenu extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
+
+
+
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

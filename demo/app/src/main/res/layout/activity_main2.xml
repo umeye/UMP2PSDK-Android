@@ -91,6 +91,12 @@
             android:background="@drawable/live_play_selector" />
 
         <Button
+            android:id="@+id/btnTalk"
+            style="@style/new_cloud_button_style"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/live_talk" />
+
+        <Button
             android:id="@+id/btnPause"
             style="@style/new_cloud_button_style"
             android:layout_alignParentRight="true"

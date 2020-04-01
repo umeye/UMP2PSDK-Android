@@ -297,7 +297,7 @@ public class AcSelectMode extends Activity {
 								});
 
 						startActivity(new Intent(AcSelectMode.this,
-								PlayActivity2.class));
+								PlayActivity.class));
 						finish();
 						super.handleMessage(msg);
 					}

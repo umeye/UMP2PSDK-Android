@@ -369,12 +369,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 // .......
                 // pc.SetAlbumPath(TempALBUM_PATH); 设置图片保存路径
                 // pc.SetSnapPicture(SnapPicture, TempFilenamePrefix),截图，设置图片保存名称
-                // pc.SetSnapPicture(true);
-                if (!pc.GetIsPPT()) {
-                    pc.StartPPTAudio();
-                } else {
-                    pc.StopPPTAudio();
-                }
+                 pc.SetSnapPicture(true);
 
                 break;
             case R.id.btnVideo:// 默认路径 //sdcard/snapShot

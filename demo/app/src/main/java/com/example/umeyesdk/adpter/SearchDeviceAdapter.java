@@ -132,7 +132,7 @@ public class SearchDeviceAdapter extends BaseAdapter {
 
 				// con.startActivity();
 				Constants.UMID = node.getsDevId();
-				Intent Intent = new Intent(con, PlayActivity2.class)
+				Intent Intent = new Intent(con, PlayActivity.class)
 						.putExtra("deviceName", node.getsDevName())
 						.putExtra("umid", node.getsDevId())
 						.putExtra("channels", node.usChNum);

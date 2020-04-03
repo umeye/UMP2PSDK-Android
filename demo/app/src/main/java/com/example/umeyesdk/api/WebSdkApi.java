@@ -1222,8 +1222,8 @@ public class WebSdkApi {
 	 *           是否开启微信推送
 	 */
 	public static void setUserPush(ClientCore clientCore, int enable_push,
-								   int client_lang, String client_token, int disable_push_other_users, int enable_wechat_push,
-								   int unread_count) {
+								   int client_lang, String client_token, int disable_push_other_users,
+								   int unread_count,int enable_wechat_push) {
 		clientCore.setUserPush(enable_push, client_lang, client_token,
 				disable_push_other_users, unread_count, enable_wechat_push, new Handler() {
 					@Override

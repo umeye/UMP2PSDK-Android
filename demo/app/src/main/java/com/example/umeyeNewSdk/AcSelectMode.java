@@ -71,7 +71,7 @@ public class AcSelectMode extends Activity {
 					if (!TextUtils.isEmpty(AlarmUtils.GETUI_CID)) {
 						WebSdkApi.setUserPush(clientCore, 1,
 								Utility.isZh(context) ? 2 : 1,
-								AlarmUtils.GETUI_CID, 1, 0);
+								AlarmUtils.GETUI_CID, 1, 0,0);
 					}
 					WebSdkApi.getNodeList(AcSelectMode.this, clientCore, "", 0, 0,
 							this);

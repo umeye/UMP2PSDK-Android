@@ -178,7 +178,7 @@ public class DemoIntentService extends GTIntentService {
         if(!TextUtils.isEmpty(AlarmUtils.GETUI_CID) && clientCore.IsLogin()) {
             WebSdkApi.setUserPush(clientCore, 1,
                     Utility.isZh(context) ? 2 : 1,
-                    AlarmUtils.GETUI_CID, 1, 0);
+                    AlarmUtils.GETUI_CID, 1, 0,0);
         }
     }
 

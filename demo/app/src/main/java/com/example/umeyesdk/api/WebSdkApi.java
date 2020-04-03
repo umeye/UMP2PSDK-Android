@@ -1217,12 +1217,15 @@ public class WebSdkApi {
 	 *
 	 * @param unread_count
 	 *            把推送的未读记录数设置为指定的值。默认置0
+	 *
+	 *  @param enable_wechat_push
+	 *           是否开启微信推送
 	 */
 	public static void setUserPush(ClientCore clientCore, int enable_push,
-								   int client_lang, String client_token, int disable_push_other_users,
+								   int client_lang, String client_token, int disable_push_other_users, int enable_wechat_push,
 								   int unread_count) {
 		clientCore.setUserPush(enable_push, client_lang, client_token,
-				disable_push_other_users, unread_count, new Handler() {
+				disable_push_other_users, unread_count, enable_wechat_push, new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
@@ -1259,11 +1262,14 @@ public class WebSdkApi {
 	 * @param platform_flag
 	 *            推送平台(取值为以下其中之一)
 	 *            getui xg fcm
+	 * @param enable_wechat_push
+	 *         是否开启微信推送
+	 *
 	 */
 	public static void setUserPush(ClientCore clientCore,int enable_push, int client_lang,
-								   String client_token, int disable_push_other_users,int unread_count,String param_type, String param_content,String platform_flag) {
+								   String client_token, int disable_push_other_users,int unread_count,String param_type, String param_content,String platform_flag, int enable_wechat_push) {
 		clientCore.setUserPush(enable_push, client_lang, client_token,
-				disable_push_other_users, unread_count, param_type, param_content, platform_flag, new Handler() {
+				disable_push_other_users, unread_count, param_type, param_content, platform_flag, enable_wechat_push,new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;

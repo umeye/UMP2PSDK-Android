@@ -281,7 +281,7 @@ public class AcSelectMode extends Activity {
 
 						clientCore.setUserPush(1,
 								Utility.isZh(context) ? 2 : 1,
-								AlarmUtils.GETUI_CID, 1, 0, new Handler() {
+								AlarmUtils.GETUI_CID, 1, 0, 0,new Handler() {
 
 									@Override
 									public void handleMessage(Message msg) {

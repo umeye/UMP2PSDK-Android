@@ -32,6 +32,7 @@ public class AppMain extends UmeyeApplication {
 		// TODO Auto-generated method stub
 		nodeList = new ArrayList<PlayNode>();
 		pc = ClientCore.getInstance();
+		pc.init(this);//初始化
 		// 设置免登陆支持报警，如果服务器不支持，必须 设置ClientCore.isSuportLocalAlarmPush=false；
 		ClientCore.isSuportLocalAlarmPush = false; // 默认是不支持
 		playerclient = new PlayerClient();

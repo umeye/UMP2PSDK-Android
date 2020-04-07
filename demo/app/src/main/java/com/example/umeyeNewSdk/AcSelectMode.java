@@ -28,6 +28,7 @@ import com.Player.web.response.DevItemInfo;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.response.ResponseQueryUserInfo;
+import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.example.umeyesdk.PlayActivity2;
@@ -156,8 +157,14 @@ public class AcSelectMode extends Activity {
 		editUser = (EditText) findViewById(R.id.et_user);
 		editServer = (EditText) findViewById(R.id.et_server);
 		editPassword = (EditText) findViewById(R.id.et_password);
+
+		UserInfo userInfo = UserInfo.getUserInfo(this);
+		if(TextUtils.isEmpty(Constants.Login_user)) {
+			Constants.Login_user = userInfo.getFullName();
+		}
+
 		editUser.setText(Constants.Login_user);
-		editPassword.setText(Constants.Login_password);
+//		editPassword.setText(Constants.Login_password);
 		editServer.setText(Constants.server);
 		textLog = (TextView) findViewById(R.id.log_text);
 		LogOut.logLisenter = new LogLisenter() {

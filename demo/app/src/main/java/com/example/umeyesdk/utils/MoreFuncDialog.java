@@ -3,13 +3,17 @@ package com.example.umeyesdk.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseGetInfomation;
 import com.Player.web.websocket.ClientCore;
+import com.example.umeyeNewSdk.AcSelectMode;
+import com.example.umeyesdk.R;
 import com.example.umeyesdk.api.WebSdkApi;
 
 /**
@@ -68,8 +72,17 @@ public class MoreFuncDialog extends AlertDialog.Builder {
 						break;
 					case 6:
 						// 注销
-						WebSdkApi.logoutServer(clientCore, 1);
-						activity.finish();
+						WebSdkApi.logoutServer(clientCore, 1, new Handler(){
+							@Override
+							public void handleMessage(Message msg) {
+								Toast.makeText(activity, R.string.logout_user, Toast.LENGTH_SHORT).show();
+								Intent intent = new Intent(activity, AcSelectMode.class);
+								intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+								activity.startActivity(intent);
+								ClientCore.getInstance().setIotTokenInvalidListener(null);
+							}
+						});
+
 						break;
 					default:
 						break;

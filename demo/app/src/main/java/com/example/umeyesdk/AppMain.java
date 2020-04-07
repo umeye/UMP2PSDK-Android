@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
+import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.Player.Core.PlayerClient;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.UmeyeApplication;
+import com.example.umeyeNewSdk.AcSelectMode;
+import com.example.umeyesdk.api.WebSdkApi;
 import com.example.umeyesdk.entity.PlayNode;
 
 public class AppMain extends UmeyeApplication {
@@ -20,6 +25,7 @@ public class AppMain extends UmeyeApplication {
 	private List<PlayNode> nodeList;
 	public boolean isRun = false;
 	private int currentNodeId = 0; // 当前列表父节点的ID；
+	private Handler handler = new Handler();
 
 	@Override
 	public void onCreate() {
@@ -49,13 +55,7 @@ public class AppMain extends UmeyeApplication {
 //		}
 
 
-		//设置登录账号已在其他地方登录或者未登录的错误回调函数，可在baseActivity使用
-		pc.setIotTokenInvalidListener(new IoTTokenInvalidListener() {
-			@Override
-			public void onIoTTokenInvalid() {//线程回调，更新UI请用handler
 
-			}
-		});
 
 		super.onCreate();
 	}

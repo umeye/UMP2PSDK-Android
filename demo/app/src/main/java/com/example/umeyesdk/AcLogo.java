@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.Player.Source.LogOut;
 import com.Player.web.response.ResponseServer;
+import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
@@ -42,8 +43,8 @@ public class AcLogo extends Activity {
 		}
 
 		ClientCore clientCore = ClientCore.getInstance();
-		if (clientCore != null && clientCore.IsLogin()) {// 已经登录过，直接进入主界面
-			startActivity(new Intent(AcLogo.this, AcSelectMode.class));
+		if (clientCore != null && clientCore.IsLogin()) {// 判断是否处于登录状态，直接进入主界面
+			startActivity(new Intent(AcLogo.this, MainActivity.class));
 			finish();
 		} else {
 			ClientCore.isKeDaDev=false;
@@ -139,6 +140,8 @@ public class AcLogo extends Activity {
 	public void authUstServerAtUserId(final ClientCore clientCore) {
 
 		int language = Utility.isZh(this) ? 2 : 1;
+
+
 		clientCore.setupHost(this, Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,
 				String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空
@@ -165,6 +168,7 @@ public class AcLogo extends Activity {
 					Log.e(WebSdkApi_Error, "获取服务器失败! error=" + msg.what);
 					Show.toast(AcLogo.this, "获取服务器失败! error=" + msg.what);
 				}
+
 				actionToLogin();
 				super.handleMessage(msg);
 			}
@@ -177,8 +181,15 @@ public class AcLogo extends Activity {
 			@Override
 			public void run() {
 
-				startActivity(new Intent(AcLogo.this, AcSelectMode.class));
-				finish();
+				if(ClientCore.getInstance().IsLoginEx(AcLogo.this)) {//如果需要自动登录，增加这个判断，判断上次是否有登录
+					startActivity(new Intent(AcLogo.this, MainActivity.class));
+					finish();
+
+				} else {
+					startActivity(new Intent(AcLogo.this, AcSelectMode.class));
+					finish();
+				}
+
 			}
 		}, 2000);
 

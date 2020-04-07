@@ -24,6 +24,7 @@ import com.Player.web.response.ResponseRefreshSession;
 import com.Player.web.response.ResponseResetPwd;
 import com.Player.web.response.ServerListInfo;
 import com.Player.web.websocket.ClientCore;
+import com.Player.web.websocket.SharedPrefsUtil;
 import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Show;
@@ -74,6 +75,7 @@ public class WebSdkApi {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
 							if (responseCommon.h.e == 200) {
+
 								handler.sendEmptyMessage(Constants.LOGIN_OK);
 							} else if (responseCommon.h.e == 406) {
 								handler.sendEmptyMessage(Constants.LOGIN_USER_OR_PWD_ERROR);
@@ -392,7 +394,7 @@ public class WebSdkApi {
 	 *            是否取消报警推送
 	 */
 	public static void logoutServer(final ClientCore clientCore,
-									int disableAlarm) {
+									int disableAlarm, final Handler handler) {
 		clientCore.logoutServer(disableAlarm, new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -400,12 +402,18 @@ public class WebSdkApi {
 				if (responseCommon != null && responseCommon.h != null) {
 					if (responseCommon.h.e == 200) {
 						Log.e(WebSdkApi, "登出成功!code=" + responseCommon.h.e);
+						handler.sendMessage(Message.obtain(handler,
+								Constants.LOGOUT_S,
+								responseCommon));
+
 					} else {
 						Log.e(WebSdkApi, "登出失败!code=" + responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.LOGOUT_F);
 					}
 
 				} else {
 					Log.e(WebSdkApi, "登出失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.LOGOUT_F);
 				}
 				super.handleMessage(msg);
 			}

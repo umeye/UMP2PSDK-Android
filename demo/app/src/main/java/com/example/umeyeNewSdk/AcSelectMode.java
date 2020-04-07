@@ -29,6 +29,7 @@ import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.response.ResponseQueryUserInfo;
 import com.Player.web.websocket.ClientCore;
+import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.example.umeyesdk.PlayActivity2;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
@@ -67,32 +68,42 @@ public class AcSelectMode extends Activity {
 					String[] server = clientCore.getCurrentServer();
 
 					Log.d("getCurrentServer", "认证服务器:" + server[1]);
+
+
+
+
 					// 启动用户报警推送
 					if (!TextUtils.isEmpty(AlarmUtils.GETUI_CID)) {
 						WebSdkApi.setUserPush(clientCore, 1,
 								Utility.isZh(context) ? 2 : 1,
 								AlarmUtils.GETUI_CID, 1, 0,0);
 					}
-					WebSdkApi.getNodeList(AcSelectMode.this, clientCore, "", 0, 0,
-							this);
+//					WebSdkApi.getNodeList(AcSelectMode.this, clientCore, "", 0, 0,
+//							this);
 
-					ClientCore.getInstance().queryUserInfo(AcSelectMode.this,
-							"yin", new Handler() {
+//					ClientCore.getInstance().queryUserInfo(AcSelectMode.this,
+//							"yin", new Handler() {
+//
+//								@Override
+//								public void handleMessage(Message msg) {
+//									// TODO Auto-generated method stub
+//									ResponseQueryUserInfo responseQueryUserInfo = (ResponseQueryUserInfo) msg.obj;
+//									if (responseQueryUserInfo != null
+//											&& responseQueryUserInfo.b != null) {
+//										Log.i("ResponseQueryUserInfo",
+//												responseQueryUserInfo.b
+//														.toJsonString());
+//
+//									}
+//									super.handleMessage(msg);
+//								}
+//							});
 
-								@Override
-								public void handleMessage(Message msg) {
-									// TODO Auto-generated method stub
-									ResponseQueryUserInfo responseQueryUserInfo = (ResponseQueryUserInfo) msg.obj;
-									if (responseQueryUserInfo != null
-											&& responseQueryUserInfo.b != null) {
-										Log.i("ResponseQueryUserInfo",
-												responseQueryUserInfo.b
-														.toJsonString());
+					startActivity(new Intent(AcSelectMode.this, MainActivity.class));
+					finish();
 
-									}
-									super.handleMessage(msg);
-								}
-							});
+
+
 					break;
 				case Constants.LOGIN_USER_OR_PWD_ERROR:
 					Show.toast(AcSelectMode.this, "用户名或密码错误");

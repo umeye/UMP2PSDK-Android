@@ -177,7 +177,8 @@
     <string name="modify_success">修改成功</string>
     <string name="pir_time">PIR 时间</string>
     <string name="power_mode">省电模式</string>
-    <string name="login_success">登录成功</string>
+    <string name="login_success">登录成功</string>\
+    <string name="logout_user">账号已登出，请重新登录</string>
     
     
     <string-array name="pir_time">

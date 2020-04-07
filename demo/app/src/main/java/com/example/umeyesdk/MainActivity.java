@@ -30,6 +30,7 @@ import com.Player.web.response.DevItemInfo;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.websocket.ClientCore;
+import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.adpter.DeviceManagerAdapter;
@@ -169,16 +170,36 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		initeView();
 		clientCore = ClientCore.getInstance();
 
+		//设置登录账号已在其他地方登录或者未登录的错误回调函数
+		clientCore.setIotTokenInvalidListener(new IoTTokenInvalidListener() {
+			@Override
+			public void onIoTTokenInvalid(int code) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(appMain, R.string.logout_user, Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(appMain, AcSelectMode.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						startActivity(intent);
+						ClientCore.getInstance().setIotTokenInvalidListener(null);
+					}
+				});
+			}
+		});
+
+		WebSdkApi.getNodeList(MainActivity.this, clientCore, "", 0, 0,
+				handler);
+
 	}
 
 	void initeView() {
 		listView = (ListView) findViewById(R.id.lvLive);
-		nodeList = appMain.getDvrAndCamera();// 列表重新赋值
+		nodeList = appMain.getNodeList();//appMain.getDvrAndCamera();// 列表重新赋值
 		adapter = new DeviceManagerAdapter(context, nodeList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(MainActivity.this);
 		listView.setOnItemLongClickListener(MainActivity.this);
-		adapter.setNodeList(nodeList);
+//		adapter.setNodeList(nodeList);
 		btnMoreFunc = (Button) findViewById(R.id.btnMore);
 		btnMoreFunc.setOnClickListener(this);
 	}
@@ -369,9 +390,8 @@ public class MainActivity extends Activity implements OnItemClickListener,
 
 				return true;
 			} else {
-				// 注销登录
-				WebSdkApi.logoutServer(clientCore, 1);
-				this.finish();
+				finish();
+
 			}
 		}
 		return super.onKeyDown(keyCode, event);

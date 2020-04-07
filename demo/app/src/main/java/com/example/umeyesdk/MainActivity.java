@@ -170,7 +170,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		initeView();
 		clientCore = ClientCore.getInstance();
 
-		//设置登录账号已在其他地方登录或者未登录的错误回调函数
+		//设置登录账号登录过期或者session错误的错误回调函数
 		clientCore.setIotTokenInvalidListener(new IoTTokenInvalidListener() {
 			@Override
 			public void onIoTTokenInvalid(int code) {

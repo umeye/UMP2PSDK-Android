@@ -223,12 +223,12 @@ public class AcSelectMode extends Activity {
 		Constants.server = server;
 		ClientCore clientCore = ClientCore.getInstance();
 		clientCore.RelaseClient();
-		clientCore.setCurrentBestServer(this, "", 0,"",0,"",0);
+		clientCore.setCurrentBestServer("", 0,"",0,"",0);
 		int language = Utility.isZh(this) ? 2 : 1;
-		clientCore.setupHost(this, Constants.server, 0, Utility.getImsi(this),
+		clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,
 				String.valueOf(Utility.GetVersionCode(this)), "", "");
-		clientCore.getCurrentBestServer(this, new Handler());
+		clientCore.getCurrentBestServer(new Handler());
 		SharedPreferences sp = getSharedPreferences("server",
 				Context.MODE_PRIVATE);
 		Editor ed = sp.edit();

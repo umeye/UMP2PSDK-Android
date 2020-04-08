@@ -118,7 +118,7 @@ public class AcLogo extends Activity {
 	public void test() {
 		ClientCore clientCore = ClientCore.getInstance();
 		clientCore
-				.setupHost(this, "v0.api.umeye.com", 0, "", 0, "", "", "", "");
+				.setupHost("v0.api.umeye.com", 0, "", 0, "", "", "", "");
 		clientCore.authUstServerAtUserId("", "", new Handler() {
 
 			@Override
@@ -142,12 +142,12 @@ public class AcLogo extends Activity {
 		int language = Utility.isZh(this) ? 2 : 1;
 
 
-		clientCore.setupHost(this, Constants.server, 0, Utility.getImsi(this),
+		clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,
 				String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空
 		// 获取最优服务器，然后启动sdk
 
-		clientCore.getCurrentBestServer(this, new Handler() {
+		clientCore.getCurrentBestServer(new Handler() {
 			@Override
 			public void handleMessage(Message msg) { // TODO
 
@@ -181,7 +181,7 @@ public class AcLogo extends Activity {
 			@Override
 			public void run() {
 
-				if(ClientCore.getInstance().IsLoginEx(AcLogo.this)) {//如果需要自动登录，增加这个判断，判断上次是否有登录
+				if(ClientCore.getInstance().IsLoginEx()) {//如果需要自动登录，增加这个判断，判断上次是否有登录
 					startActivity(new Intent(AcLogo.this, MainActivity.class));
 					finish();
 

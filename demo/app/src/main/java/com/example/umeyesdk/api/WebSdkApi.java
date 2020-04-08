@@ -67,7 +67,7 @@ public class WebSdkApi {
 	public static void loginServerAtUserId(final Context context,
 										   final ClientCore clientCore, String areaCode, String userName, String password,
 										   final Handler handler) {
-		clientCore.loginServerAtUserId(context, areaCode, userName, password,
+		clientCore.loginServerAtUserId(areaCode, userName, password,
 				new Handler() {
 					@Override
 					public void handleMessage(Message msg) {

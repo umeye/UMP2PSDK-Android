@@ -159,9 +159,7 @@ public class AcSelectMode extends Activity {
 		editPassword = (EditText) findViewById(R.id.et_password);
 
 		UserInfo userInfo = UserInfo.getUserInfo(this);
-		if(TextUtils.isEmpty(Constants.Login_user)) {
-			Constants.Login_user = userInfo.getFullName();
-		}
+		Constants.Login_user = userInfo.getFullName();
 
 		editUser.setText(Constants.Login_user);
 //		editPassword.setText(Constants.Login_password);

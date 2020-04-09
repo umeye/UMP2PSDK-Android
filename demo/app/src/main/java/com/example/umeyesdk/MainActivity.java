@@ -174,16 +174,11 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		clientCore.setIotTokenInvalidListener(new IoTTokenInvalidListener() {
 			@Override
 			public void onIoTTokenInvalid(int code) {
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(appMain, R.string.logout_user, Toast.LENGTH_SHORT).show();
-						Intent intent = new Intent(appMain, AcSelectMode.class);
-						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-						startActivity(intent);
-						ClientCore.getInstance().setIotTokenInvalidListener(null);
-					}
-				});
+				Toast.makeText(appMain, R.string.logout_user, Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(appMain, AcSelectMode.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+				startActivity(intent);
+				ClientCore.getInstance().setIotTokenInvalidListener(null);
 			}
 		});
 

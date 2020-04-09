@@ -31,7 +31,6 @@ import com.Player.web.response.ResponseQueryUserInfo;
 import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
-import com.example.umeyesdk.PlayActivity2;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.MainActivity;
@@ -313,7 +312,7 @@ public class AcSelectMode extends Activity {
 								});
 
 						startActivity(new Intent(AcSelectMode.this,
-								PlayActivity.class));
+								PlayActivity2.class));
 						finish();
 						super.handleMessage(msg);
 					}

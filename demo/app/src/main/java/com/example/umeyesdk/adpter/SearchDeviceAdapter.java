@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.umeyeNewSdk.AcModifyDevice;
 import com.example.umeyeNewSdk.PlayActivity;
-import com.example.umeyesdk.PlayActivity2;
+import com.example.umeyeNewSdk.PlayActivity2;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.entity.SearchDeviceInfo;
 import com.example.umeyesdk.utils.Constants;
@@ -132,7 +132,7 @@ public class SearchDeviceAdapter extends BaseAdapter {
 
 				// con.startActivity();
 				Constants.UMID = node.getsDevId();
-				Intent Intent = new Intent(con, PlayActivity.class)
+				Intent Intent = new Intent(con, PlayActivity2.class)
 						.putExtra("deviceName", node.getsDevName())
 						.putExtra("umid", node.getsDevId())
 						.putExtra("channels", node.usChNum);

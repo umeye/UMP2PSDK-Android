@@ -92,6 +92,10 @@ public class Constants {
 	public final static int ADD_SHARE_F = -19;//添加分享失败
 	public final static int DELETE_SHARE_S = 20;//取消分享成功
 	public final static int DELETE_SHARE_F = -20;//取消分享失败
+	public final static int GET_PUBLIC_USER_ACCOUNT_S = 21;//获取公众号信息成功
+	public final static int GET_PUBLIC_USER_ACCOUNT_F = -21;//获取公众号信息失败
+	public final static int QUERY_USER_PUSH_S = 22;//获取用户推送信息成功
+	public final static int QUERY_USER_PUSH_F = -22;//获取用户推送信息失败
 	// public static final byte NEW_DATA = 0x11;
 	public static final byte DELETE_FAILED = 0x12;
 	public static final byte DELETE_SUCCEED = 0x13;

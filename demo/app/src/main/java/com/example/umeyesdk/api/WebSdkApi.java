@@ -17,9 +17,12 @@ import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.response.ResponseDevShareInfo;
 import com.Player.web.response.ResponseDevState;
+import com.Player.web.response.ResponseGetPublicAccountInfo;
+import com.Player.web.response.ResponseGetPublicAccountInfoBody;
 import com.Player.web.response.ResponseGetServerList;
 import com.Player.web.response.ResponseQueryAlarm;
 import com.Player.web.response.ResponseQueryAlarmSettings;
+import com.Player.web.response.ResponseQueryUserPush;
 import com.Player.web.response.ResponseRefreshSession;
 import com.Player.web.response.ResponseResetPwd;
 import com.Player.web.response.ServerListInfo;
@@ -1515,4 +1518,59 @@ public class WebSdkApi {
 		return p2pConnectInfo;
 
 	}
+
+
+	/**
+	 * 获取公众号信息
+	 */
+	public static void getPublicAccountInfo(ClientCore clientCore, final Handler handler) {
+		clientCore.getPublicAccountInfo(new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseGetPublicAccountInfo responseGetPublicAccountInfo = (ResponseGetPublicAccountInfo) msg.obj;
+				if (responseGetPublicAccountInfo != null && responseGetPublicAccountInfo.h != null) {
+					if (responseGetPublicAccountInfo.h.e == 200) {
+						handler.sendEmptyMessage(Constants.GET_PUBLIC_USER_ACCOUNT_S);
+					} else {
+						Log.e(WebSdkApi, "获取公众号信息失败!code="
+								+ responseGetPublicAccountInfo.h.e);
+						handler.sendEmptyMessage(Constants.GET_PUBLIC_USER_ACCOUNT_F);
+					}
+				} else {
+					Log.e(WebSdkApi, "获取公众号信息失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.GET_PUBLIC_USER_ACCOUNT_F);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
+	/**
+	 * 查询用户推送信息
+	 * @param clientCore
+	 */
+	public static void queryUserPush(ClientCore clientCore, final Handler handler) {
+		clientCore.queryUserPush(new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseQueryUserPush responseQueryUserPush = (ResponseQueryUserPush) msg.obj;
+				if (responseQueryUserPush != null && responseQueryUserPush.h != null) {
+					if (responseQueryUserPush.h.e == 200) {
+						handler.sendEmptyMessage(Constants.QUERY_USER_PUSH_S);
+					} else {
+						Log.e(WebSdkApi, "获取用户推送信息失败!code="
+								+ responseQueryUserPush.h.e);
+						handler.sendEmptyMessage(Constants.QUERY_USER_PUSH_F);
+					}
+				} else {
+					Log.e(WebSdkApi, "获取用户推送信息失败! error=" + msg.what);
+					handler.sendEmptyMessage(Constants.QUERY_USER_PUSH_F);
+				}
+				super.handleMessage(msg);
+			}
+		});
+	}
+
+
 }

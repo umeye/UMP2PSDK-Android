@@ -46,13 +46,13 @@ public class EditDevDialog extends AlertDialog.Builder {
 
 					case 0:
 						// 修改设备连接参数，通道名称、设备用户名密码、码流、摄像机的通道号
-						WebSdkApi.modifyNodeInfo(activity, clientCore,
+						WebSdkApi.modifyNodeInfo(clientCore,
 								node.node.dwNodeId, "test_modify", 2,
 								tFileListNode.usVendorId, node.umid, "", 0,
 								"admin", "", 0, 1, "", 1, handler);
 						break;
 					case 1:
-						WebSdkApi.deleteNodeInfo(activity, clientCore,
+						WebSdkApi.deleteNodeInfo(clientCore,
 								String.valueOf(node.node.dwNodeId),
 								node.node.ucNodeKind, node.node.id_type, handler);
 						break;

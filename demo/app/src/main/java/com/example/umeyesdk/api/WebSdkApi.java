@@ -64,8 +64,7 @@ public class WebSdkApi {
 	 * @param password
 	 *            必填 密码 必填 20位 , 限定字母，数字，下划线
 	 **/
-	public static void loginServerAtUserId(final Context context,
-										   final ClientCore clientCore, String areaCode, String userName, String password,
+	public static void loginServerAtUserId(final ClientCore clientCore, String areaCode, String userName, String password,
 										   final Handler handler) {
 		clientCore.loginServerAtUserId(areaCode, userName, password,
 				new Handler() {
@@ -606,8 +605,7 @@ public class WebSdkApi {
 	 *            分页功能，每页返回的记录数，是可选的，默认不分页；
 	 * @param handler
 	 */
-	public static void getNodeList(final Context context,
-								   final ClientCore clientCore, String parent_node_id, int page_index,
+	public static void getNodeList(final ClientCore clientCore, String parent_node_id, int page_index,
 								   int page_size, final Handler handler) {
 		clientCore.getNodeList(parent_node_id, page_index, page_size,
 				new Handler() {
@@ -653,8 +651,7 @@ public class WebSdkApi {
 	 *            分页功能，每页返回的记录数，是可选的，默认不分页；
 	 * @param handler
 	 */
-	public static void getNodeList(final Context context,
-								   final ClientCore clientCore, boolean isLocalList, final String parent_node_id,
+	public static void getNodeList(final ClientCore clientCore, boolean isLocalList, final String parent_node_id,
 								   int page_index, int page_size, final Handler handler) {
 		clientCore.getNodeList(isLocalList, parent_node_id, page_index, page_size,
 				new Handler() {
@@ -858,8 +855,7 @@ public class WebSdkApi {
 	 *            自定义参数
 	 * @param handler
 	 */
-	public static void addNodeInfo(final Context context,
-								   final ClientCore clientCore, String node_name, String parent_node_id,
+	public static void addNodeInfo(final ClientCore clientCore, String node_name, String parent_node_id,
 								   int node_type, int conn_mode, int vendor_id, String dev_umid,
 								   String dev_addr, int dev_port, String dev_user, String dev_passwd,
 								   int dev_ch_num, int dev_ch_no, int dev_stream_no, int only_umid,int limit_appid,String custom_param,
@@ -899,8 +895,7 @@ public class WebSdkApi {
 	 *            ID类型，0：用户id,1:设备组id,2:授权设备，默认填写0
 	 * @param handler
 	 */
-	public static void deleteNodeInfo(final Context context,
-									  final ClientCore clientCore, String node_id, int node_type,
+	public static void deleteNodeInfo(final ClientCore clientCore, String node_id, int node_type,
 									  int id_type, final Handler handler) {
 		clientCore.deleteNodeInfo(node_id, node_type, id_type, new Handler() {
 
@@ -991,8 +986,7 @@ public class WebSdkApi {
 	 *          是否需要同步更新设备通道名称,默认1
 	 * @param handler
 	 */
-	public static void modifyNodeInfo(final Context context,
-									  final ClientCore clientCore, String node_id, String node_name,
+	public static void modifyNodeInfo(final ClientCore clientCore, String node_id, String node_name,
 									  int node_type, int vendor_id, String dev_umid, String dev_addr,
 									  int dev_port, String dev_user, String dev_passwd, int dev_ch_no,
 									  int dev_stream_no, String custom_param,int update_channelname, final Handler handler) {
@@ -1145,8 +1139,7 @@ public class WebSdkApi {
 	 * 根据客户端定制标识获取服务器列表
 	 *
 	 */
-	public static void getServerList(final Context context,
-									 final ClientCore clientCore) {
+	public static void getServerList(final ClientCore clientCore) {
 		clientCore.getServerList(new Handler() {
 
 			@Override
@@ -1374,7 +1367,7 @@ public class WebSdkApi {
 	 */
 	public static void setDeviceAlarm(ClientCore clientCore, PlayNode node,
 									  final int opCode, String client_token, int[] alarm_events) {
-		P2pConnectInfo p2pConnectInfo = createConnectInfo(clientCore, node);
+		P2pConnectInfo p2pConnectInfo = createConnectInfo(node);
 		P2pConnectInfo[] p2pConnectInfos = { p2pConnectInfo };
 		clientCore.alarmSettings(p2pConnectInfos);// 免登陆需提供设备参数
 		clientCore.alarmSettings(opCode, client_token, alarm_events,
@@ -1496,8 +1489,7 @@ public class WebSdkApi {
 	 * @param node
 	 * @return
 	 */
-	public static P2pConnectInfo createConnectInfo(ClientCore clientCore,
-												   PlayNode node) {
+	public static P2pConnectInfo createConnectInfo(PlayNode node) {
 		P2pConnectInfo p2pConnectInfo = new P2pConnectInfo();
 		if (node != null) {
 			// 解析连接参数

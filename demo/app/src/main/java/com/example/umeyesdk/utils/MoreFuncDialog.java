@@ -45,14 +45,14 @@ public class MoreFuncDialog extends AlertDialog.Builder {
 				switch (which) {
 					case 0:
 						// 添加4路子码流的dvr
-						WebSdkApi.addNodeInfo(activity, clientCore,
+						WebSdkApi.addNodeInfo(clientCore,
 								String.valueOf(System.currentTimeMillis()), "", 1, 2, 1009,
 								Constants.UMID, "", 0, Constants.user,
 								Constants.password, 8, 0, 1, 0,0,"",handler);
 						break;
 					case 1:
 						// 重新获取列表
-						WebSdkApi.getNodeList(activity, clientCore, "", 0, 0,handler);
+						WebSdkApi.getNodeList(clientCore, "", 0, 0,handler);
 						break;
 					case 2:
 						// 修改登录用户密码

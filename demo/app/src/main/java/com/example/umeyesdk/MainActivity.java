@@ -69,12 +69,12 @@ public class MainActivity extends Activity implements OnItemClickListener,
 					Show.toast(MainActivity.this, "修改设备通道数失败");
 					break;
 				case Constants.MODIFY_DEV_NUM_S:
-					WebSdkApi.getNodeList(MainActivity.this, clientCore, "0", 0, 0,
+					WebSdkApi.getNodeList(clientCore, "0", 0, 0,
 							this);
 					Show.toast(MainActivity.this, "修改设备通道数成功");
 					break;
 				case Constants.MODIFY_DEV_S:
-					WebSdkApi.getNodeList(MainActivity.this, clientCore, "0", 0, 0,
+					WebSdkApi.getNodeList(clientCore, "0", 0, 0,
 							this);
 					Show.toast(MainActivity.this, "修改设备成功");
 					break;
@@ -85,13 +85,13 @@ public class MainActivity extends Activity implements OnItemClickListener,
 					Show.toast(MainActivity.this, "删除设备失败");
 					break;
 				case Constants.DELETE_DEV_S:
-					WebSdkApi.getNodeList(MainActivity.this, clientCore, "0", 0, 0,
+					WebSdkApi.getNodeList(clientCore, "0", 0, 0,
 							this);
 					Show.toast(MainActivity.this, "删除设备成功");
 					break;
 
 				case Constants.ADD_DEV_S:
-					WebSdkApi.getNodeList(MainActivity.this, clientCore, "0", 0, 0,
+					WebSdkApi.getNodeList(clientCore, "0", 0, 0,
 							this);
 					Show.toast(MainActivity.this, "添加设备成功");
 					break;
@@ -182,7 +182,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 			}
 		});
 
-		WebSdkApi.getNodeList(MainActivity.this, clientCore, "", 0, 0,
+		WebSdkApi.getNodeList(clientCore, "", 0, 0,
 				handler);
 
 	}

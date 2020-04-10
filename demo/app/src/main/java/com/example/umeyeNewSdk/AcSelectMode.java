@@ -259,7 +259,7 @@ public class AcSelectMode extends Activity {
 
 		// 设置登录模式
 		clientCore.setLocalList(false);
-		WebSdkApi.loginServerAtUserId(AcSelectMode.this, clientCore, "",
+		WebSdkApi.loginServerAtUserId(clientCore, "",
 				Constants.Login_user, Constants.Login_password, handler);
 
 	}
@@ -272,7 +272,7 @@ public class AcSelectMode extends Activity {
 	public void onClick1(View v) {
 		// 设置免登陆模式
 		clientCore.setLocalList(true);
-		WebSdkApi.loginServerAtUserId(AcSelectMode.this, clientCore, "", "", "",
+		WebSdkApi.loginServerAtUserId(clientCore, "", "", "",
 				handler);
 	}
 
@@ -287,7 +287,7 @@ public class AcSelectMode extends Activity {
 		// umid直连模式 ，不需要下载设备列表
 		clientCore.setLocalList(true);
 		ClientCore.isSuportLocalAlarmPush = true;// 设置支持免登陆报警
-		WebSdkApi.loginServerAtUserId(AcSelectMode.this, clientCore, "", "", "",
+		WebSdkApi.loginServerAtUserId(clientCore, "", "", "",
 				new Handler() {
 
 					@Override

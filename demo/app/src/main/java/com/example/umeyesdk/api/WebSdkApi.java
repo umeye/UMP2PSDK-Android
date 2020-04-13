@@ -1,16 +1,20 @@
 package com.example.umeyesdk.api;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.Player.Source.TAlarmSetInfor;
 import com.Player.Source.TDevNodeInfor;
 import com.Player.web.request.P2pConnectInfo;
+import com.Player.web.response.AlarmInfo;
 import com.Player.web.response.DevState;
 import com.Player.web.response.ResponseAddNode;
 import com.Player.web.response.ResponseCommon;
@@ -1049,8 +1053,51 @@ public class WebSdkApi {
 		});
 	}
 
+
+    /**
+     * 分页查询报警信息
+     * @param page_index 页号，从1开始
+     * @param page_size 每页条数
+     * @param user_id 用户id，可选
+     * @param dev_id 设备id，可选
+     * @param alarm_events 报警事件数组
+     * @param start_time 开始时间，可选，yyyy-MM-dd hh:mm:ss
+     * @param end_time 结束时间，可选，yyyy-MM-dd hh:mm:ss
+     */
+	public static void queryAlarmList(ClientCore clientCore, int page_index, int page_size, String user_id, String dev_id,
+                                      int[] alarm_events, String start_time, String end_time) {
+        clientCore.queryAlarm(page_index, page_size, user_id, dev_id, alarm_events, start_time, end_time, new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                ResponseQueryAlarm responseQueryAlarm = (ResponseQueryAlarm) msg.obj;
+                if (responseQueryAlarm != null && responseQueryAlarm.h != null) {
+                    if (responseQueryAlarm.h.e == 200) {
+                        if (responseQueryAlarm.b != null
+                                && responseQueryAlarm.b.alarms != null) {
+                            for (int i = 0; i < responseQueryAlarm.b.alarms.length; i++) {
+                                Log.i("alarms", responseQueryAlarm.b.alarms[i]
+                                        .toString());
+                            }
+                            Log.e(WebSdkApi, "查询报警成果");
+                        } else {
+                            Log.e(WebSdkApi, "其它错误");
+                        }
+                    } else {
+                        Log.e(WebSdkApi, " 查询报警失败!code="
+                                + responseQueryAlarm.h.e);
+                    }
+                } else {
+                    Log.e(WebSdkApi, " 查询报警失败! error=" + msg.what);
+                }
+
+            }
+        });
+    }
+
+
+
 	/**
-	 * 查询报警记录
+	 * 一次性查询报警记录
 	 */
 	public static void queryAlarmList(ClientCore clientCore) {
 		clientCore.queryAlarmList(new Handler() {

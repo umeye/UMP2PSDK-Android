@@ -307,7 +307,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 while (isRun) {
 
 
-                    Thread.sleep(3000);
+                    Thread.sleep(500);
                     Message msg = new Message();
                     msg.what = SHOW_STATE;
                     msg.arg1 = pc.PlayCoreGetCameraPlayerState();

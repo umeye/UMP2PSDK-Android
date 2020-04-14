@@ -83,6 +83,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 btnQuality.setText(stream == 1 ? "标清" : "高清");
 
                 int state = pc.PlayCoreGetCameraPlayerState();
+
                 if(!(state == 0 || state == 1 || state == 2 || state == 4 || state == 10 || state == 7 || state == SDKError.NPC_D_MPI_MON_ERROR_USERID_ERROR
                         || state == SDKError.NPC_D_MPI_MON_ERROR_USERPWD_ERROR || state == SDKError.NPC_D_MPI_MON_ERROR_REJECT_ACCESS)) {
                     Reconnect();
@@ -306,7 +307,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 while (isRun) {
 
 
-                    Thread.sleep(500);
+                    Thread.sleep(3000);
                     Message msg = new Message();
                     msg.what = SHOW_STATE;
                     msg.arg1 = pc.PlayCoreGetCameraPlayerState();

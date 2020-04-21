@@ -227,9 +227,7 @@ public class MainActivity extends Activity implements OnItemClickListener,
 			return;
 		} else {
 
-			if (cameraFuncDialog == null) {
-				cameraFuncDialog = new CameraFuncDialog(this, clientCore, node, handler);
-			}
+			cameraFuncDialog = new CameraFuncDialog(this, clientCore, node, handler);
 			cameraFuncDialog.setTitle(R.string.function);
 			cameraFuncDialog.show();
 

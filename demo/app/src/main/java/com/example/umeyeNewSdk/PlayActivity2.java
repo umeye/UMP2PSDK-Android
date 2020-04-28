@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,7 @@ import com.Player.Core.PlayerClient;
 import com.Player.Core.PlayerCore;
 import com.Player.Source.SDKError;
 import com.Player.Source.TAlarmFrame;
+import com.Player.web.websocket.PermissionUtils;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.utils.Constants;
@@ -119,6 +121,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 		pc.InitParam("", -1, img);
 		pc.SetPPtMode(false);
 		pc.isQueryDevInfo = true;
+//		pc.SetVideorecordtime(10, true);
 	}
 
 	public void EditEditetext() {
@@ -333,14 +336,12 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
 				break;
 			case R.id.btnTalk:// 开启对讲
+                if (!PermissionUtils.checkRecordePermission(this)) {
+                    PermissionUtils.verifyRecordePermissions(this, 1);
+                } else {
+                    ppt();
+                }
 
-				if (pc.GetIsPPT()) {
-					pc.StopPPTAudio();
-					btnTalk.setBackgroundResource(R.drawable.ch_talk);
-				} else {
-					pc.StartPPTAudio();
-					btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
-				}
 				// pc.OpenAudio();
 				break;
 			case R.id.search:// 搜索本地摄像头
@@ -399,6 +400,30 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 				break;
 		}
 	}
+
+
+	private void ppt() {
+        if (pc.GetIsPPT()) {
+            pc.StopPPTAudio();
+            btnTalk.setBackgroundResource(R.drawable.ch_talk);
+        } else {
+            pc.StartPPTAudio();
+            btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
+        }
+    }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ppt();
+                }
+        }
+    }
 
 
 

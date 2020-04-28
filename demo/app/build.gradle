@@ -51,8 +51,7 @@ dependencies {
     implementation files('libs/NewLivePlayer-new.jar')
     implementation files('libs/WebSocket.jar')
     implementation files('libs/SmartLink.jar')
-//    implementation 'com.getui:sdk:2.13.3.0'
-    
-//	implementation 'com.getui:sdk-for-google-play:4.3.5.0'
+    //    implementation 'com.getui:sdk:2.13.3.0'
+    //	implementation 'com.getui:sdk-for-google-play:4.3.5.0'
     implementation files('libs/GetuiSDK4.3.5.6.jar')
 }

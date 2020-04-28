@@ -3,6 +3,7 @@ package com.example.umeyesdk;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +23,9 @@ import com.Player.Core.PlayerCore;
 import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
 import com.Player.Source.StopRecodeVideoListener;
+import com.Player.web.websocket.PermissionUtils;
 import com.example.umeyesdk.utils.Imagedeal;
+import com.getui.demo.AlarmUtils;
 import com.mp4.maker.MP4make;
 import com.video.h264.DecodeDisplay;
 import com.video.h264.OnFrameChangeListener;
@@ -391,16 +394,42 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 setMediaStreamType();
                 break;
             case R.id.btnTalk:
-                if (pc.GetIsPPT()) {
-                    pc.StopPPTAudio();
-                    btnTalk.setBackgroundResource(R.drawable.ch_talk);
+                if (!PermissionUtils.checkRecordePermission(this)) {
+                    PermissionUtils.verifyRecordePermissions(this, 1);
                 } else {
-                    pc.StartPPTAudio();
-                    btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
+                    ppt();
                 }
                 break;
             default:
                 break;
+        }
+    }
+
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ppt();
+                }
+        }
+    }
+
+
+
+
+
+    private void ppt() {
+        if (pc.GetIsPPT()) {
+            pc.StopPPTAudio();
+            btnTalk.setBackgroundResource(R.drawable.ch_talk);
+        } else {
+            pc.StartPPTAudio();
+            btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
         }
     }
 

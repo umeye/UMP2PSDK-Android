@@ -44,7 +44,7 @@ public class WebSdkApi {
 	 * 无证书
 	 */
 	public static void setHttps() {
-		ClientCore.setHttps();
+		ClientCore.setHttps(null);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class WebSdkApi {
 	 *         InputStream certInputStream = new BufferedInputStream(getAssets().open("test.crt"));
 	 */
 	public static void setHttps(InputStream certInputStream) {
-		ClientCore.setHttps(certInputStream);
+		ClientCore.setHttps(certInputStream,null);
 	}
 
    /**
@@ -1618,6 +1618,39 @@ public class WebSdkApi {
 			}
 		});
 	}
+
+
+	/**
+	 * 请求清除设备ID的所有用户添加信息
+	 * @param comp_id 企业ID
+	 * @param umid 设备ID,即umid
+	 * @param pkid 产品keyID，用于匹配产品Key值，向服务供应商申请
+	 * @param mac 设备MAC地址
+	 * @param rsaPubKey 公钥
+	 */
+	public static void clearUserByDeviceId(ClientCore clientCore, String comp_id, String umid, String pkid, String mac, String rsaPubKey, final Handler handler) {
+         clientCore.clearUserByDeviceId(comp_id,umid,pkid,mac,rsaPubKey,new Handler(){
+			 @Override
+			 public void handleMessage(Message msg) {
+				 ResponseCommon responseCommon = (ResponseCommon) msg.obj;
+				 if (responseCommon != null && responseCommon.h != null) {
+					 if (responseCommon.h.e == 200) {
+
+						 handler.sendEmptyMessage(Constants.CLEAR_USER_BY_DEVICE_ID_S);
+					 } else {
+						 Log.e(WebSdkApi, "清除失败!code="
+								 + responseCommon.h.e);
+						 handler.sendEmptyMessage(Constants.CLEAR_USER_BY_DEVICE_ID_F);
+					 }
+				 } else {
+					 Log.e(WebSdkApi, "清除失败! error=" + msg.what);
+					 handler.sendEmptyMessage(Constants.CLEAR_USER_BY_DEVICE_ID_F);
+				 }
+				 super.handleMessage(msg);
+			 }
+		 });
+	}
+
 
 
 }

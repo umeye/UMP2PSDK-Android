@@ -96,6 +96,8 @@ public class Constants {
 	public final static int GET_PUBLIC_USER_ACCOUNT_F = -21;//获取公众号信息失败
 	public final static int QUERY_USER_PUSH_S = 22;//获取用户推送信息成功
 	public final static int QUERY_USER_PUSH_F = -22;//获取用户推送信息失败
+    public final static int CLEAR_USER_BY_DEVICE_ID_S = 23;
+    public final static int CLEAR_USER_BY_DEVICE_ID_F = -23;
 	// public static final byte NEW_DATA = 0x11;
 	public static final byte DELETE_FAILED = 0x12;
 	public static final byte DELETE_SUCCEED = 0x13;

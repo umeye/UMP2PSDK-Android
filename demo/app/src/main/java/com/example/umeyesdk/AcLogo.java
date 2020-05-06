@@ -12,16 +12,19 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.Player.Source.LogOut;
+import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseServer;
 import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
+import com.audio2.aacEncode;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.Utility;
+import com.video.h264.DefualtRecoredThread;
 
 public class AcLogo extends Activity {
 	public static final String WebSdkApi_Error = "WebSdkApi_Error";
@@ -65,6 +68,7 @@ public class AcLogo extends Activity {
 			// clientCore.CLTStartClient("182.92.170.98", 8300);
 			// actionToLogin();
 		}
+
 
 	}
 
@@ -171,6 +175,9 @@ public class AcLogo extends Activity {
 
 				actionToLogin();
 				super.handleMessage(msg);
+
+
+
 			}
 		});
 	}

@@ -428,6 +428,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
             pc.StopPPTAudio();
             btnTalk.setBackgroundResource(R.drawable.ch_talk);
         } else {
+//            pc.SetPPtMode(true);//是否双工模式
             pc.StartPPTAudio();
             btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
         }

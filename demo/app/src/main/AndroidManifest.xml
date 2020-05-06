@@ -92,6 +92,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.example.extra.AcSendProtocol"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".AcDevNetPort"
             android:screenOrientation="portrait" >
         </activity>

@@ -19,6 +19,7 @@ import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
 import com.audio2.aacEncode;
+import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.utils.Constants;
@@ -157,7 +158,7 @@ public class AcLogo extends Activity {
 
 				ResponseServer responseServer = (ResponseServer) msg.obj;
 				if (responseServer != null && responseServer.h != null) {
-					if (responseServer.h.e == 200) {
+					if (responseServer.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Show.toast(AcLogo.this,
 								"获取服务器:" + responseServer.b.toJsonString());
 						String[] server = clientCore.getCurrentServer();

@@ -57,7 +57,8 @@ public class Constants {
 	public final static int LOGIN = 1;// 登陆
 	public final static int LOGIN_OK = 2;// 登陆成功
 	public final static int LUNCH_FAILED = -1;// 启动客户端失败
-	public final static int LOGIN_USER_OR_PWD_ERROR = -2;// 用户名或密码错误登陆失败
+	public final static int LOGIN_USER_ERROR = -2;// 用户名错误登陆失败
+	public final static int LOGIN_PWD_ERROR = -24;// 密码错误登陆失败
 	public final static int LOGIN_FAILED = -3;// 其他登陆失败
 	public final static int MODIFY_PASSWORD_S = 3;// 修改密码成功
 	public final static int MODIFY_PASSWORD_F = -4;// 修改密码失败

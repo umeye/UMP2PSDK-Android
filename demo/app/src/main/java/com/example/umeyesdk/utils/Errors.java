@@ -57,7 +57,9 @@ public class Errors {
     /// 获取认证服务器错误，比如：用户名不存在，网络不好
     UM_WEB_API_ERROR_ID_GETQUTH = 899998,
     /// 分享设备失败，不能分享给自己
-    UM_WEB_API_ERROR_ID_SHARK_USER = 899997;
+    UM_WEB_API_ERROR_ID_SHARK_USER = 899997,
+    /// 成功
+    UM_WEB_API_SUCCESS = 200;
 
 
     /**

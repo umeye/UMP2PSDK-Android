@@ -34,6 +34,7 @@ import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.SharedPrefsUtil;
 import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
+import com.example.umeyesdk.utils.Errors;
 import com.example.umeyesdk.utils.Show;
 
 /**
@@ -82,11 +83,15 @@ public class WebSdkApi {
 						// TODO Auto-generated method stub
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+							if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 
 								handler.sendEmptyMessage(Constants.LOGIN_OK);
-							} else if (responseCommon.h.e == 406) {
-								handler.sendEmptyMessage(Constants.LOGIN_USER_OR_PWD_ERROR);
+							} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE) {
+								handler.sendEmptyMessage(Constants.LOGIN_USER_ERROR);
+
+							} else if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_PASSWORD) {
+								handler.sendEmptyMessage(Constants.LOGIN_PWD_ERROR);
+
 							} else {
 								Log.e(WebSdkApi, "登录失败!code="
 										+ responseCommon.h.e);
@@ -120,8 +125,16 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.SEND_SMS_S);
+					} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_CONFLICT) {//用户已注册
+						Log.e(WebSdkApi, "发送验证码失败!code="
+								+ responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.SEND_SMS_F);
+					} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE) {//1：找回密码时候用户名不存在
+						Log.e(WebSdkApi, "发送验证码失败!code="
+								+ responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.SEND_SMS_F);
 					} else {
 						Log.e(WebSdkApi, "发送验证码失败!code="
 								+ responseCommon.h.e);
@@ -150,8 +163,16 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_S);
+					} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_CONFLICT) {//用户已注册
+						Log.e(WebSdkApi, "发送验证码失败!code="
+								+ responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_F);
+					} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE) {//2：邮箱修改密码验证码时候用户名不存在
+						Log.e(WebSdkApi, "发送验证码失败!code="
+								+ responseCommon.h.e);
+						handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_F);
 					} else {
 						Log.e(WebSdkApi, "发送验证码失败!code="
 								+ responseCommon.h.e);
@@ -199,8 +220,12 @@ public class WebSdkApi {
 						// TODO Auto-generated method stub
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+							if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 								Show.toast(context, "注册成功");
+							} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_CONFLICT) {//用户已注册
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
 							} else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
@@ -259,8 +284,12 @@ public class WebSdkApi {
 						// TODO Auto-generated method stub
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+							if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 								Show.toast(context, "注册成功");
+							} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_CONFLICT) {//用户已注册
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
 							} else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
@@ -316,9 +345,13 @@ public class WebSdkApi {
 						// TODO Auto-generated method stub
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+							if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 								Show.toast(context, "注册成功");
-							} else {
+							} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_CONFLICT) {//用户已注册
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
+							}  else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
 								Show.toast(context, "注册失败");
@@ -368,8 +401,12 @@ public class WebSdkApi {
 						// TODO Auto-generated method stub
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+							if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 								Show.toast(context, "注册成功");
+							} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_CONFLICT) {//用户已注册
+								Log.e(WebSdkApi, "注册失败!code="
+										+ responseCommon.h.e);
+								Show.toast(context, "注册失败");
 							} else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
@@ -408,7 +445,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Log.e(WebSdkApi, "登出成功!code=" + responseCommon.h.e);
 						handler.sendMessage(Message.obtain(handler,
 								Constants.LOGOUT_S,
@@ -442,7 +479,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Log.e(WebSdkApi, "注销成功!code=" + responseCommon.h.e);
 					} else {
 						Log.e(WebSdkApi, "注销失败!code=" + responseCommon.h.e);
@@ -468,7 +505,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseRefreshSession responseRefreshSession = (ResponseRefreshSession) msg.obj;
 				if (responseRefreshSession != null && responseRefreshSession.h != null) {
-					if (responseRefreshSession.h.e == 200) {
+					if (responseRefreshSession.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendMessage(Message.obtain(handler,
 								Constants.REFRESH_SESSION_S,
 								responseRefreshSession));
@@ -508,8 +545,12 @@ public class WebSdkApi {
 				// TODO Auto-generated method stub
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Show.toast(context, "修改密码成功");
+					} else if (responseCommon.h.e == Errors.UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE) {//用户名错误
+						Show.toast(context, "用户名错误，修改密码失败");
+					} else if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_PASSWORD) {//密码错误
+						Show.toast(context, "密码错误，修改密码失败");
 					} else {
 						Log.e(WebSdkApi, "修改密码失败!code=" + responseCommon.h.e);
 						Show.toast(context, "修改密码失败");
@@ -548,7 +589,7 @@ public class WebSdkApi {
 				// TODO Auto-generated method stub
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Show.toast(context, "修改密码成功");
 					} else {
 						Log.e(WebSdkApi, "修改密码失败!code=" + responseCommon.h.e);
@@ -586,8 +627,11 @@ public class WebSdkApi {
 				// TODO Auto-generated method stub
 				ResponseResetPwd responseResetPwd = (ResponseResetPwd) msg.obj;
 				if (responseResetPwd != null && responseResetPwd.h != null) {
-					if (responseResetPwd.h.e == 200) {
+					if (responseResetPwd.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Show.toast(context, "发送重置密码成功，稍后请查收！");
+					} else if (responseResetPwd.h.e == Errors.UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE) {//用户名不存在
+						Log.e(WebSdkApi, "发送重置密码失败!code=" + responseResetPwd.h.e);
+						Show.toast(context, "发送重置密码失败");
 					} else {
 						Log.e(WebSdkApi, "发送重置密码失败!code=" + responseResetPwd.h.e);
 						Show.toast(context, "发送重置密码失败");
@@ -625,7 +669,7 @@ public class WebSdkApi {
 						ResponseDevList responseDevList = (ResponseDevList) msg.obj;
 						if (responseDevList != null
 								&& responseDevList.h != null) {
-							if (responseDevList.h.e == 200) {
+							if (responseDevList.h.e == Errors.UM_WEB_API_SUCCESS) {
 								handler.sendMessage(Message.obtain(handler,
 										Constants.GET_DEVLIST_S,
 										responseDevList));
@@ -671,7 +715,7 @@ public class WebSdkApi {
 						ResponseDevList responseDevList = (ResponseDevList) msg.obj;
 						if (responseDevList != null
 								&& responseDevList.h != null) {
-							if (responseDevList.h.e == 200) {
+							if (responseDevList.h.e == Errors.UM_WEB_API_SUCCESS) {
 								handler.sendMessage(Message.obtain(handler,
 										Constants.GET_DEVLIST_S,
 										responseDevList));
@@ -708,7 +752,7 @@ public class WebSdkApi {
 				ResponseDevShareInfo responseDevShareInfo = (ResponseDevShareInfo) msg.obj;
 				if (responseDevShareInfo != null
 						&& responseDevShareInfo.h != null) {
-					if (responseDevShareInfo.h.e == 200) {
+					if (responseDevShareInfo.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendMessage(Message.obtain(handler,
 								Constants.GET_SHARE_INFO_S,
 								responseDevShareInfo));
@@ -742,7 +786,7 @@ public class WebSdkApi {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null
 						&& responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						if(opcode == 1) {
 							handler.sendMessage(Message.obtain(handler,
 									Constants.ADD_SHARE_S,
@@ -791,7 +835,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Show.toast(context, "修改设备节点顺序成功！");
 					} else {
 						Log.e(WebSdkApi, "修改设备节点顺序失败!code=" + responseCommon.h.e);
@@ -877,7 +921,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseAddNode responseAddNode = (ResponseAddNode) msg.obj;
 						if (responseAddNode != null && responseAddNode.h != null) {
-							if (responseAddNode.h.e == 200) {
+							if (responseAddNode.h.e == Errors.UM_WEB_API_SUCCESS) {
 								handler.sendEmptyMessage(Constants.ADD_DEV_S);
 							} else {
 								Log.e(WebSdkApi, "添加设备失败!code="	+ responseAddNode.h.e);
@@ -912,7 +956,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.DELETE_DEV_S);
 					} else {
 						Log.e(WebSdkApi, " 删除设备设备失败!code=" + responseCommon.h.e);
@@ -948,7 +992,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.DELETE_DEV_S);
 					} else {
 						Log.e(WebSdkApi, " 删除设备设备失败!code=" + responseCommon.h.e);
@@ -1007,7 +1051,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null) {
-							if (responseCommon.h.e == 200) {
+							if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 								handler.sendEmptyMessage(Constants.MODIFY_DEV_S);
 							} else {
 								Log.e(WebSdkApi, " 修改设备设备失败!code="
@@ -1038,7 +1082,7 @@ public class WebSdkApi {
 				// TODO Auto-generated method stub
 				ResponseDevState responseDevState = (ResponseDevState) msg.obj;
 				if (responseDevState != null && responseDevState.h != null
-						&& responseDevState.h.e == 200
+						&& responseDevState.h.e == Errors.UM_WEB_API_SUCCESS
 						&& responseDevState.b != null
 						&& responseDevState.b.devs != null) {
 					List<DevState> devStates = responseDevState.b.devs;
@@ -1073,7 +1117,7 @@ public class WebSdkApi {
             public void handleMessage(Message msg) {
                 ResponseQueryAlarm responseQueryAlarm = (ResponseQueryAlarm) msg.obj;
                 if (responseQueryAlarm != null && responseQueryAlarm.h != null) {
-                    if (responseQueryAlarm.h.e == 200) {
+                    if (responseQueryAlarm.h.e == Errors.UM_WEB_API_SUCCESS) {
                         if (responseQueryAlarm.b != null
                                 && responseQueryAlarm.b.alarms != null) {
                             for (int i = 0; i < responseQueryAlarm.b.alarms.length; i++) {
@@ -1108,7 +1152,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseQueryAlarm responseQueryAlarm = (ResponseQueryAlarm) msg.obj;
 				if (responseQueryAlarm != null && responseQueryAlarm.h != null) {
-					if (responseQueryAlarm.h.e == 200) {
+					if (responseQueryAlarm.h.e == Errors.UM_WEB_API_SUCCESS) {
 						if (responseQueryAlarm.b != null
 								&& responseQueryAlarm.b.alarms != null) {
 							for (int i = 0; i < responseQueryAlarm.b.alarms.length; i++) {
@@ -1144,7 +1188,7 @@ public class WebSdkApi {
 				// TODO Auto-generated method stub
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Log.i(WebSdkApi, "删除报警信息成功！");
 					} else {
 						Log.e(WebSdkApi, "删除所有报警信息失败!code="
@@ -1173,7 +1217,7 @@ public class WebSdkApi {
 				// TODO Auto-generated method stub
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Log.i(WebSdkApi, "删除报警信息成功！");
 					} else {
 						Log.e(WebSdkApi, "删除所有报警信息失败!code="
@@ -1200,7 +1244,7 @@ public class WebSdkApi {
 				final ResponseGetServerList responseGetServerList = (ResponseGetServerList) msg.obj;
 				if (responseGetServerList != null
 						&& responseGetServerList.h != null) {
-					if (responseGetServerList.h.e == 200
+					if (responseGetServerList.h.e == Errors.UM_WEB_API_SUCCESS
 							&& responseGetServerList.b.srvs != null) {
 						ServerListInfo serverListInfos[] = responseGetServerList.b.srvs;
 						for (int i = 0; i < serverListInfos.length; i++) {
@@ -1240,7 +1284,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				if (responseCommon != null && responseCommon.h != null) {
-					if (responseCommon.h.e == 200) {
+					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.MODIFY_DEV_NUM_S);
 					} else {
 						Log.e(WebSdkApi, " 修改设备通道数失败!code="
@@ -1283,7 +1327,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null
-								&& responseCommon.h.e == 200) {
+								&& responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 							Log.i("setUserPush", "设置用户推送成功");
 						} else {
 							Log.i("setUserPush", "设置用户推送失败");
@@ -1327,7 +1371,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 						if (responseCommon != null && responseCommon.h != null
-								&& responseCommon.h.e == 200) {
+								&& responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 							Log.i("setUserPush", "设置用户推送成功");
 						} else {
 							Log.i("setUserPush", "设置用户推送失败");
@@ -1380,7 +1424,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseCommon commonSocketText = (ResponseCommon) msg.obj;
 						if (commonSocketText != null
-								&& commonSocketText.h.e == 200) {
+								&& commonSocketText.h.e == Errors.UM_WEB_API_SUCCESS) {
 							if (opCode == 1) {
 								Log.i(WebSdkApi, "布防成功");
 							} else if (opCode == 2) {
@@ -1429,7 +1473,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseCommon commonSocketText = (ResponseCommon) msg.obj;
 						if (commonSocketText != null
-								&& commonSocketText.h.e == 200) {
+								&& commonSocketText.h.e == Errors.UM_WEB_API_SUCCESS) {
 							if (opCode == 1) {
 								Log.i(WebSdkApi, "布防成功");
 							} else if (opCode == 2) {
@@ -1463,7 +1507,7 @@ public class WebSdkApi {
 				ResponseQueryAlarmSettings responseQueryAlarmSettings = (ResponseQueryAlarmSettings) msg.obj;
 				if (responseQueryAlarmSettings != null
 						&& responseQueryAlarmSettings.h != null) {
-					if (responseQueryAlarmSettings.h.e == 200
+					if (responseQueryAlarmSettings.h.e == Errors.UM_WEB_API_SUCCESS
 							&& responseQueryAlarmSettings.b != null
 							&& responseQueryAlarmSettings.b.devs != null
 							&& responseQueryAlarmSettings.b.devs.length > 0) {
@@ -1578,7 +1622,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseGetPublicAccountInfo responseGetPublicAccountInfo = (ResponseGetPublicAccountInfo) msg.obj;
 				if (responseGetPublicAccountInfo != null && responseGetPublicAccountInfo.h != null) {
-					if (responseGetPublicAccountInfo.h.e == 200) {
+					if (responseGetPublicAccountInfo.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.GET_PUBLIC_USER_ACCOUNT_S);
 					} else {
 						Log.e(WebSdkApi, "获取公众号信息失败!code="
@@ -1605,7 +1649,7 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseQueryUserPush responseQueryUserPush = (ResponseQueryUserPush) msg.obj;
 				if (responseQueryUserPush != null && responseQueryUserPush.h != null) {
-					if (responseQueryUserPush.h.e == 200) {
+					if (responseQueryUserPush.h.e == Errors.UM_WEB_API_SUCCESS) {
 						handler.sendEmptyMessage(Constants.QUERY_USER_PUSH_S);
 					} else {
 						Log.e(WebSdkApi, "获取用户推送信息失败!code="
@@ -1636,7 +1680,7 @@ public class WebSdkApi {
 			 public void handleMessage(Message msg) {
 				 ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 				 if (responseCommon != null && responseCommon.h != null) {
-					 if (responseCommon.h.e == 200) {
+					 if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 
 						 handler.sendEmptyMessage(Constants.CLEAR_USER_BY_DEVICE_ID_S);
 					 } else {

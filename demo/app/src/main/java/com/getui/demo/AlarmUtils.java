@@ -9,6 +9,7 @@ import com.Player.web.request.P2pConnectInfo;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.websocket.ClientCore;
 import com.example.umeyesdk.entity.PlayNode;
+import com.example.umeyesdk.utils.Errors;
 import com.example.umeyesdk.utils.Show;
 import com.igexin.sdk.PushManager;
 
@@ -57,7 +58,7 @@ public class AlarmUtils {
 					public void handleMessage(Message msg) {
 						ResponseCommon commonSocketText = (ResponseCommon) msg.obj;
 						if (commonSocketText != null
-								&& commonSocketText.h.e == 200) {
+								&& commonSocketText.h.e == Errors.UM_WEB_API_SUCCESS) {
 							if (opCode == 1) {
 								Show.toast(context, "布防成功");
 							} else if (opCode == 2) {
@@ -148,7 +149,7 @@ public class AlarmUtils {
 					public void handleMessage(Message msg) {
 						ResponseCommon commonSocketText = (ResponseCommon) msg.obj;
 						if (commonSocketText != null
-								&& commonSocketText.h.e == 200) {
+								&& commonSocketText.h.e == Errors.UM_WEB_API_SUCCESS) {
 							if (opCode == 1) {
 								Show.toast(activity, "布防成功");
 							} else if (opCode == 2) {

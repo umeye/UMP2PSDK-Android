@@ -31,6 +31,7 @@ import com.Player.web.response.ResponseQueryUserInfo;
 import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
+import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.MainActivity;
@@ -105,8 +106,11 @@ public class AcSelectMode extends Activity {
 
 
 					break;
-				case Constants.LOGIN_USER_OR_PWD_ERROR:
-					Show.toast(AcSelectMode.this, "用户名或密码错误");
+				case Constants.LOGIN_USER_ERROR:
+					Show.toast(AcSelectMode.this, "用户名错误");
+					break;
+				case Constants.LOGIN_PWD_ERROR:
+					Show.toast(AcSelectMode.this, "密码错误");
 					break;
 				case Constants.GET_DEVLIST_F:
 					Show.toast(AcSelectMode.this, "获取设备失败");
@@ -307,7 +311,7 @@ public class AcSelectMode extends Activity {
 										ResponseCommon responseCommon = (ResponseCommon) msg.obj;
 										if (responseCommon != null
 												&& responseCommon.h != null
-												&& responseCommon.h.e == 200) {
+												&& responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 											Log.i("setUserPush", "设置用户推送成功");
 										} else {
 											Log.i("setUserPush", "设置用户推送失败");

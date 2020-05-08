@@ -30,7 +30,7 @@ public class Errors {
     UM_WEB_API_ERROR_ID_NOT_FOUND = 404,
     /// 非法请求。未登录，请登录[illegal request. unlogged in, pls login]
     UM_WEB_API_ERROR_ID_NOT_ALLOWED = 405,
-    /// 请求不被接受。参数错误，比如：用户名或密码不正确[request unaccepted. parameter error, such as wrong user name or password]
+    /// 请求不被接受。参数错误，比如：用户名不正确[request unaccepted. parameter error, such as wrong user name]
     UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE = 406,
     /// 请求发送冲突，数据中数据库已经存在，比如用户已注册，设备id已添加[request conflict, for example, the registered user name already exists]
     UM_WEB_API_ERROR_ID_CONFLICT = 409,

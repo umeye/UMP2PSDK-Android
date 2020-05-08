@@ -36,9 +36,11 @@ import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Show;
 
+/**
+ * 错误码详见com.example.umeyesdk.utils.Errors
+ */
 public class WebSdkApi {
 	public static final String WebSdkApi = "WebSdkApi";
-
 
 	/**
 	 * 无证书

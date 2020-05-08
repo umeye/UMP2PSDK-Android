@@ -179,6 +179,17 @@
     <string name="power_mode">省电模式</string>
     <string name="login_success">登录成功</string>\
     <string name="logout_user">账号已登出，请重新登录</string>
+    <string name="not_support_api">不支持此功能!</string>
+    <string name="format_err">格式错误，请修改以后再重试！</string>
+    <string name="outdate_relogin">已过期,请重新登录</string>
+    <string name="verify_failed">验证失败</string>
+    <string name="username_nonexistent">该用户名不存在</string>
+    <string name="uid_exits_not_add_dev">UID已存在，不能添加设备！</string>
+    <string name="register_fail_by_errcode">注册失败，验证码错误</string>
+    <string name="email_address_error2">邮箱地址错误</string>
+    <string name="request_too_many_times">请求次数太多，请稍候再试！</string>
+    <string name="network_err">网络异常，请检查网络</string>
+    <string name="unknown_errors">未知错误</string>
     
     
     <string-array name="pir_time">

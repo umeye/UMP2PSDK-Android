@@ -24,14 +24,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Player.Core.PlayerClient;
 import com.Player.Core.PlayerCore;
 import com.Player.Source.SDKError;
 import com.Player.Source.TAlarmFrame;
+import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.PermissionUtils;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.R;
+import com.example.umeyesdk.api.WebSdkApi;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.ShowProgress;
 
@@ -71,7 +74,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 	private ImageButton btnUp, btnDown, btnLeft, btnRight, btnZoomIn,
 			btnZoomOut, btnNear, btnFar, btnCircleAdd, btnCircleReduce,
 			btnTalk, btnSound;
-	private Button btnPlay, btnPause, btnSnap, btnVideo, btnSearch;
+	private Button btnPlay, btnPause, btnSnap, btnVideo, btnSearch, btnLogout;
 	private ImageButton btnMenu, btnUnLock;
 	public static boolean isRun = true;
 	PlayerClient playClient;
@@ -149,6 +152,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 		btnSnap = (Button) findViewById(R.id.btnSnap);
 		btnVideo = (Button) findViewById(R.id.btnVideo);
 		btnSearch = (Button) findViewById(R.id.search);
+		btnLogout = findViewById(R.id.logout);
 
 		btnMenu = (ImageButton) findViewById(R.id.btnMenu);
 		btnUnLock = (ImageButton) findViewById(R.id.btnLock);
@@ -160,6 +164,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 		btnSearch.setOnClickListener(this);
 		btnMenu.setOnClickListener(this);
 		btnUnLock.setOnClickListener(this);
+		btnLogout.setOnClickListener(this);
 
 		// 设备信息
 		server = (EditText) findViewById(R.id.server);
@@ -395,6 +400,18 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 				} else {
 					pc.OpenAudio();
 				}
+				break;
+			case R.id.logout:
+				WebSdkApi.logoutServer(ClientCore.getInstance(), 1, new Handler(){
+					@Override
+					public void handleMessage(Message msg) {
+						Toast.makeText(PlayActivity2.this, R.string.logout_user, Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(PlayActivity2.this, AcSelectMode.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						startActivity(intent);
+						ClientCore.getInstance().setIotTokenInvalidListener(null);
+					}
+				});
 				break;
 			default:
 				break;

@@ -167,7 +167,7 @@ public class MyAudioDecodeThread extends Thread {
 									mFrame.EncodeType, mFrame.iAudioSampleRate,
 									mFrame.iLen);
 							decodeDisplay.mp4make.writeaudioframe(
-									mFrame.iData.clone(), mFrame.iPTS);
+									mFrame.iData.clone(), mFrame.iLen, mFrame.iPTS);
 						}
 					}
 				} catch (Exception e1) {

@@ -19,6 +19,7 @@ import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
 import com.audio2.aacEncode;
+import com.example.umeyeNewSdk.PlayActivity2;
 import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyeNewSdk.AcSelectMode;
@@ -31,6 +32,7 @@ public class AcLogo extends Activity {
 	public static final String WebSdkApi_Error = "WebSdkApi_Error";
 	AppMain appMain;
 	private Handler handler;
+	private boolean localLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,20 @@ public class AcLogo extends Activity {
 			Constants.server = server;
 		}
 
+		UserInfo userInfo = UserInfo.getUserInfo(this);
+		localLogin = userInfo != null && userInfo.isLocalMode();
+
 		ClientCore clientCore = ClientCore.getInstance();
 		if (clientCore != null && clientCore.IsLogin()) {// 判断是否处于登录状态，直接进入主界面
-			startActivity(new Intent(AcLogo.this, MainActivity.class));
-			finish();
+			if(!localLogin) {
+				startActivity(new Intent(AcLogo.this, MainActivity.class));
+				finish();
+
+			} else {
+				startActivity(new Intent(AcLogo.this,PlayActivity2.class));
+				finish();
+
+			}
 		} else {
 			ClientCore.isKeDaDev=false;
 			if (!PermissionUtils.checkStoragePermission(this)) {
@@ -190,8 +202,15 @@ public class AcLogo extends Activity {
 			public void run() {
 
 				if(ClientCore.getInstance().IsLoginEx()) {//如果需要自动登录，增加这个判断，判断上次是否有登录
-					startActivity(new Intent(AcLogo.this, MainActivity.class));
-					finish();
+					if(!localLogin) {
+						startActivity(new Intent(AcLogo.this, MainActivity.class));
+						finish();
+
+					} else {
+						startActivity(new Intent(AcLogo.this,PlayActivity2.class));
+						finish();
+
+					}
 
 				} else {
 					startActivity(new Intent(AcLogo.this, AcSelectMode.class));

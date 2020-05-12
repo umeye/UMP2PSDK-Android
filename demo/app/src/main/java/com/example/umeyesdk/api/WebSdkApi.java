@@ -51,6 +51,7 @@ public class WebSdkApi {
 	}
 
 	/**
+	 *  有证书
 	 *
 	 * @param certInputStream
 	 *         证书文件的输入流

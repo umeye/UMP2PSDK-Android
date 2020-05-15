@@ -158,7 +158,7 @@ public class AcLogo extends Activity {
 
 		int language = Utility.isZh(this) ? 2 : 1;
 
-
+//		ClientCore.isAPLanMode = true;//ap mode方式
 		clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,
 				String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空

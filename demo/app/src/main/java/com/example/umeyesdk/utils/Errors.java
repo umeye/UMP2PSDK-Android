@@ -59,7 +59,9 @@ public class Errors {
     /// 分享设备失败，不能分享给自己
     UM_WEB_API_ERROR_ID_SHARK_USER = 899997,
     /// 成功
-    UM_WEB_API_SUCCESS = 200;
+    UM_WEB_API_SUCCESS = 200,
+    // 网络问题
+    UM_WEB_API_ERROR_NET_ERROR = -10000;
 
 
     /**
@@ -109,6 +111,9 @@ public class Errors {
                 break;
             case UM_WEB_API_ERROR_ID_TOO_MANY_REQUESTS://请求次数太多,比如意见反馈只能1个小时一次
                 sError = R.string.request_too_many_times;
+                break;
+            case UM_WEB_API_ERROR_NET_ERROR:
+                sError = R.string.net_error;
                 break;
 
         }

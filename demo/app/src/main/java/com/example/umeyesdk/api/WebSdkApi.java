@@ -32,6 +32,7 @@ import com.Player.web.response.ResponseResetPwd;
 import com.Player.web.response.ServerListInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.SharedPrefsUtil;
+import com.example.umeyesdk.R;
 import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Errors;
@@ -93,9 +94,15 @@ public class WebSdkApi {
 							} else if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_PASSWORD) {
 								handler.sendEmptyMessage(Constants.LOGIN_PWD_ERROR);
 
-							} else {
+							}
+							else {
+
 								Log.e(WebSdkApi, "登录失败!code="
 										+ responseCommon.h.e);
+                                if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    handler.sendEmptyMessage(Constants.LOGIN_FAILED);
+                                    return;
+                                }
 								handler.sendEmptyMessage(Constants.LOGIN_FAILED);
 							}
 						} else {
@@ -137,8 +144,13 @@ public class WebSdkApi {
 								+ responseCommon.h.e);
 						handler.sendEmptyMessage(Constants.SEND_SMS_F);
 					} else {
+
 						Log.e(WebSdkApi, "发送验证码失败!code="
 								+ responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.SEND_SMS_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.SEND_SMS_F);
 					}
 				} else {
@@ -177,6 +189,10 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "发送验证码失败!code="
 								+ responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.SEND_EMAIL_CODE_F);
 					}
 				} else {
@@ -230,6 +246,10 @@ public class WebSdkApi {
 							} else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
+                                if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    Show.toast(context, "注册失败");
+                                    return;
+                                }
 								Show.toast(context, "注册失败");
 							}
 
@@ -294,6 +314,10 @@ public class WebSdkApi {
 							} else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
+                                if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    Show.toast(context, "注册失败");
+                                    return;
+                                }
 								Show.toast(context, "注册失败");
 							}
 
@@ -355,6 +379,10 @@ public class WebSdkApi {
 							}  else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
+                                if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    Show.toast(context, "注册失败");
+                                    return;
+                                }
 								Show.toast(context, "注册失败");
 							}
 
@@ -411,6 +439,10 @@ public class WebSdkApi {
 							} else {
 								Log.e(WebSdkApi, "注册失败!code="
 										+ responseCommon.h.e);
+                                if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    Show.toast(context, "注册失败");
+                                    return;
+                                }
 								Show.toast(context, "注册失败");
 							}
 
@@ -454,6 +486,10 @@ public class WebSdkApi {
 
 					} else {
 						Log.e(WebSdkApi, "登出失败!code=" + responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.LOGOUT_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.LOGOUT_F);
 					}
 
@@ -482,7 +518,10 @@ public class WebSdkApi {
 				if (responseCommon != null && responseCommon.h != null) {
 					if (responseCommon.h.e == Errors.UM_WEB_API_SUCCESS) {
 						Log.e(WebSdkApi, "注销成功!code=" + responseCommon.h.e);
-					} else {
+					}
+                    else if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+
+                    }else {
 						Log.e(WebSdkApi, "注销失败!code=" + responseCommon.h.e);
 					}
 
@@ -510,7 +549,9 @@ public class WebSdkApi {
 						handler.sendMessage(Message.obtain(handler,
 								Constants.REFRESH_SESSION_S,
 								responseRefreshSession));
-					} else {
+					} else if(responseRefreshSession.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+
+                    }else {
 						Log.e(WebSdkApi, "刷新session失败!code=" + responseRefreshSession.h.e);
 						handler.sendEmptyMessage(Constants.REFRESH_SESSION_F);
 					}
@@ -554,6 +595,10 @@ public class WebSdkApi {
 						Show.toast(context, "密码错误，修改密码失败");
 					} else {
 						Log.e(WebSdkApi, "修改密码失败!code=" + responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            Show.toast(context, "修改密码失败");
+                            return;
+                        }
 						Show.toast(context, "修改密码失败");
 					}
 				} else {
@@ -594,6 +639,10 @@ public class WebSdkApi {
 						Show.toast(context, "修改密码成功");
 					} else {
 						Log.e(WebSdkApi, "修改密码失败!code=" + responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            Show.toast(context, "修改密码失败");
+                            return;
+                        }
 						Show.toast(context, "修改密码失败");
 					}
 				} else {
@@ -635,6 +684,10 @@ public class WebSdkApi {
 						Show.toast(context, "发送重置密码失败");
 					} else {
 						Log.e(WebSdkApi, "发送重置密码失败!code=" + responseResetPwd.h.e);
+                        if(responseResetPwd.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            Show.toast(context, "发送重置密码失败");
+                            return;
+                        }
 						Show.toast(context, "发送重置密码失败");
 					}
 				} else {
@@ -677,6 +730,10 @@ public class WebSdkApi {
 							} else {
 								Log.e(WebSdkApi, "获取设备列表失败!code="
 										+ responseDevList.h.e);
+                                if(responseDevList.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    handler.sendEmptyMessage(Constants.GET_DEVLIST_F);
+                                    return;
+                                }
 								handler.sendEmptyMessage(Constants.GET_DEVLIST_F);
 							}
 						} else {
@@ -723,6 +780,10 @@ public class WebSdkApi {
 							} else {
 								Log.e(WebSdkApi, "获取设备列表失败!code="
 										+ responseDevList.h.e);
+                                if(responseDevList.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    handler.sendEmptyMessage(Constants.GET_DEVLIST_F);
+                                    return;
+                                }
 								handler.sendEmptyMessage(Constants.GET_DEVLIST_F);
 							}
 						} else {
@@ -760,6 +821,10 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "获取分享信息失败!code="
 								+ responseDevShareInfo.h.e);
+                        if(responseDevShareInfo.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.GET_SHARE_INFO_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.GET_SHARE_INFO_F);
 					}
 				} else {
@@ -799,9 +864,18 @@ public class WebSdkApi {
 						}
 
 					} else {
+
 						if(opcode == 1) {
+                            if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                handler.sendEmptyMessage(Constants.ADD_SHARE_F);
+                                return;
+                            }
 							handler.sendEmptyMessage(Constants.ADD_SHARE_F);
 						} else {
+                            if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                handler.sendEmptyMessage(Constants.DELETE_SHARE_F);
+                                return;
+                            }
 							handler.sendEmptyMessage(Constants.DELETE_SHARE_F);
 						}
 					}
@@ -840,6 +914,10 @@ public class WebSdkApi {
 						Show.toast(context, "修改设备节点顺序成功！");
 					} else {
 						Log.e(WebSdkApi, "修改设备节点顺序失败!code=" + responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            Show.toast(context, "修改设备节点顺序失败");
+                            return;
+                        }
 						Show.toast(context, "修改设备节点顺序失败");
 					}
 				} else {
@@ -926,6 +1004,10 @@ public class WebSdkApi {
 								handler.sendEmptyMessage(Constants.ADD_DEV_S);
 							} else {
 								Log.e(WebSdkApi, "添加设备失败!code="	+ responseAddNode.h.e);
+                                if(responseAddNode.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    handler.sendEmptyMessage(Constants.ADD_DEV_F);
+                                    return;
+                                }
 								handler.sendEmptyMessage(Constants.ADD_DEV_F);
 							}
 						} else {
@@ -961,6 +1043,10 @@ public class WebSdkApi {
 						handler.sendEmptyMessage(Constants.DELETE_DEV_S);
 					} else {
 						Log.e(WebSdkApi, " 删除设备设备失败!code=" + responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.DELETE_DEV_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.DELETE_DEV_F);
 					}
 				} else {
@@ -997,6 +1083,10 @@ public class WebSdkApi {
 						handler.sendEmptyMessage(Constants.DELETE_DEV_S);
 					} else {
 						Log.e(WebSdkApi, " 删除设备设备失败!code=" + responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.DELETE_DEV_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.DELETE_DEV_F);
 					}
 				} else {
@@ -1057,6 +1147,10 @@ public class WebSdkApi {
 							} else {
 								Log.e(WebSdkApi, " 修改设备设备失败!code="
 										+ responseCommon.h.e);
+                                if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                    handler.sendEmptyMessage(Constants.MODIFY_DEV_F);
+                                    return;
+                                }
 								handler.sendEmptyMessage(Constants.MODIFY_DEV_F);
 							}
 						} else {
@@ -1093,6 +1187,9 @@ public class WebSdkApi {
 										+ devStates.get(i).state);
 					}
 				} else {
+                    if(responseDevState != null && responseDevState.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                        return;
+                    }
 					Log.i("state", "get state fail");
 				}
 				super.handleMessage(msg);
@@ -1132,6 +1229,9 @@ public class WebSdkApi {
                     } else {
                         Log.e(WebSdkApi, " 查询报警失败!code="
                                 + responseQueryAlarm.h.e);
+                        if(responseQueryAlarm.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            return;
+                        }
                     }
                 } else {
                     Log.e(WebSdkApi, " 查询报警失败! error=" + msg.what);
@@ -1168,6 +1268,9 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, " 查询报警失败!code="
 								+ responseQueryAlarm.h.e);
+                        if(responseQueryAlarm.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            return;
+                        }
 					}
 				} else {
 					Log.e(WebSdkApi, " 查询报警失败! error=" + msg.what);
@@ -1194,6 +1297,9 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "删除所有报警信息失败!code="
 								+ responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            return;
+                        }
 					}
 				} else {
 					Log.e(WebSdkApi, "删除所有报警信息失败! error=" + msg.what);
@@ -1223,6 +1329,9 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "删除所有报警信息失败!code="
 								+ responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            return;
+                        }
 					}
 				} else {
 					Log.e(WebSdkApi, "删除所有报警信息失败! error=" + msg.what);
@@ -1255,6 +1364,9 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "获取服务器列表失败! code="
 								+ responseGetServerList.h.e);
+                        if(responseGetServerList.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            return;
+                        }
 					}
 				} else {
 					Log.e(WebSdkApi, "获取服务器列表失败! error=" + msg.what);
@@ -1290,6 +1402,10 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, " 修改设备通道数失败!code="
 								+ responseCommon.h.e);
+                        if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.MODIFY_DEV_NUM_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.MODIFY_DEV_NUM_F);
 					}
 				} else {
@@ -1432,6 +1548,9 @@ public class WebSdkApi {
 								Log.i(WebSdkApi, "撤防成功");
 							}
 						} else {
+                            if(commonSocketText.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                return;
+                            }
 							if (opCode == 1) {
 								Log.i(WebSdkApi, "布防失败");
 							} else if (opCode == 2) {
@@ -1481,6 +1600,9 @@ public class WebSdkApi {
 								Log.i(WebSdkApi, "撤防成功");
 							}
 						} else {
+                            if(commonSocketText.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                                return;
+                            }
 							if (opCode == 1) {
 								Log.i(WebSdkApi, "布防失败");
 							} else if (opCode == 2) {
@@ -1544,6 +1666,9 @@ public class WebSdkApi {
 					} else {
 						Log.e("queryAlarmSettings", "查询报警布防失败!code="
 								+ responseQueryAlarmSettings.h.e);
+                        if(responseQueryAlarmSettings.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            return;
+                        }
 					}
 				} else {
 					Log.e("queryAlarmSettings", "查询报警布防失败! error=" + msg.what);
@@ -1628,6 +1753,10 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "获取公众号信息失败!code="
 								+ responseGetPublicAccountInfo.h.e);
+                        if(responseGetPublicAccountInfo.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.GET_PUBLIC_USER_ACCOUNT_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.GET_PUBLIC_USER_ACCOUNT_F);
 					}
 				} else {
@@ -1655,6 +1784,10 @@ public class WebSdkApi {
 					} else {
 						Log.e(WebSdkApi, "获取用户推送信息失败!code="
 								+ responseQueryUserPush.h.e);
+                        if(responseQueryUserPush.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                            handler.sendEmptyMessage(Constants.QUERY_USER_PUSH_F);
+                            return;
+                        }
 						handler.sendEmptyMessage(Constants.QUERY_USER_PUSH_F);
 					}
 				} else {
@@ -1687,6 +1820,10 @@ public class WebSdkApi {
 					 } else {
 						 Log.e(WebSdkApi, "清除失败!code="
 								 + responseCommon.h.e);
+                         if(responseCommon.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+                             handler.sendEmptyMessage(Constants.CLEAR_USER_BY_DEVICE_ID_F);
+                             return;
+                         }
 						 handler.sendEmptyMessage(Constants.CLEAR_USER_BY_DEVICE_ID_F);
 					 }
 				 } else {

@@ -175,7 +175,7 @@ public class DemoIntentService extends GTIntentService {
         Log.e(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
         AlarmUtils.GETUI_CID = clientid;
         ClientCore clientCore = ClientCore.getInstance();
-        if(!TextUtils.isEmpty(AlarmUtils.GETUI_CID) && clientCore.IsLogin()) {
+        if(!TextUtils.isEmpty(AlarmUtils.GETUI_CID) && clientCore.IsLoginEx()) {
             WebSdkApi.setUserPush(clientCore, 1,
                     Utility.isZh(context) ? 2 : 1,
                     AlarmUtils.GETUI_CID, 1, 0,0);

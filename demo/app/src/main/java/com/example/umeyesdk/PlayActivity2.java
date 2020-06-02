@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,12 +24,14 @@ import com.Player.Core.OnFinishListener;
 import com.Player.Core.PlayerCore;
 import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
-import com.Player.Source.StopRecodeVideoListener;
+import com.Player.Source.SetRecodeVideoListener;
+import com.Player.Source.SetSnapListener;
 import com.Player.web.websocket.PermissionUtils;
 import com.example.umeyesdk.utils.Imagedeal;
 import com.getui.demo.AlarmUtils;
 import com.mp4.maker.MP4make;
 import com.video.h264.DecodeDisplay;
+import com.video.h264.DefualtRecoredThread;
 import com.video.h264.OnFrameChangeListener;
 
 import java.util.concurrent.ExecutorService;
@@ -55,7 +59,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     public static final byte RECONENT = 1;
     private PlayerCore pc;
     private String id = "";
-    private ImageView img;
+    private ImageView img, iv_snap;
     private TextView txtState, txtRec;
     private boolean isStopCloudCommand = false;
     private ImageButton btnUp, btnDown, btnLeft, btnRight, btnZoomIn,
@@ -69,6 +73,8 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     private boolean isSetStream = false;
     private int stream = 1;
     private boolean isStoping = false;
+    private boolean isSnapVideoFirst = true;
+    private Handler snapHandler = new Handler();
     private Handler handler = new Handler() {
 
         @SuppressLint("HandlerLeak")
@@ -115,15 +121,46 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         id = getIntent().getStringExtra("id");
         pc.InitParam(id, 0, img);
         pc.SetbCleanLastView(false);
+        DefualtRecoredThread.isSaveToLocal = true;
         // 关闭播放日志输出
         pc.SetOpenLog(true);
-        pc.setStopRecodeVideoListener(new StopRecodeVideoListener() {
+        pc.setRecodeVideoListener(new SetRecodeVideoListener() {
+            @Override
+            public void record(boolean b, Bitmap bitmap) {
+                if(bitmap != null && isSnapVideoFirst) {
+                    iv_snap.setImageBitmap(bitmap);
+                    iv_snap.setVisibility(View.VISIBLE);
+                    snapHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv_snap.setVisibility(View.GONE);
+                        }
+                    }, 3000);
+                    isSnapVideoFirst = false;
+                }
+            }
 
             @Override
-            public void finish(boolean isSuccess, String path) {
-                // TODO Auto-generated method stub
-                Log.d("StopRecodeVideoListener", "isSuccess:" + isSuccess
-                        + ",path=" + path);
+            public void finish(boolean b, String s) {
+                Log.d("StopRecodeVideoListener", "isSuccess:" + b
+                        + ",path=" + s);
+                isSnapVideoFirst = true;
+            }
+        });
+        pc.setSnapListener(new SetSnapListener() {
+
+            @Override
+            public void finish(boolean b, String s, Bitmap bitmap) {
+                if(bitmap != null) {
+                    iv_snap.setImageBitmap(bitmap);
+                    iv_snap.setVisibility(View.VISIBLE);
+                    snapHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv_snap.setVisibility(View.GONE);
+                        }
+                    }, 3000);
+                }
             }
         });
         // 设置平滑播放
@@ -216,6 +253,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     }
 
     void initeView() {
+        iv_snap = findViewById(R.id.iv_snap);
         img = (ImageView) findViewById(R.id.imgLive);
         img.setOnTouchListener(this);
         txtState = (TextView) findViewById(R.id.txt_state);

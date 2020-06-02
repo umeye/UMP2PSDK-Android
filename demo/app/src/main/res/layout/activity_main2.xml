@@ -17,6 +17,11 @@
             android:background="#e0000000"
             android:scaleType="fitXY" />
 
+        <ImageView
+            android:id="@+id/iv_snap"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
         <TextView
             android:id="@+id/tvwRec"
             android:layout_width="wrap_content"

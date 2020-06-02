@@ -3,6 +3,7 @@ package com.example.umeyesdk;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import com.Player.Core.PlayerCore;
 import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
-import com.Player.Source.StopRecodeVideoListener;
+import com.Player.Source.SetRecodeVideoListener;
 import com.mp4.maker.MP4make;
 import com.video.h264.DecodeDisplay;
 
@@ -81,13 +82,17 @@ public class PlayActivity extends Activity implements OnTouchListener,
 		pc.InitParam(id, 0, img);
 		// 关闭播放日志输出
 		pc.SetOpenLog(true);
-		pc.setStopRecodeVideoListener(new StopRecodeVideoListener() {
+		pc.setRecodeVideoListener(new SetRecodeVideoListener() {
 
 			@Override
-			public void finish(boolean isSuccess, String path) {
-				// TODO Auto-generated method stub
-				Log.d("setStopRecodeVideoListener", "isSuccess:" + isSuccess
-						+ ",path=" + path);
+			public void record(boolean b, Bitmap bitmap) {
+
+			}
+
+			@Override
+			public void finish(boolean b, String s) {
+				Log.d("setStopRecodeVideoListener", "isSuccess:" + b
+						+ ",path=" + s);
 			}
 		});
 		// 设置平滑播放

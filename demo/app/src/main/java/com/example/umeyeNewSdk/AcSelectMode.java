@@ -228,7 +228,7 @@ public class AcSelectMode extends Activity {
 		Constants.server = server;
 		ClientCore clientCore = ClientCore.getInstance();
 		clientCore.RelaseClient();
-		clientCore.setCurrentBestServer("", 0,"",0,"",0);
+		clientCore.setCurrentBestServer("",0,"", 0,"",0,"",0);
 		int language = Utility.isZh(this) ? 2 : 1;
 		clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,

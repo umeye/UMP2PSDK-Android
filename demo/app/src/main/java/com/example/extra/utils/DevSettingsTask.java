@@ -44,7 +44,7 @@ public class DevSettingsTask extends AsyncTask<Void, Void, CFResponse> {
     @Override
     protected CFResponse doInBackground(Void... params) {
         try {
-            return playerClient.CallCustomFuncExEx(connParams, functionId, reqJson.getBytes("UTF-8"));
+            return playerClient.CallCustomFuncExExEx(connParams, functionId, reqJson.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;

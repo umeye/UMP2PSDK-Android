@@ -52,6 +52,7 @@ public class AcLogo extends Activity {
 		localLogin = userInfo != null && userInfo.isLocalMode();
 
 		ClientCore clientCore = ClientCore.getInstance();
+
 		if (clientCore != null && clientCore.IsLogin()) {// 判断是否处于登录状态，直接进入主界面
 			if(!localLogin) {
 				startActivity(new Intent(AcLogo.this, MainActivity.class));

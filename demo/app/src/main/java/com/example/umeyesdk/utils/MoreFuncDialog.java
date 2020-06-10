@@ -47,7 +47,7 @@ public class MoreFuncDialog extends AlertDialog.Builder {
 						//0是主码流，1是子码流 dev_stream_no
 						// 添加4路子码流的dvr
 						WebSdkApi.addNodeInfo(clientCore,
-								String.valueOf(System.currentTimeMillis()), "", 1, 2, 1009,
+								String.valueOf(System.currentTimeMillis()), "", 1, 2, Constants.Vendorid,
 								Constants.UMID, "", 0, Constants.user,
 								Constants.password, 8, 0, 0, 0,0,"",handler);
 						break;

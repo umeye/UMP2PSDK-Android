@@ -11,6 +11,7 @@ import android.util.Log;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseGetInfomation;
 import com.Player.web.websocket.ClientCore;
+import com.example.extra.AcSendProtocol;
 import com.example.umeyesdk.PlayActivity;
 import com.example.umeyesdk.PlayActivity2;
 import com.example.umeyesdk.api.WebSdkApi;
@@ -27,7 +28,7 @@ public class CameraFuncDialog extends AlertDialog.Builder  {
     Activity activity;
     PlayNode node;
     Handler handler;
-    public String[] funcArray = {"去播放", "布防", "撤防", "查询布防"};
+    public String[] funcArray = {"去播放", "布防", "撤防", "查询布防", "发送自定义数据"};
 
     public CameraFuncDialog(Activity arg0, ClientCore clientCore, PlayNode node, Handler handler) {
         super(arg0);
@@ -59,6 +60,11 @@ public class CameraFuncDialog extends AlertDialog.Builder  {
                         break;
                     case 3:
                         WebSdkApi.getDeviceAlarm(clientCore,node.node.sDevId,AlarmUtils.GETUI_CID);
+                        break;
+                    case 4:
+                        intent = new Intent(activity, AcSendProtocol.class);
+                        intent.putExtra("id", node.connecParams);
+                        activity.startActivity(intent);
                         break;
                     default:
                         break;

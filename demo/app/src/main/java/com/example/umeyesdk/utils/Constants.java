@@ -54,6 +54,9 @@ public class Constants {
 	 */
 	public static String UserVideoDir = "sdcard/videorecord";
 
+
+	public static int Vendorid = 1009;
+
 	public final static int LOGIN = 1;// 登陆
 	public final static int LOGIN_OK = 2;// 登陆成功
 	public final static int LUNCH_FAILED = -1;// 启动客户端失败

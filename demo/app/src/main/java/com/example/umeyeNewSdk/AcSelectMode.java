@@ -160,14 +160,12 @@ public class AcSelectMode extends Activity {
 		editUser = (EditText) findViewById(R.id.et_user);
 		editServer = (EditText) findViewById(R.id.et_server);
 		editPassword = (EditText) findViewById(R.id.et_password);
-
 		UserInfo userInfo = UserInfo.getUserInfo(this);
 		if(userInfo != null) {
 			Constants.Login_user = userInfo.getFullName();
 		} else {
 
 		}
-
 		editUser.setText(Constants.Login_user);
 //		editPassword.setText(Constants.Login_password);
 		editServer.setText(Constants.server);
@@ -195,11 +193,6 @@ public class AcSelectMode extends Activity {
 			}
 		};
 		super.onCreate(savedInstanceState);
-
-
-
-
-
 	}
 
 	/**
@@ -228,7 +221,7 @@ public class AcSelectMode extends Activity {
 		Constants.server = server;
 		ClientCore clientCore = ClientCore.getInstance();
 		clientCore.RelaseClient();
-		clientCore.setCurrentBestServer("",0,"", 0,"",0,"",0);
+		clientCore.setCurrentBestServer("",0,"", 0,"",0,"",0,false);
 		int language = Utility.isZh(this) ? 2 : 1;
 		clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,
@@ -239,7 +232,6 @@ public class AcSelectMode extends Activity {
 		Editor ed = sp.edit();
 		ed.putString("server", server);
 		ed.commit();
-
 	}
 
 	/**
@@ -248,15 +240,14 @@ public class AcSelectMode extends Activity {
 	 * @param v
 	 */
 	public void onClick(View v) {
-
 		// TODO Auto-generated method stub
 		String userName = editUser.getText().toString();
 		String password = editPassword.getText().toString();
 		if (TextUtils.isEmpty(userName)) {
-
 			Show.toast(this, R.string.enter_user_name);
 			return;
 		}
+
 		if (TextUtils.isEmpty(password)) {
 
 			Show.toast(this, R.string.enter_password);
@@ -267,6 +258,7 @@ public class AcSelectMode extends Activity {
 
 		// 设置登录模式
 		clientCore.setLocalList(false);
+
 		WebSdkApi.loginServerAtUserId(clientCore, "",
 				Constants.Login_user, Constants.Login_password, handler);
 
@@ -290,7 +282,6 @@ public class AcSelectMode extends Activity {
 	 * @param v
 	 */
 	public void onClick2(View v) {
-
 		//startActivity(new Intent(AcSelectMode.this, AcDevNetPort.class));
 		// umid直连模式 ，不需要下载设备列表
 		clientCore.setLocalList(true);
@@ -327,5 +318,17 @@ public class AcSelectMode extends Activity {
 				});
 		// TODO Auto-generated method stub
 	}
+
+
+
+
+	public void onClick3(View v) {
+		clientCore.setLocalList(false);
+		WebSdkApi.loginServerByThirdParty(clientCore, "wx31d03edf8e532e3f", "", 1,"oQoOsw2tMWSALpjO-xnkRBKPW4M2",
+				handler);
+
+	}
+
+
 
 }

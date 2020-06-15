@@ -79,6 +79,14 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:onClick="onClick3"
+            android:text="@string/wechat_mode" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:onClick="onClick2"
             android:text="@string/umid_connect_mode" />
 

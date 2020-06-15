@@ -159,6 +159,7 @@
     <string name="mainSavedphotos">Photos</string>
     <string name="login_mode">账户登录</string>
     <string name="local_mode">免登录</string>
+    <string name="wechat_mode">微信登录</string>
     <string name="umid_connect_mode">umid直连模式</string>
     <string name="enter_user_name">请输入用户名</string>
     <string name="hint_password">密码</string>

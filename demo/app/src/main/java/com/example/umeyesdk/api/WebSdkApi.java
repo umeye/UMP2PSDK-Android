@@ -24,6 +24,7 @@ import com.Player.web.response.ResponseDevState;
 import com.Player.web.response.ResponseGetPublicAccountInfo;
 import com.Player.web.response.ResponseGetPublicAccountInfoBody;
 import com.Player.web.response.ResponseGetServerList;
+import com.Player.web.response.ResponseLoginThirdParty;
 import com.Player.web.response.ResponseQueryAlarm;
 import com.Player.web.response.ResponseQueryAlarmSettings;
 import com.Player.web.response.ResponseQueryUserPush;
@@ -103,6 +104,53 @@ public class WebSdkApi {
                                     handler.sendEmptyMessage(Constants.LOGIN_FAILED);
                                     return;
                                 }
+								handler.sendEmptyMessage(Constants.LOGIN_FAILED);
+							}
+						} else {
+							Log.e(WebSdkApi, "登录失败! error=" + msg.what);
+							handler.sendEmptyMessage(Constants.LOGIN_FAILED);
+						}
+						super.handleMessage(msg);
+					}
+
+				});
+
+	}
+
+
+
+
+
+
+
+
+	public static void loginServerByThirdParty(final ClientCore clientCore, String open_id, String open_name, int open_type, String open_user,
+										   final Handler handler) {
+		clientCore.loginServerAtUserIdByThirdParty(open_id, open_name, open_type, open_user,
+				new Handler() {
+					@Override
+					public void handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+						ResponseLoginThirdParty responseLoginThirdParty = (ResponseLoginThirdParty) msg.obj;
+						if (responseLoginThirdParty != null && responseLoginThirdParty.h != null) {
+							if (responseLoginThirdParty.h.e == Errors.UM_WEB_API_SUCCESS) {
+
+								handler.sendEmptyMessage(Constants.LOGIN_OK);
+							} else if (responseLoginThirdParty.h.e == Errors.UM_WEB_API_ERROR_ID_NOT_ACCEPTABLE) {
+								handler.sendEmptyMessage(Constants.LOGIN_USER_ERROR);
+
+							} else if(responseLoginThirdParty.h.e == Errors.UM_WEB_API_ERROR_PASSWORD) {
+								handler.sendEmptyMessage(Constants.LOGIN_PWD_ERROR);
+
+							}
+							else {
+
+								Log.e(WebSdkApi, "登录失败!code="
+										+ responseLoginThirdParty.h.e);
+								if(responseLoginThirdParty.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+									handler.sendEmptyMessage(Constants.LOGIN_FAILED);
+									return;
+								}
 								handler.sendEmptyMessage(Constants.LOGIN_FAILED);
 							}
 						} else {

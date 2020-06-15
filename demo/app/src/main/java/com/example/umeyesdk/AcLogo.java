@@ -146,6 +146,7 @@ public class AcLogo extends Activity {
 					LogOut.i("getCurrentBestServer", "获穿透服务器："
 							+ responseServer.b.ust_ip + ",端口："
 							+ responseServer.b.ust_port);
+
 				}
 			}
 		});
@@ -156,19 +157,20 @@ public class AcLogo extends Activity {
 	 *
 	 */
 	public void authUstServerAtUserId(final ClientCore clientCore) {
-
 		int language = Utility.isZh(this) ? 2 : 1;
-
 //		ClientCore.isAPLanMode = true;//ap mode方式
+
 		clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
 				language, Constants.custom_flag,
 				String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空
-		// 获取最优服务器，然后启动sdk
 
+
+
+
+		// 获取最优服务器，然后启动sdk
 		clientCore.getCurrentBestServer(new Handler() {
 			@Override
 			public void handleMessage(Message msg) { // TODO
-
 				ResponseServer responseServer = (ResponseServer) msg.obj;
 				if (responseServer != null && responseServer.h != null) {
 					if (responseServer.h.e == Errors.UM_WEB_API_SUCCESS) {

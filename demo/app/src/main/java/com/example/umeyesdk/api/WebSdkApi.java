@@ -118,12 +118,13 @@ public class WebSdkApi {
 	}
 
 
-
-
-
-
-
-
+	/**
+	 *
+	 * @param open_id  第三方平台APP ID
+	 * @param open_name 第三方平台 账号昵称，可选
+	 * @param open_type 第三方平台类型，1：微信
+	 * @param open_user 第三方平台账号ID，如微信的openid
+	 */
 	public static void loginServerByThirdParty(final ClientCore clientCore, String open_id, String open_name, int open_type, String open_user,
 										   final Handler handler) {
 		clientCore.loginServerAtUserIdByThirdParty(open_id, open_name, open_type, open_user,

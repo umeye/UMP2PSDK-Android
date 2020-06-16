@@ -194,6 +194,8 @@ public class AcLogo extends Activity {
 
 
 
+
+
 			}
 		});
 	}

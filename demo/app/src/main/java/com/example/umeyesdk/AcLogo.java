@@ -39,7 +39,6 @@ public class AcLogo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ac_logo);
 		appMain = (AppMain) this.getApplicationContext();
-
 		handler = new Handler();
 		SharedPreferences sp = getSharedPreferences("server",
 				Context.MODE_PRIVATE);

@@ -206,11 +206,21 @@ public class AcLogo extends Activity {
 			public void run() {
 
 				if(ClientCore.getInstance().IsLoginEx()) {//如果需要自动登录，增加这个判断，判断上次是否有登录
-					if(!localLogin) {
+
+					UserInfo userInfo = ClientCore.getInstance().getUserInfo();
+					boolean isGo2MainActivity = false;
+					try {
+						isGo2MainActivity = (boolean) userInfo.extras.get("isGo2MainActivity");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					if(!localLogin || isGo2MainActivity) {
 						startActivity(new Intent(AcLogo.this, MainActivity.class));
 						finish();
 
 					} else {
+
 						startActivity(new Intent(AcLogo.this,PlayActivity2.class));
 						finish();
 

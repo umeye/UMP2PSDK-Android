@@ -31,6 +31,7 @@ import com.Player.web.response.ResponseQueryUserInfo;
 import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
+import com.example.umeyesdk.AcLogo;
 import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
@@ -99,6 +100,13 @@ public class AcSelectMode extends Activity {
 //									super.handleMessage(msg);
 //								}
 //							});
+
+
+					UserInfo userInfo = ClientCore.getInstance().getUserInfo();
+					if(userInfo != null && userInfo.isLocalMode()) {//免登录情况下为了区分免登录进入还是umid直连模式进入，保存下
+						userInfo.extras.put("isGo2MainActivity", true);
+						UserInfo.setUserInfo(AcSelectMode.this, userInfo);
+					}
 
 					startActivity(new Intent(AcSelectMode.this, MainActivity.class));
 					finish();

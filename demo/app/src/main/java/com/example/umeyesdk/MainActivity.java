@@ -111,9 +111,9 @@ public class MainActivity extends Activity implements OnItemClickListener,
 						DevItemInfo devItemInfo = items.get(i);
 						if (devItemInfo != null) {
 							PlayNode node = PlayNode.ChangeData(devItemInfo);
-							Log.d("PlayNode", "PlayNode.dwParentNodeId:"
-									+ node.node.dwParentNodeId
-									+ ",PlayNode.dwNodeId" + node.node.dwNodeId);
+//							Log.d("PlayNode", "PlayNode.dwParentNodeId:"
+//									+ node.node.dwParentNodeId
+//									+ ",PlayNode.dwNodeId" + node.node.dwNodeId);
 							reGetList.add(node);
 						}
 					}

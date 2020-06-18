@@ -165,7 +165,6 @@ public class AcLogo extends Activity {
 
 
 
-
 		// 获取最优服务器，然后启动sdk
 		clientCore.getCurrentBestServer(new Handler() {
 			@Override

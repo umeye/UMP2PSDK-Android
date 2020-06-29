@@ -101,6 +101,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".AcVideoPlayback"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor" >
+        </activity>
+        <activity
             android:name=".PlayActivity"
             android:screenOrientation="portrait" >
         </activity>

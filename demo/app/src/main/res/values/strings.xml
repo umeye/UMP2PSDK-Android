@@ -191,6 +191,7 @@
     <string name="request_too_many_times">请求次数太多，请稍候再试！</string>
     <string name="network_err">网络异常，请检查网络</string>
     <string name="unknown_errors">未知错误</string>
+    <string name="no_records">无录像</string>
     
     
     <string-array name="pir_time">

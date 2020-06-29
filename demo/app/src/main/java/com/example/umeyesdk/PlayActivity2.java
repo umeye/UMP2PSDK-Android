@@ -26,6 +26,7 @@ import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
 import com.Player.Source.SetRecodeVideoListener;
 import com.Player.Source.SetSnapListener;
+import com.Player.web.response.DevItemInfo;
 import com.Player.web.websocket.PermissionUtils;
 import com.example.umeyesdk.utils.Imagedeal;
 import com.getui.demo.AlarmUtils;
@@ -121,7 +122,6 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         id = getIntent().getStringExtra("id");
         pc.InitParam(id, 0, img);
         pc.SetbCleanLastView(false);
-        DefualtRecoredThread.isSaveToLocal = true;
         // 关闭播放日志输出
         pc.SetOpenLog(true);
         pc.setRecodeVideoListener(new SetRecodeVideoListener() {
@@ -419,7 +419,12 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
             case R.id.btnVideo:// 默认路径 //sdcard/snapShot
                 // 判断SDCard
                 // .......
-                // pc.SetVideoPath(TempVIDEO_PATH);
+                //默认路径
+//                PlayerCore.getDefaultVideoPath()
+
+                DevItemInfo devItemInfo = DevItemInfo.toConnectParams(id);
+                //设置存放目录路径
+                pc.SetVideoPath("/sdcard/" + getPackageName() + "/" + devItemInfo.umid + "_" + devItemInfo.dev_ch_no + "/");
                 if (pc.GetIsSnapVideo()) {
                     pc.SetSnapVideo(false);
                 } else {

@@ -89,7 +89,6 @@ public class AcSendProtocol extends Activity {
                     @Override
                     public void onPostExecuteSuccess(ResponseGetXXX responseGetXXX) {
                         if (isFinishing()) {
-                            playerClient.CameraDisconnectAsync();
                             return;
                         }
                         try {
@@ -123,7 +122,7 @@ public class AcSendProtocol extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        playerClient.CameraDisconnectAsync();
+        playerClient.CameraDisconnectAsyncAndRelease();
     }
 
 

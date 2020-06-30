@@ -32,7 +32,7 @@
             android:paddingRight="15dp"
             android:progress="10"
             android:thumbOffset="2dip"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

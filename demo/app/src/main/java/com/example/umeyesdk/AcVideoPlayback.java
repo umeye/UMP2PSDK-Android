@@ -146,7 +146,7 @@ public class AcVideoPlayback extends Activity {
 			if(isFinishing()) {
 				return;
 			}
-			int ret = msg.what;// GetPlayerState();
+			int ret = player.GetPlayerState();
 			// if (ret==SDKError.Statue_PLAYING) {
 			// fpsProgress.setEnabled(false);
 			// }else {
@@ -162,24 +162,16 @@ public class AcVideoPlayback extends Activity {
 				Log.e("Reconect", "SDKError.Exception_ERRO");
 				player.Stop();
 				// mPlayerCore.Player_Start(CurrentChannel, mImageView);
-			} else if (ret == SDKError.NET_NODATA_ERROR) {
-				Log.e("Reconect", "SDKError.NET_NODATA_ERROR");
-				player.Stop();
-				player.Play();
-			} else if (msg.what == SDKError.Exception_ERROR) {
+			}  else if (ret == SDKError.Exception_ERROR) {
 				Log.e("Reconect", "SDKError.Exception_ERROR");
 				// mStatusBar.setText(R.string.networkerro);
 				// mPlayerCore.Player_Stop();
 				player.Play();
-			} else if (msg.what == SDKError.Statue_RecordFileOver)// 录像结束
-			{
-				Log.e("Reconect", "SDKError.Statue_RecordFileOver");
-				player.Stop();
-			} else if (msg.what == SDKError.Statue_Pause)// 播放暂停
+			}  else if (ret == SDKError.Statue_Pause)// 播放暂停
 			{
 				Log.e("Reconect", "SDKError.Statue_PAUSE");
 				btnPlay.setImageResource(R.drawable.live_play_selector);
-			} else if (msg.what == SDKError.Statue_PLAYING) {
+			} else if (ret == SDKError.Statue_PLAYING) {
 				btnPlay.setImageResource(R.drawable.live_pause_selector);
 				// 设置进度
 				int current = playTimeSev;
@@ -187,31 +179,11 @@ public class AcVideoPlayback extends Activity {
 						+ getTotalTime(fileTime));// +"/"+player.GetFileAllTime());
 				sbProgress.setProgress(current);
 				int total = fileTime;
-				if (msg.arg1 == SDKError.Statue_ConnectFail
-						|| msg.arg1 == SDKError.NET_NODATA_ERROR) {// 如果发现连接失败或者没有数据，则使用重新连接
-					Reconnect();
-				}
 				if (current != 0 && total != 0 && (current >= total)) {// 证明播放到尽头,停止播放
 					Stop();
 				}
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);// 设置成有重力感应模式就是自由切换横竖屏模式
-			} else if (ret == SDKError.NET_LOGIN_ERROR_PASSWORD) {
-				openOptionsDialog(getResources().getString(
-						R.string.passworderro));// "Connect server failed");
-				player.Stop();
-			} else if (ret == SDKError.NET_LOGIN_ERROR_USER) {
-				openOptionsDialog(getResources().getString(R.string.usererro));
-				player.Stop();
-			} else if (ret == SDKError.NET_LOGIN_ERROR_TIMEOUT) {
-				// mStatusBar.setText(R.string.loginfail);
-				openOptionsDialog(getResources().getString(R.string.loginfail));
-				player.Stop();
-			} else if (ret == SDKError.NET_LOGIN_ERROR_LOCKED) {
-				player.Stop();
-			} else if (ret == SDKError.NET_LOGIN_ERROR_BUSY) {
-				openOptionsDialog("Server is busying now!");
-				player.Stop();
-			} else if (ret == SDKError.Statue_STOP) {
+			}  else if (ret == SDKError.Statue_STOP) {
 				btnPlay.setImageResource(R.drawable.live_play_selector);
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 				// sbProgress.setEnabled(false);
@@ -219,6 +191,7 @@ public class AcVideoPlayback extends Activity {
 			}
 			if (ret != SDKError.Statue_PLAYING && ret != SDKError.Statue_Pause) {
 				playTimeSev = 0;
+				Log.d("playTimeSev", "playTimeSev " + playTimeSev + ", ret= " + ret);
 				sbProgress.setProgress(playTimeSev);
 			}
 
@@ -265,7 +238,7 @@ public class AcVideoPlayback extends Activity {
 		// 仅且当停止、就绪、连接失败才可播放
 		if (player.GetPlayerState() != SDKError.Statue_PLAYING) {
 			btnPlay.setImageResource(R.drawable.live_pause_selector);
-			player.InitParam(fileName, imgVod);
+//			player.InitParam(fileName, imgVod);
 			player.Play();
 			if (timer != null) {
 				timer.cancel();
@@ -278,18 +251,13 @@ public class AcVideoPlayback extends Activity {
 				public void run() {
 					// TODO Auto-generated method stub
 					if (!player.IsPausing) {
-						try {
-							playTimeSev = (int) ((float)player.getCurrentPosition()/1000);
-							Log.d("playTimeSev", "playTimeSev " + playTimeSev);
-							System.out.println("playTimeSev：" + playTimeSev);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+						playTimeSev = (int) ((float)player.getCurrentPosition()/1000);
+						Log.d("playTimeSev", "playTimeSev " + playTimeSev);
 					}
 	
 
 				}
-			}, 0, 1000);
+			}, 0, 100);
 
 		}
 		// boolean ret = player.Play(CommonData.VideoFile, imgVod);
@@ -346,9 +314,7 @@ public class AcVideoPlayback extends Activity {
 					if (player != null) {
 						// System.out.println("时间长度:"+player.AVCountTime+"  fps:"+player.GetFrameBitRate()+"当前时间："+player.GetCurrentPlayTime());
 						try {
-							int state = player.GetPlayerState();
 							Message message = handler.obtainMessage();
-							message.what = state;
 							handler.sendMessage(message);
 						} catch (Exception e) {
 							e.printStackTrace();

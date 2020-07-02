@@ -8,13 +8,19 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -30,504 +36,234 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class AcVideoPlayback extends Activity {
-
-	private static final int PDSEEKING = 2;
-
-	private ImageButton btnPlay;
-	private TextView tvProgress, tvfps;
-	private SurfaceView imgVod;
-	private SeekBar sbProgress, fpsProgress;
-	private RelativeLayout rlTitle;
-	private PlayerLocalFileCore player;// ²¥·ÅÆ÷
-	private boolean IsinPlayerView = true;
-	private boolean isShowInfo = true;// ÅÐ¶¨ÊÇ·ñÏÔÊ¾ÐÅÏ¢
-	private MyHandler handler;
-
-	private int fileTime = 0;// Ãë
-
-	private  int playTimeSev = 0;// ²¥·ÅÊ±³¤
-
-	private String fileName;
-	private TMp4FileInfo tmpMp4FileInfo;
-
-	private Timer timer;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ac_videoplayback);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-		fileName = getIntent().getStringExtra("fileName");
-
-		InitView();
-
-
-		handler = new MyHandler();
-		new ShowStateInfoThread().start();
-	}
-
-	public void InitView() {
-
-		imgVod = (SurfaceView) findViewById(R.id.imgLive);
-		tvProgress = (TextView) findViewById(R.id.tvState);
-		rlTitle = (RelativeLayout) findViewById(R.id.title_layout);
-		// µ×²¿¿ØÖÆ°´Å¥
-		OnControlClick onCtontrolClick = new OnControlClick();
-		btnPlay = (ImageButton) findViewById(R.id.btnPlay);
-		btnPlay.setOnClickListener(onCtontrolClick);
-
-		sbProgress = (SeekBar) findViewById(R.id.sbProgressNew);
-		fpsProgress = (SeekBar) findViewById(R.id.fpsProgress);
-		tvfps = (TextView) findViewById(R.id.fpstextview);
-		player = new PlayerLocalFileCore(this);
-		// fileName="/sdcard/vMEyeIPC/video/20140202201007032.mp4";
-		player.InitParam(fileName, imgVod);
-		System.out.println("MP4 fileName is " + fileName);
-
-		// player.Play();
-		tmpMp4FileInfo = player.GetMp4FileInfo(fileName, Integer.parseInt(fileName.substring(fileName.lastIndexOf("fps")+3,fileName.lastIndexOf(".mp4"))));
-		if (tmpMp4FileInfo != null) {
-			System.out.println(player.GetCurrentPlayTime() + "ÐÅÏ¢:Ö¡"
-					+ tmpMp4FileInfo.fps + ",³¤¶È" + tmpMp4FileInfo.totaltime
-					+ ",¿í" + tmpMp4FileInfo.width + "x¸ß"
-					+ tmpMp4FileInfo.height);
-		}
-		Play();
-		fileTime = tmpMp4FileInfo.totaltime / 1000;
-		sbProgress.setMax(fileTime);
-		fpsProgress.setMax(99);
-		fpsProgress.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
-			@Override
-			public void onStopTrackingTouch(SeekBar arg0) {
-				// TODO Auto-generated method stub
-				int fps = arg0.getProgress() + 1;
-
-				player.ControlMp4PlaySpeed(fps);
-
-				int tmpfileTime = (int) ((float)player.getDuration()/1000);
-				tvfps.setText(fps + "fps");
-
-				playTimeSev = (int) ((float)player.getCurrentPosition()/1000);
-				Log.d("playTimeSev", "playTimeSev " + playTimeSev);
-				fileTime=tmpfileTime;
-				sbProgress.setMax(fileTime);
-				tvProgress.setText(getTotalTime(playTimeSev) + "/"
-						+ getTotalTime(fileTime));
-
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		sbProgress.setOnSeekBarChangeListener(new OnSeekBarChange());
-
-	}
-
-
-
-	@SuppressLint("HandlerLeak")
-	class MyHandler extends Handler {
-		@Override
-		public void dispatchMessage(Message msg) {
-
-			super.handleMessage(msg);
-			if(isFinishing()) {
-				return;
-			}
-			int ret = player.GetPlayerState();
-			// if (ret==SDKError.Statue_PLAYING) {
-			// fpsProgress.setEnabled(false);
-			// }else {
-			// fpsProgress.setEnabled(true);
-			// }
-
-			if (ret == SDKError.Statue_ConnectFail) {
-				Log.e("Reconect", "SDKError.Statue_ConnectFail");
-				btnPlay.setImageResource(R.drawable.live_play_selector);
-				player.Stop();
-				// mPlayerCore.Player_Start(CurrentChannel, mImageView);
-			} else if (ret == SDKError.NET_ERROR) {
-				Log.e("Reconect", "SDKError.Exception_ERRO");
-				player.Stop();
-				// mPlayerCore.Player_Start(CurrentChannel, mImageView);
-			}  else if (ret == SDKError.Exception_ERROR) {
-				Log.e("Reconect", "SDKError.Exception_ERROR");
-				// mStatusBar.setText(R.string.networkerro);
-				// mPlayerCore.Player_Stop();
-				player.Play();
-			}  else if (ret == SDKError.Statue_Pause)// ²¥·ÅÔÝÍ£
-			{
-				Log.e("Reconect", "SDKError.Statue_PAUSE");
-				btnPlay.setImageResource(R.drawable.live_play_selector);
-			} else if (ret == SDKError.Statue_PLAYING) {
-				btnPlay.setImageResource(R.drawable.live_pause_selector);
-				// ÉèÖÃ½ø¶È
-				int current = playTimeSev;
-				tvProgress.setText(getTotalTime(current) + "/"
-						+ getTotalTime(fileTime));// +"/"+player.GetFileAllTime());
-				sbProgress.setProgress(current);
-				int total = fileTime;
-				if (current != 0 && total != 0 && (current >= total)) {// Ö¤Ã÷²¥·Åµ½¾¡Í·,Í£Ö¹²¥·Å
-					Stop();
-				}
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);// ÉèÖÃ³ÉÓÐÖØÁ¦¸ÐÓ¦Ä£Ê½¾ÍÊÇ×ÔÓÉÇÐ»»ºáÊúÆÁÄ£Ê½
-			}  else if (ret == SDKError.Statue_STOP) {
-				btnPlay.setImageResource(R.drawable.live_play_selector);
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-				// sbProgress.setEnabled(false);
-				// mIsPlaying = false;
-			}
-			if (ret != SDKError.Statue_PLAYING && ret != SDKError.Statue_Pause) {
-				playTimeSev = 0;
-				Log.d("playTimeSev", "playTimeSev " + playTimeSev + ", ret= " + ret);
-				sbProgress.setProgress(playTimeSev);
-			}
-
-			if (player.IsPausing) {
-				btnPlay.setImageResource(R.drawable.live_play_selector);
-				return;
-			}
-
-		}
-	}
-
-	public void Reconnect() {
-		if (player != null) {
-			Stop();
-			try// Ð¡·¶Î§ÐÝÃß
-			{
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			Play();
-			System.out.println("ÖØÐÂÁ¬½Ó");
-		}
-	}
-
-	public void Pause() {
-		// µ±ÒÑ¾­ÔÝÍ£Ê±£¬°´Å¥²»Æð×÷ÓÃ
-		if (player.GetPlayerState() == SDKError.Statue_Pause)
-			return;
-		player.Pause();
-		btnPlay.setImageResource(R.drawable.live_play_selector);
-	}
-
-	public void Play() {
-		// µ±ÕýÔÚ²¥·ÅÊ±£¬°´Å¥²»Æð×÷ÓÃ
-		if (player.GetPlayerState() == SDKError.Statue_PLAYING)
-			return;
-
-		if (player.GetPlayerState() == SDKError.Statue_Pause) {
-			player.Resume();
-			btnPlay.setImageResource(R.drawable.live_pause_selector);
-			return;
-		}
-		// ½öÇÒµ±Í£Ö¹¡¢¾ÍÐ÷¡¢Á¬½ÓÊ§°Ü²Å¿É²¥·Å
-		if (player.GetPlayerState() != SDKError.Statue_PLAYING) {
-			btnPlay.setImageResource(R.drawable.live_pause_selector);
-//			player.InitParam(fileName, imgVod);
-			player.Play();
-			if (timer != null) {
-				timer.cancel();
-				timer = null;
-			}
-			timer = new Timer();
-			timer.schedule(new TimerTask() {
-
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					if (!player.IsPausing) {
-						playTimeSev = (int) ((float)player.getCurrentPosition()/1000);
-						Log.d("playTimeSev", "playTimeSev " + playTimeSev);
-					}
-	
-
-				}
-			}, 0, 100);
-
-		}
-		// boolean ret = player.Play(CommonData.VideoFile, imgVod);
-		// if(ret && currentpos>0)
-		// player.
-		// player.SeekFilePos(currentpos,0);
-
-	}
-
-	public void Stop() {
-		if (player.GetPlayerState() == SDKError.Statue_STOP)
-			return;// Èç¹û×´Ì¬ÒÑ¾­ÊÇÍ£Ö¹£¬Ôò²»Ö´ÐÐ
-		player.Stop();
-		tvProgress.setText(getTotalTime(0) + "/" + getTotalTime(fileTime));
-		btnPlay.setImageResource(R.drawable.live_play_selector);
-		if (timer != null) {
-			timer.cancel();
-			timer = null;
-		}
-		System.out.println("-------------Í£Ö¹-----------------");
-	}
-
-
-
-	public void Release() {
-		player.Release();
-		if (timer != null) {
-			timer.cancel();
-			timer = null;
-		}
-		System.out.println("-------------ÊÍ·Å-----------------");
-	}
-
-
-	private void openOptionsDialog(String MessageTip) {
-		new AlertDialog.Builder(this)
-				.setMessage(MessageTip)
-				.setPositiveButton(getResources().getString(R.string.positive),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-
-							}
-						}).show();
-	}
-
-	class ShowStateInfoThread extends Thread// ÏÔÊ¾Ïß³ÌµÄ×´Ì¬
-	{
-		@Override
-		public void run() {
-			while (isShowInfo) {
-				if (IsinPlayerView) {
-					if (player != null) {
-						// System.out.println("Ê±¼ä³¤¶È:"+player.AVCountTime+"  fps:"+player.GetFrameBitRate()+"µ±Ç°Ê±¼ä£º"+player.GetCurrentPlayTime());
-						try {
-							Message message = handler.obtainMessage();
-							handler.sendMessage(message);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		// TODO Auto-generated method stub
-		super.onConfigurationChanged(newConfig);
-		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			Log.d("Changel", "ºáÆÁ" + newConfig);
-//			imgVod.setScaleType(ImageView.ScaleType.FIT_XY);
-			player.changeVideoSize();
-			rlTitle.setVisibility(View.GONE);
-			findViewById(R.id.bottom_layout).setVisibility(View.GONE);
-		} else {
-			Log.d("Changel", "ÊúÆÁ" + newConfig);
-//			imgVod.setScaleType(ImageView.ScaleType.FIT_CENTER);\
-			player.changeVideoSize();
-			rlTitle.setVisibility(View.VISIBLE);
-			findViewById(R.id.bottom_layout).setVisibility(View.VISIBLE);
-		}
-
-	}
-
-	public class OnControlClick implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.btnPlay:
-				if (player.GetPlayerState() == SDKError.Statue_STOP) {
-					Play();
-					break;
-				}
-				if (player.IsPausing) {
-					Play();
-				} else
-					Pause();
-
-				break;
-
-			case R.id.back_btn:
-				finish();
-				break;
-			// case R.id.btnSnap:
-			// if (player.GetPlayerState() == SDKError.Statue_PLAYING) {
-			// // Î´×°ÈëSD¿¨Òì³£
-			// if (android.os.Environment.getExternalStorageState()
-			// .equals(android.os.Environment.MEDIA_MOUNTED)) {
-			// player.SetAlbumPath(Config.UserImageDir);
-			// player.SetSnapPicture(true);
-			//
-			// Toast.makeText(
-			// AcVideoPlayback.this,
-			// getString((R.string.savetips))
-			// + Config.UserImageDir
-			// + getString(R.string.dirctory),
-			// Toast.LENGTH_SHORT).show();
-			// } else {
-			// Toast.makeText(AcVideoPlayback.this,
-			// R.string.sdcard_unavaible, Toast.LENGTH_SHORT)
-			// .show();
-			// }
-			// } else {
-			// Toast.makeText(AcVideoPlayback.this, R.string.nopictips,
-			// Toast.LENGTH_SHORT).show();
-			// }
-			// break;
-			}
-		}
-
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Release();
-		isShowInfo = false;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		if (id == PDSEEKING) {
-			ProgressDialog pd = new ProgressDialog(this);
-			pd.setMessage(getString(R.string.loading));
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			return pd;
-		}
-
-		return super.onCreateDialog(id);
-	}
-
-	public class OnSeekBarChange implements OnSeekBarChangeListener {
-
-		@Override
-		public void onProgressChanged(SeekBar seekBar, int progress,
-				boolean fromUser) {
-			playTimeSev = seekBar.getProgress();
-			tvProgress.setText(getTotalTime(playTimeSev) + "/"
-					+ getTotalTime(fileTime));
-		}
-
-		@Override
-		public void onStartTrackingTouch(SeekBar seekBar) {
-			player.Pause();
-		}
-
-		@SuppressWarnings("deprecation")
-		@Override
-		public void onStopTrackingTouch(SeekBar seekBar) {
-			playTimeSev = seekBar.getProgress();
-			showDialog(PDSEEKING);
-			Thread t = new Thread(SeekThread);
-			t.start();
-		}
-
-	}
-
-	// public class OnFpsSeekBarChange implements OnSeekBarChangeListener {
-	//
-	// @Override
-	// public void onProgressChanged(SeekBar seekBar, int progress,
-	// boolean fromUser) {
-	// }
-	//
-	// @Override
-	// public void onStartTrackingTouch(SeekBar seekBar) {
-	// }
-	//
-	// @Override
-	// public void onStopTrackingTouch(SeekBar seekBar) {
-	// int selectFps = seekBar.getProgress() + 2;
-	// fpstextview.setText(selectFps + " fps");
-	// player.ControlMp4PlaySpeed(selectFps);
-	// // Thread t = new Thread(SeekThread);
-	// // t.start();
-	// }
-	//
-	// }
-
-	public String getTotalTime(int fileTime) {
-
-		long hour, min, sec;
-		hour = fileTime / 3600;
-		min = (fileTime % 3600) / 60;
-		sec = fileTime % 60;
-		return getStartTime((int) hour, (int) min, (int) sec);
-	}
-
-	public String getStartTime(int hour, int min, int sec) {
-		String startHour = String.valueOf(hour);
-		String startMin = String.valueOf(min);
-		String startSec = String.valueOf(sec);
-		if (hour < 10)
-			startHour = "0" + startHour;
-		if (min < 10)
-			startMin = "0" + startMin;
-		if (sec < 10)
-			startSec = "0" + sec;
-
-		if (hour <= 0) {
-			startHour = "00";
-		}
-		if (min <= 0) {
-			startMin = "00";
-		}
-		if (sec <= 0) {
-			startSec = "00";
-		}
-		return startHour + ":" + startMin + ":" + startSec;
-	}
-
-	private Runnable SeekThread = new Runnable() {
-		@Override
-		public void run() {
-
-			try {
-				player.SetCurrentPlayTime(playTimeSev * 1000);
-				System.out.println(playTimeSev + "+" + player.GetCurrentPlayTime());
-				player.SeekFilePos(playTimeSev);
-				player.Resume();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			SeekHandler.sendEmptyMessage(PDSEEKING);
-		};
-	};
-	@SuppressLint("HandlerLeak")
-	private Handler SeekHandler = new Handler() {
-		@SuppressWarnings("deprecation")
-		@Override
-		public void handleMessage(Message msg) {
-			dismissDialog(PDSEEKING);
-			super.handleMessage(msg);
-		}
-	};
-
-
-
-
+    private PlayerLocalFileCore player;
+    private SeekBar seekBar, fps;
+    private SurfaceView sv_main_surface;
+    private String fileName;
+    private TextView tv_time;
+    private ImageButton iv_play;
+    private boolean flag = false;
+    private boolean isSeeking = false;
+    private TMp4FileInfo tmpMp4FileInfo;
+    private boolean isPaused = false;
+    private int duration;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (isFinishing()) {
+                return;
+            }
+            if (isSeeking) {
+                return;
+            }
+
+            if (player.GetPlayerState() == SDKError.Statue_PLAYING) {
+
+                int currentPosition = player.getCurrentPosition();
+                duration = player.getDuration();
+                //è®©è¿›åº¦æ¡æ»šåŠ¨èµ·æ¥
+                seekBar.setProgress(currentPosition / 1000 * 1000);
+                seekBar.setMax(duration);
+                tv_time.setText(generateTime(currentPosition) + "/" + generateTime(duration));
+
+            } else if (player.GetPlayerState() == SDKError.Statue_Ready) {
+                seekBar.setProgress(0);
+                iv_play.setImageResource(android.R.drawable.ic_media_play);
+                tv_time.setText(generateTime(0) + "/" + generateTime(duration));
+
+            }
+
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.ac_videoview);
+        iv_play = findViewById(R.id.iv_play);
+        seekBar = findViewById(R.id.seekBar);
+        fps = findViewById(R.id.fps);
+        fps.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                setPlaySpeed(seekBar.getProgress());
+            }
+        });
+
+        sv_main_surface = findViewById(R.id.sv_main_surface);
+        tv_time = findViewById(R.id.tv_time);
+
+
+        iv_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play();
+            }
+        });
+
+        player = new PlayerLocalFileCore(this);
+
+        fileName = getIntent().getStringExtra("fileName");
+        tmpMp4FileInfo = player.GetMp4FileInfo(fileName, Integer.parseInt(fileName.substring(fileName.lastIndexOf("fps") + 3, fileName.lastIndexOf(".mp4"))));
+        if (tmpMp4FileInfo != null) {
+            System.out.println(player.GetCurrentPlayTime() + "ä¿¡æ¯:å¸§"
+                    + tmpMp4FileInfo.fps + ",é•¿åº¦" + tmpMp4FileInfo.totaltime
+                    + ",å®½" + tmpMp4FileInfo.width + "xé«˜"
+                    + tmpMp4FileInfo.height);
+            fps.setProgress(tmpMp4FileInfo.fps);
+            fps.setMax(tmpMp4FileInfo.fps * 2);
+        }
+
+
+        player.InitParam(fileName, sv_main_surface);
+
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isSeeking = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //èŽ·å–æ‹–åŠ¨ç»“æŸä¹‹åŽçš„ä½ç½®
+                int progress = seekBar.getProgress();
+                //è·³è½¬åˆ°æŸä¸ªä½ç½®æ’­æ”¾
+                player.SeekFilePos(progress);
+                isSeeking = false;
+            }
+        });
+
+        player.Play();
+
+
+    }
+
+
+    private void setPlaySpeed(int fps) {
+        if(fps <= 0) {
+            fps = 1;
+        }
+        player.ControlMp4PlaySpeed(fps);
+
+        duration = player.getDuration();
+        seekBar.setMax(duration);
+
+        int progress = player.getCurrentPosition();
+        seekBar.setProgress(progress);
+
+        tv_time.setText(generateTime(progress) + "/" + generateTime(duration));
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //æŠŠå›¾æ ‡å˜ä¸ºæ’­æ”¾å›¾æ ‡
+        iv_play.setImageResource(android.R.drawable.ic_media_play);
+        flag = false;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isPaused) {
+            // æŠŠå›¾æ ‡å˜ä¸ºæš‚åœå›¾æ ‡
+            iv_play.setImageResource(android.R.drawable.ic_media_pause);
+            if (!flag) {
+                flag = true;
+                new MyThread().start();
+            }
+        }
+    }
+
+    public void play() {
+        if (player.GetPlayerState() == SDKError.Statue_PLAYING) {
+            player.Pause();
+            //æŠŠå›¾æ ‡å˜ä¸ºæ’­æ”¾å›¾æ ‡
+            iv_play.setImageResource(android.R.drawable.ic_media_play);
+            isPaused = true;
+        } else {
+            if (player.IsPausing) {
+                player.Resume();
+            } else {
+                player.Play();
+            }
+            //æŠŠå›¾æ ‡å˜ä¸ºæš‚åœå›¾æ ‡
+            iv_play.setImageResource(android.R.drawable.ic_media_pause);
+            isPaused = false;
+            if (!flag) {
+                flag = true;
+                new MyThread().start();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        player.Release();
+        flag = false;
+    }
+
+    class MyThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            while (flag) {
+                //èŽ·å–å½“å‰ä½ç½®éŸ³ä¹æ’­æ”¾çš„ä½ç½®
+                handler.sendEmptyMessage(0);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
+
+    public static String generateTime(long time) {
+        int totalSeconds = (int) (time / 1000);
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
+
+        return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        player.changeVideoSize();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            super.onBackPressed();
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        }
+    }
 
 
 }

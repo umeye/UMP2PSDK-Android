@@ -114,7 +114,7 @@ public class AcVideoPlayback extends Activity {
         player = new PlayerLocalFileCore(this);
 
         fileName = getIntent().getStringExtra("fileName");
-        tmpMp4FileInfo = player.GetMp4FileInfo(fileName, Integer.parseInt(fileName.substring(fileName.lastIndexOf("fps") + 3, fileName.lastIndexOf(".mp4"))));
+        tmpMp4FileInfo = player.GetMp4FileInfo(fileName);
         if (tmpMp4FileInfo != null) {
             System.out.println(player.GetCurrentPlayTime() + "信息:帧"
                     + tmpMp4FileInfo.fps + ",长度" + tmpMp4FileInfo.totaltime

@@ -86,7 +86,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 return;
             }
             if (msg.what == SHOW_STATE) {
-                txtState.setText(GetDescription(PlayActivity2.this, msg.arg1));
+
                 // 是否显示录像
                 txtRec.setVisibility(msg.arg2 == 1 ? View.VISIBLE : View.GONE);
 
@@ -94,8 +94,13 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
                 int state = pc.PlayCoreGetCameraPlayerState();
 
+                Log.d("printState", "state=> " + state);
+
+                txtState.setText(GetDescription(PlayActivity2.this, state));
+
                 if(!(state == 0 || state == 1 || state == 2 || state == 4 || state == 10 || state == 7 || state == SDKError.NPC_D_MPI_MON_ERROR_USERID_ERROR
-                        || state == SDKError.NPC_D_MPI_MON_ERROR_USERPWD_ERROR || state == SDKError.NPC_D_MPI_MON_ERROR_REJECT_ACCESS)) {
+                        || state == SDKError.NPC_D_MPI_MON_ERROR_USERPWD_ERROR || state == SDKError.NPC_D_MPI_MON_ERROR_REJECT_ACCESS
+                        )) {
                     Reconnect();
                 }
 
@@ -351,7 +356,6 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                     Thread.sleep(500);
                     Message msg = new Message();
                     msg.what = SHOW_STATE;
-                    msg.arg1 = pc.PlayCoreGetCameraPlayerState();
                     if (pc.GetIsSnapVideo()) {
                         msg.arg2 = 1;
                     }

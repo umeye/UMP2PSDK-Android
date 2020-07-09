@@ -297,7 +297,7 @@ public class AcVod extends Activity {
 				if (msg.arg1 == SDKError.Statue_ConnectFail
 						|| msg.arg1 == SDKError.NET_NODATA_ERROR)// 如果发现连接失败或者没有数据，则使用重新连接
 				{
-					// Reconnect();
+					 Reconnect();
 				}
 
 			}
@@ -383,7 +383,7 @@ public class AcVod extends Activity {
 
 	public void Reconnect() {
 		if (player != null) {
-			// Stop();
+			 Stop();
 			// try//小范围休眠
 			// {
 			// Thread.sleep(100);

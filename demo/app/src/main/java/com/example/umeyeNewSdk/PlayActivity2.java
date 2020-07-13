@@ -89,6 +89,9 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
+			if(isFinishing()) {
+				return;
+			}
 			if (msg.what == SHOW_STATE) {
 				txtState.setText(GetDescription(PlayActivity2.this, msg.arg1));
 				// 是否显示录像
@@ -578,7 +581,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 				des = con.getString(R.string.stop);
 				break;
 			case 7:
-				des = con.getString(R.string.stop);
+				des = con.getString(R.string.stopping);
 				break;
 			case SDKError.NPC_D_MPI_MON_ERROR_USERID_ERROR:
 				des = con.getString(R.string.usererro);

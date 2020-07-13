@@ -722,7 +722,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 des = con.getString(R.string.buffering);
                 break;
             case 7:
-                des = con.getString(R.string.stop);
+                des = con.getString(R.string.stopping);
                 break;
             case SDKError.NPC_D_MPI_MON_ERROR_USERID_ERROR:
                 des = con.getString(R.string.usererro);

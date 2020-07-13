@@ -60,6 +60,7 @@
     <string name="playing">播放中……</string>
     <string name="pause">暂停</string>
     <string name="stop">停止</string>
+    <string name="stopping">停止中……</string>
     <string name="connect_success">连接成功</string>
     <string name="connect_fail">连接失败</string>
     <string name="connecting">连接中……</string>

@@ -76,7 +76,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 			btnTalk, btnSound;
 	private Button btnPlay, btnPause, btnSnap, btnVideo, btnSearch, btnLogout;
 	private ImageButton btnMenu, btnUnLock;
-	public static boolean isRun = true;
+	public boolean isRun = true;
 	PlayerClient playClient;
 	private EditText server, port, umid, user, password;
 	AppMain appMain;

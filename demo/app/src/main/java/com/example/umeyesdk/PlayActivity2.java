@@ -98,9 +98,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
                 txtState.setText(GetDescription(PlayActivity2.this, state));
 
-                if(!(state == 0 || state == 1 || state == 2 || state == 4 || state == 10 || state == 7 || state == SDKError.NPC_D_MPI_MON_ERROR_USERID_ERROR
-                        || state == SDKError.NPC_D_MPI_MON_ERROR_USERPWD_ERROR || state == SDKError.NPC_D_MPI_MON_ERROR_REJECT_ACCESS
-                        )) {
+                if(pc.isNeedReconnect()) {
                     Reconnect();
                 }
 

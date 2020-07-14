@@ -22,13 +22,13 @@ import android.widget.TextView;
 
 import com.Player.Core.OnFinishListener;
 import com.Player.Core.PlayerCore;
+import com.Player.Core.Utils.Imagedeal;
 import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
 import com.Player.Source.SetRecodeVideoListener;
 import com.Player.Source.SetSnapListener;
 import com.Player.web.response.DevItemInfo;
 import com.Player.web.websocket.PermissionUtils;
-import com.example.umeyesdk.utils.Imagedeal;
 import com.getui.demo.AlarmUtils;
 import com.mp4.maker.MP4make;
 import com.video.h264.DecodeDisplay;

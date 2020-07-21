@@ -9,18 +9,24 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.Player.Source.TAlarmSetInfor;
 import com.Player.Source.TDevNodeInfor;
 import com.Player.web.request.P2pConnectInfo;
 import com.Player.web.response.AlarmInfo;
+import com.Player.web.response.CloudFiles;
 import com.Player.web.response.DevState;
 import com.Player.web.response.ResponseAddNode;
+import com.Player.web.response.ResponseBatchQueryFileUrl;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
 import com.Player.web.response.ResponseDevShareInfo;
 import com.Player.web.response.ResponseDevState;
+import com.Player.web.response.ResponseFileDetail;
+import com.Player.web.response.ResponseFileList;
+import com.Player.web.response.ResponseFileListBody;
 import com.Player.web.response.ResponseGetPublicAccountInfo;
 import com.Player.web.response.ResponseGetPublicAccountInfoBody;
 import com.Player.web.response.ResponseGetServerList;
@@ -1883,6 +1889,116 @@ public class WebSdkApi {
 			 }
 		 });
 	}
+
+
+	/**
+	 * 批量查询文件下载URL
+	 * @param file_ids 文件访问ID列表
+	 * @param check_sub_file 是否需要生成附属文件信息，1：需要; 0：不需要
+	 * @param schema HTTP schema; 1为http; 2为https
+	 * @param select_key 密钥
+	 */
+	public static void batchCloudQueryFileURL(ClientCore clientCore, String[] file_ids, int check_sub_file, int schema, String select_key) {
+		clientCore.batchCloudQueryFileURL(file_ids, check_sub_file,schema, select_key, new Handler() {
+
+					@Override
+					public void handleMessage(Message msg) {
+						ResponseBatchQueryFileUrl responseBatchQueryFileUrl = (ResponseBatchQueryFileUrl) msg.obj;
+						if (responseBatchQueryFileUrl != null && responseBatchQueryFileUrl.h != null) {
+							if (responseBatchQueryFileUrl.h.e == 200) {
+
+
+								for (CloudFiles file : responseBatchQueryFileUrl.b.file_list) {
+									String file_id = file.file_id;//link_img_id
+									String url = file.url;
+								}
+
+
+							} else {
+
+							}
+						} else {
+
+						}
+					}
+				});
+	}
+
+
+
+
+	/**
+	 *  根据文件ID获取文件详情
+	 * @param file_id 文件访问ID
+	 * @param check_sub_file 是否需要生成附属文件信息，1：需要; 0：不需要
+	 * @param schema HTTP schema; 1为http; 2为https
+	 * @param select_key 密钥
+	 */
+	public static void getCloudFileDetail(ClientCore clientCore, String file_id, int check_sub_file, int schema, String select_key){
+		clientCore.getCloudFileDetail(file_id,check_sub_file,schema, select_key, new Handler(){
+
+					@Override
+					public void handleMessage(Message msg) {
+						ResponseFileDetail responseFileDetail = (ResponseFileDetail) msg.obj;
+						if (responseFileDetail != null && responseFileDetail.h != null) {
+							if (responseFileDetail.h.e == 200) {
+								String remark = responseFileDetail.b.remark;
+								if (!TextUtils.isEmpty(responseFileDetail.b.sub_file.url_2)) {
+
+								}
+								if(!TextUtils.isEmpty(responseFileDetail.b.sub_file.url_1)) {
+
+								}
+
+							} else {
+
+
+							}
+						} else {
+
+						}
+
+					}
+				});
+	}
+
+
+
+	/**
+	 * 根据umid、channel获取云存储文件列表
+	 * @param file_type 文件访问ID
+	 * @param umid_id umid
+	 * @param channel 通道号
+	 * @param check_sub_file 是否需要生成附属文件信息，1：需要; 0：不需要
+	 * @param schema HTTP schema; 1为http; 2为https
+	 * @param select_key 密钥
+	 */
+	public static void getCloudFileList(ClientCore clientCore, int file_type, String umid_id, String start_time, String end_time, int channel, int check_sub_file, int schema, String select_key){
+		clientCore.getCloudFileList(file_type,umid_id,start_time, end_time,channel, check_sub_file,schema,select_key,new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+				ResponseFileList responseFileList = (ResponseFileList) msg.obj;
+				if (responseFileList != null && responseFileList.h != null) {
+					if (responseFileList.h.e == 200) {
+						ResponseFileListBody responseFileListBody = responseFileList.b;
+						for (ResponseFileListBody.FileListBean fileListBean : responseFileListBody.file_list) {
+
+						}
+
+					} else {
+
+
+					}
+				} else {
+
+				}
+
+			}
+		});
+	}
+
+
 
 
 

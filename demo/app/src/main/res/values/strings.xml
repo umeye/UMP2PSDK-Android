@@ -193,6 +193,13 @@
     <string name="network_err">网络异常，请检查网络</string>
     <string name="unknown_errors">未知错误</string>
     <string name="no_records">无录像</string>
+
+
+    <string name="cloud_service">云服务</string>
+    <string name="check_order">查询名单</string>
+    <string name="order_list">订单列表</string>
+    <string name="ys_statement">云存储服务说明</string>
+    <string name="fail_to_getcloud_service">获取云存储服务失败！</string>
     
     
     <string-array name="pir_time">

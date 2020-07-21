@@ -21,9 +21,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.Player.Core.PlayGlCore;
+import com.Player.Core.Utils.Imagedeal;
 import com.Player.Source.SDKError;
 import com.SPWipet.Jni.GLViewFragment;
-import com.example.umeyesdk.utils.Imagedeal;
 
 public class AcVrPlay extends FragmentActivity implements OnTouchListener,
 		OnClickListener {

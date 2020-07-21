@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.Player.Core.PlayGlCore;
+import com.Player.Core.Utils.Imagedeal;
 import com.Player.Source.SDKError;
-import com.example.umeyesdk.utils.Imagedeal;
 import com.yuv.glDisplay.GLFrameSurface;
 
 public class GlPlayActivity extends Activity implements OnTouchListener,

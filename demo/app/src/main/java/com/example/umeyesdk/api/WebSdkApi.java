@@ -1905,7 +1905,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseBatchQueryFileUrl responseBatchQueryFileUrl = (ResponseBatchQueryFileUrl) msg.obj;
 						if (responseBatchQueryFileUrl != null && responseBatchQueryFileUrl.h != null) {
-							if (responseBatchQueryFileUrl.h.e == 200) {
+							if (responseBatchQueryFileUrl.h.e == Errors.UM_WEB_API_SUCCESS) {
 
 
 								for (CloudFiles file : responseBatchQueryFileUrl.b.file_list) {
@@ -1915,7 +1915,9 @@ public class WebSdkApi {
 
 
 							} else {
-
+								if(responseBatchQueryFileUrl.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+									return;
+								}
 							}
 						} else {
 
@@ -1941,7 +1943,7 @@ public class WebSdkApi {
 					public void handleMessage(Message msg) {
 						ResponseFileDetail responseFileDetail = (ResponseFileDetail) msg.obj;
 						if (responseFileDetail != null && responseFileDetail.h != null) {
-							if (responseFileDetail.h.e == 200) {
+							if (responseFileDetail.h.e == Errors.UM_WEB_API_SUCCESS) {
 								String remark = responseFileDetail.b.remark;
 								if (!TextUtils.isEmpty(responseFileDetail.b.sub_file.url_2)) {
 
@@ -1951,7 +1953,9 @@ public class WebSdkApi {
 								}
 
 							} else {
-
+								if(responseFileDetail.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+									return;
+								}
 
 							}
 						} else {
@@ -1980,14 +1984,16 @@ public class WebSdkApi {
 			public void handleMessage(Message msg) {
 				ResponseFileList responseFileList = (ResponseFileList) msg.obj;
 				if (responseFileList != null && responseFileList.h != null) {
-					if (responseFileList.h.e == 200) {
+					if (responseFileList.h.e == Errors.UM_WEB_API_SUCCESS) {
 						ResponseFileListBody responseFileListBody = responseFileList.b;
 						for (ResponseFileListBody.FileListBean fileListBean : responseFileListBody.file_list) {
 
 						}
 
 					} else {
-
+						if(responseFileList.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+							return;
+						}
 
 					}
 				} else {

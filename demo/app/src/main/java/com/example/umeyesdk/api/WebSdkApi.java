@@ -18,8 +18,8 @@ import com.Player.web.request.P2pConnectInfo;
 import com.Player.web.response.AlarmInfo;
 import com.Player.web.response.CloudFiles;
 import com.Player.web.response.DevState;
-import com.Player.web.response.NCDictionary;
 import com.Player.web.response.ResponseAddNode;
+import com.Player.web.response.ResponseBaseDictionary;
 import com.Player.web.response.ResponseBatchQueryFileUrl;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
@@ -2011,19 +2011,19 @@ public class WebSdkApi {
 	/**
 	 *  发送自定义json数据
 	 * @param function 函数识别码
-	 * @param jsonObject json字符串对象
+	 * @param json json字符串
 	 */
-	public static void sendCommonJsonStr(ClientCore clientCore,int function, JSONObject jsonObject) {
-		clientCore.sendCommonJsonStr(function,jsonObject,new Handler(){
+	public static void sendCommonJsonStr(ClientCore clientCore,int function, String json) {
+		clientCore.sendCommonJsonStr(function,json,new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
-				NCDictionary dictionary = (NCDictionary) msg.obj;
-				if (dictionary != null && dictionary.h != null) {
-					if (dictionary.h.e == Errors.UM_WEB_API_SUCCESS) {
+				ResponseBaseDictionary responseBaseDictionary = (ResponseBaseDictionary) msg.obj;
+				if (responseBaseDictionary != null && responseBaseDictionary.h != null) {
+					if (responseBaseDictionary.h.e == Errors.UM_WEB_API_SUCCESS) {
 
 
 					} else {
-						if(dictionary.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+						if(responseBaseDictionary.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
 							return;
 						}
 

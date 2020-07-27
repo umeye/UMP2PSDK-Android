@@ -41,13 +41,12 @@ import com.Player.web.response.ServerListInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.SharedPrefsUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Errors;
 import com.example.umeyesdk.utils.Show;
-
-import org.json.JSONObject;
 
 /**
  * 错误码详见com.example.umeyesdk.utils.Errors
@@ -2004,6 +2003,34 @@ public class WebSdkApi {
 
 				}
 
+			}
+		});
+	}
+
+
+	/**
+	 *  发送自定义json数据
+	 * @param function 函数识别码
+	 * @param jsonObject json字符串
+	 */
+	public static void sendCommonJsonStr(ClientCore clientCore,int function, JSONObject jsonObject) {
+		clientCore.sendCommonJsonStr(function,jsonObject,new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				NCDictionary dictionary = (NCDictionary) msg.obj;
+				if (dictionary != null && dictionary.h != null) {
+					if (dictionary.h.e == Errors.UM_WEB_API_SUCCESS) {
+
+
+					} else {
+						if(dictionary.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+							return;
+						}
+
+					}
+				} else {
+
+				}
 			}
 		});
 	}

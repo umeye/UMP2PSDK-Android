@@ -2011,7 +2011,7 @@ public class WebSdkApi {
 	/**
 	 *  发送自定义json数据
 	 * @param function 函数识别码
-	 * @param jsonObject json字符串
+	 * @param jsonObject json字符串对象
 	 */
 	public static void sendCommonJsonStr(ClientCore clientCore,int function, JSONObject jsonObject) {
 		clientCore.sendCommonJsonStr(function,jsonObject,new Handler(){

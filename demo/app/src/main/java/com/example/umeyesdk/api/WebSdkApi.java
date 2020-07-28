@@ -2042,7 +2042,7 @@ public class WebSdkApi {
 	 *  发送自定义json数据
 	 * @param function 函数识别码
 	 * @param json json字符串
-	 * @param select_key session加密公钥
+	 * @param select_key session加密key
 	 */
 	public static void sendCloudJsonStr(ClientCore clientCore,int function, String json, String select_key) {
 		clientCore.sendCloudJsonStr(function,json,select_key, new Handler(){

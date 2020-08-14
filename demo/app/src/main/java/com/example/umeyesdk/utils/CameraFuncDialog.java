@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.Player.Core.PlayerCore;
+import com.Player.Core.Utils.CommenUtil;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseGetInfomation;
 import com.Player.web.websocket.ClientCore;
@@ -75,7 +76,7 @@ public class CameraFuncDialog extends AlertDialog.Builder  {
                         break;
                     case 5:
 
-                        String videoDir = "/sdcard/" + getContext().getPackageName() + "/" + node.umid + "_" + node.dev_ch_no;//录像存放目录路径
+                        String videoDir = CommenUtil.getExternalStorageFileRelatedPackageName(getContext()) + "/" + node.umid + "_" + node.dev_ch_no;//录像存放目录路径
 //                        String videoDir = PlayerCore.getDefaultVideoPath();
                         File directory = new File(videoDir);
                         File[] files = directory.listFiles();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.Player.Core.Utils.CommenUtil;
 import com.Player.Source.TDevNodeInfor;
 import com.Player.web.request.P2pConnectInfo;
 import com.Player.web.response.ResponseCommon;
@@ -20,7 +21,7 @@ import com.igexin.sdk.PushManager;
  *
  */
 public class AlarmUtils {
-	public static final String SETTING_PATH = "/sdcard/UMEyeDome/setting.dat";// 报警设置目录
+	public static final String SETTING_PATH = CommenUtil.getExternalStorageFile(ClientCore.getInstance().getContext()) + "/UMEyeDome/setting.dat";// 报警设置目录
 
 	public static boolean isRecived = true;
 	/**

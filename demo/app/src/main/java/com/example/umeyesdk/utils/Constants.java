@@ -1,5 +1,8 @@
 package com.example.umeyesdk.utils;
 
+import com.Player.Core.Utils.CommenUtil;
+import com.Player.web.websocket.ClientCore;
+
 public class Constants {
 	/**
 	 * 服务器
@@ -48,11 +51,11 @@ public class Constants {
 	/**
 	 * 默认截图路径
 	 */
-	public static String UserImageDir = "sdcard/snapshot";
+	public static String UserImageDir = CommenUtil.getExternalStorageFile(ClientCore.getInstance().getContext()) + "/snapshot";
 	/**
 	 * 默认录像路径
 	 */
-	public static String UserVideoDir = "sdcard/videorecord";
+	public static String UserVideoDir = CommenUtil.getExternalStorageFile(ClientCore.getInstance().getContext()) + "/videorecord";
 
 
 	public static int Vendorid = 1009;

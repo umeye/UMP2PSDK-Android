@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.Player.Core.OnFinishListener;
 import com.Player.Core.PlayerCore;
+import com.Player.Core.Utils.CommenUtil;
 import com.Player.Core.Utils.Imagedeal;
 import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
@@ -426,7 +427,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
                 DevItemInfo devItemInfo = DevItemInfo.toConnectParams(id);
                 //设置存放目录路径
-                pc.SetVideoPath("/sdcard/" + getPackageName() + "/" + devItemInfo.umid + "_" + devItemInfo.dev_ch_no + "/");
+                pc.SetVideoPath(CommenUtil.getExternalStorageFileRelatedPackageName(this) + "/" + devItemInfo.umid + "_" + devItemInfo.dev_ch_no + "/");
                 if (pc.GetIsSnapVideo()) {
                     pc.SetSnapVideo(false);
                 } else {

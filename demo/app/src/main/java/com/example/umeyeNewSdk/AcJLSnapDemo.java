@@ -181,7 +181,7 @@ public class AcJLSnapDemo extends Activity{
 					addImgStruct.i_iBWMode = REQUEST_WHITE_USER;//白名单
 					addImgStruct.i_sImgId = "sadsdasa";
 					addImgStruct.i_sImgName = "android中文05";
-					int addRet = pc.addUserImg(conn_parm,addImgStruct,"/sdcard/android_test.jpg");//添加图片较多要求,参考错误码
+					int addRet = pc.addUserImg(conn_parm,addImgStruct,CommenUtil.getExternalStorageFile(AcJLSnapDemo.this) + "/android_test.jpg");//添加图片较多要求,参考错误码
 					Log.i(TAG,addRet + "");//对比错误码
 					ArrayList<UserImgStruct> listadd =  pc.getAllUserImg(conn_parm,REQUEST_WHITE_USER);//重新获取
 					if(listadd != null){

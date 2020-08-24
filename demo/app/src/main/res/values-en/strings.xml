@@ -8,5 +8,7 @@
     <string name="umid_connect_mode">UMID Connect</string>
     <string name="hint_password">Password</string>
     <string name="login_success">Login Success</string>
+    <string name="play_m3u8">Play M3U8</string>
     <string name="NPC_D_MPI_MON_ERROR_USER_PWD_ERROR"> User name or password error </string>
-</resources>
+
+</resources>

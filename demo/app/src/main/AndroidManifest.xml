@@ -115,6 +115,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".PlayM3u8Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".GlPlayActivity"
             android:screenOrientation="portrait" >
         </activity>

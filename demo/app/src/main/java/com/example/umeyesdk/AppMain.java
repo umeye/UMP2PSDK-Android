@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.Player.Core.PlayerClient;
+import com.Player.Core.PlayerCore;
 import com.Player.Core.Utils.CommenUtil;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
@@ -33,6 +34,7 @@ public class AppMain extends UmeyeApplication {
 		// TODO Auto-generated method stub
 		nodeList = new ArrayList<PlayNode>();
 		ClientCore.getInstance().init(this);
+		PlayerCore.isNewRecordMode = true;
 //		CommenUtil.isAcceptTargetQFileStorage = true;//是否使用androidQ兼容方案，如果不使用，在targetsdk=29时候须设置android:requestLegacyExternalStorage="true"
 
 //		ClientCore.ver_api = "1.0.1";

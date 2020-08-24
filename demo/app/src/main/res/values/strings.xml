@@ -167,6 +167,7 @@
     <string name="enter_password">请输入密码</string>
     <string name="enter_server">请输入服务器</string>
     <string name="clearLog">清除日志</string>
+    <string name="play_m3u8">播放 M3U8</string>
     <string name="door_pwd">门铃密码</string>
     <string name="lock_pwd">开锁密码</string>
     <string name="device_option">设备设置</string>

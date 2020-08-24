@@ -32,6 +32,7 @@ import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.example.umeyesdk.AcLogo;
+import com.example.umeyesdk.PlayM3u8Activity;
 import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
@@ -335,6 +336,12 @@ public class AcSelectMode extends Activity {
 		WebSdkApi.loginServerByThirdParty(clientCore, "wx31d03edf8e532e3f", "", 1,"oQoOsw2tMWSALpjO-xnkRBKPW4M2",
 				handler);
 
+	}
+
+
+	public void playm3u8(View v) {
+         Intent intent =  new Intent(this, PlayM3u8Activity.class);
+         startActivity(intent);
 	}
 
 

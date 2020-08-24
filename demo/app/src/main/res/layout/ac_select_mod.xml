@@ -91,12 +91,21 @@
             android:text="@string/umid_connect_mode" />
 
         <Button
+            android:id="@+id/btn_play_m3u8"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="playm3u8"
+            android:text="@string/play_m3u8" />
+
+        <Button
             android:id="@+id/btn_clear"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="clearLog"
             android:text="@string/clearLog" />
+
 
         <TextView
             android:id="@+id/log_text"

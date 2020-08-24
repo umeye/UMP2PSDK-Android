@@ -116,7 +116,8 @@
         </activity>
         <activity
             android:name=".PlayM3u8Activity"
-            android:screenOrientation="portrait" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor">
         </activity>
         <activity
             android:name=".GlPlayActivity"

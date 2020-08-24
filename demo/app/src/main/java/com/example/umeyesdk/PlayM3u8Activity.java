@@ -121,6 +121,9 @@ public class PlayM3u8Activity extends Activity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(duration > 0) {
+                    tv_time.setText(generateTime(progress) + "/" + generateTime(duration));
+                }
             }
 
             @Override

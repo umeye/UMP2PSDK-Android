@@ -66,162 +66,172 @@ public class PlayM3u8Activity extends Activity {
                 }
             } else if (state == SDKError.Statue_Pause) {
                 iv_play.setImageResource(android.R.drawable.ic_media_play);
+            } else if (state == SDKError.Exception_ERROR || state == SDKError.Statue_ConnectFail || state == SDKError.MERR_ALLOC || state == SDKError.MERR_ENCODE
+                    || state == SDKError.MERR_DECODE
+                    || state == SDKError.MERR_OPEN
+                    || state == SDKError.MERR_PARAM
+                    || state == SDKError.MERR_READ
+                    || state == SDKError.MERR_SEEK
+                    || state == SDKError.MERR_SWR
+                    || state == SDKError.MERR_SIZE) {
+                player.StopAsync();
+                player.Play();
             }
-             txtState.setText(GetDescription(PlayM3u8Activity.this, state));
+            txtState.setText(GetDescription(PlayM3u8Activity.this, state));
 
 
         }
     };
 
 
-        public String GetDescription(Context con, int state) {
-            Log.i("GetDescription", "GetDescription:" + state);
-            String des = con.getString(R.string.connect_fail);
-            switch (state) {
-                case SDKError.Statue_Ready:
-                    des = con.getString(R.string.ready);
-                    break;
-                case SDKError.Statue_PLAYING:
-                    des = con.getString(R.string.playing);
-                    break;
-                case SDKError.Statue_Pause:
-                    des = con.getString(R.string.pause);
-                    break;
-                case SDKError.Statue_STOP:
-                case SDKError.MERR_EOF:
-                    des = con.getString(R.string.stop);
-                    break;
-                case SDKError.Exception_ERROR:
-                case SDKError.Statue_ConnectFail:
-                case SDKError.MERR_ALLOC:
-                case SDKError.MERR_ENCODE:
-                case SDKError.MERR_DECODE:
-                case SDKError.MERR_OPEN:
-                case SDKError.MERR_PARAM:
-                case SDKError.MERR_READ:
-                case SDKError.MERR_SEEK:
-                case SDKError.MERR_SWR:
-                case SDKError.MERR_SIZE:
-                    des = con.getString(R.string.connect_fail);
-                    break;
-                case SDKError.Statue_ConnectingSucess:
-                    des = con.getString(R.string.buffering);
-                    break;
-            }
-            des = des + "             " + player.GetPlayFrameRate() + "fps";
-            return des;
-
+    public String GetDescription(Context con, int state) {
+        Log.i("GetDescription", "GetDescription:" + state);
+        String des = con.getString(R.string.connect_fail);
+        switch (state) {
+            case SDKError.Statue_Ready:
+                des = con.getString(R.string.ready);
+                break;
+            case SDKError.Statue_PLAYING:
+                des = con.getString(R.string.playing);
+                break;
+            case SDKError.Statue_Pause:
+                des = con.getString(R.string.pause);
+                break;
+            case SDKError.Statue_STOP:
+            case SDKError.MERR_EOF:
+                des = con.getString(R.string.stop);
+                break;
+            case SDKError.Exception_ERROR:
+            case SDKError.Statue_ConnectFail:
+            case SDKError.MERR_ALLOC:
+            case SDKError.MERR_ENCODE:
+            case SDKError.MERR_DECODE:
+            case SDKError.MERR_OPEN:
+            case SDKError.MERR_PARAM:
+            case SDKError.MERR_READ:
+            case SDKError.MERR_SEEK:
+            case SDKError.MERR_SWR:
+            case SDKError.MERR_SIZE:
+                des = con.getString(R.string.connect_fail);
+                break;
+            case SDKError.Statue_ConnectingSucess:
+                des = con.getString(R.string.buffering);
+                break;
         }
+        des = des + "             " + player.GetPlayFrameRate() + "fps";
+        return des;
+
+    }
 
 
-        public static String generateTime(long time) {
-            int totalSeconds = (int) (time / 1000);
-            int seconds = totalSeconds % 60;
-            int minutes = (totalSeconds / 60) % 60;
-            int hours = totalSeconds / 3600;
+    public static String generateTime(long time) {
+        int totalSeconds = (int) (time / 1000);
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
 
-            return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
-        }
-
-
-        @Override
-        protected void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.ac_videoview_hls);
-            iv_play = findViewById(R.id.iv_play);
-            imgLive = findViewById(R.id.imgLive);
-            tv_time = findViewById(R.id.tv_time);
-            seekBar = findViewById(R.id.seekBar);
-            txtState = findViewById(R.id.txt_state);
-
-            player = new PlayerCore(this, PlayerCore.HLSSERVER);
-            player.InitParam("http://123.207.88.138:5888/tsvod/test.m3u8", imgLive);
-            player.Play();
-
-            new ProgressThread().start();
-
-            iv_play.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (player.GetPlayerState() == SDKError.Statue_Pause) {
-                        player.Resume();
-
-                    } else if (player.GetPlayerState() == SDKError.Statue_STOP) {
-                        player.Play();
-                    } else {
-                        player.Pause();
-
-                    }
-                }
-            });
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    if (duration > 0) {
-                        tv_time.setText(generateTime(progress) + "/" + generateTime(duration));
-                    }
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    isSeeking = true;
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    //获取拖动结束之后的位置
-                    int progress = seekBar.getProgress();
-                    //跳转到某个位置播放
-                    player.SeekFilePos(progress / 1000, 0);
-                    isSeeking = false;
-                }
-            });
-
-            btnSnap = findViewById(R.id.btnSnap);
-            btnVideo = findViewById(R.id.btnVideo);
-            txtRec = (TextView) findViewById(R.id.tvwRec);
-
-            btnSnap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    player.SetSnapPicture(true);
-                }
-            });
-
-            btnVideo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (player.GetIsSnapVideo()) {
-                        player.SetSnapVideo(false);
-                    } else {
-                        if (player.GetPlayerState() == SDKError.Statue_PLAYING)
-                            player.SetSnapVideo(true);
-                    }
-                }
-            });
+        return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
 
 
-        }
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.ac_videoview_hls);
+        iv_play = findViewById(R.id.iv_play);
+        imgLive = findViewById(R.id.imgLive);
+        tv_time = findViewById(R.id.tv_time);
+        seekBar = findViewById(R.id.seekBar);
+        txtState = findViewById(R.id.txt_state);
 
+        player = new PlayerCore(this, PlayerCore.HLSSERVER);
+        player.InitParam("http://123.207.88.138:5888/tsvod/test.m3u8", imgLive);
+        player.Play();
 
-        class ProgressThread extends Thread {
+        new ProgressThread().start();
+
+        iv_play.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                while (flag) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    handler.sendEmptyMessage(0);
+            public void onClick(View v) {
+                if (player.GetPlayerState() == SDKError.Statue_Pause) {
+                    player.Resume();
+
+                } else if (player.GetPlayerState() == SDKError.Statue_STOP) {
+                    player.Play();
+                } else if (player.GetPlayerState() == SDKError.Statue_PLAYING) {
+                    player.Pause();
+
                 }
             }
-        }
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (duration > 0) {
+                    tv_time.setText(generateTime(progress) + "/" + generateTime(duration));
+                }
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isSeeking = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //获取拖动结束之后的位置
+                int progress = seekBar.getProgress();
+                //跳转到某个位置播放
+                player.SeekFilePos(progress / 1000, 0);
+                isSeeking = false;
+            }
+        });
+
+        btnSnap = findViewById(R.id.btnSnap);
+        btnVideo = findViewById(R.id.btnVideo);
+        txtRec = (TextView) findViewById(R.id.tvwRec);
+
+        btnSnap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                player.SetSnapPicture(true);
+            }
+        });
+
+        btnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (player.GetIsSnapVideo()) {
+                    player.SetSnapVideo(false);
+                } else {
+                    if (player.GetPlayerState() == SDKError.Statue_PLAYING)
+                        player.SetSnapVideo(true);
+                }
+            }
+        });
+
+
+    }
+
+
+    class ProgressThread extends Thread {
         @Override
-        protected void onDestroy() {
-            super.onDestroy();
-            flag = false;
-            player.StopAsync();
+        public void run() {
+            while (flag) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.sendEmptyMessage(0);
+            }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        flag = false;
+        player.StopAsync();
+    }
 }

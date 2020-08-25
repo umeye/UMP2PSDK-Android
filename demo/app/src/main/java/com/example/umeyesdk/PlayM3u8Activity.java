@@ -1,6 +1,7 @@
 package com.example.umeyesdk;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,13 +23,13 @@ public class PlayM3u8Activity extends Activity {
     PlayerCore player;
     private ImageView imgLive;
     private ImageButton iv_play;
-    private TextView tv_time,txtRec;
+    private TextView tv_time, txtRec, txtState;
     private SeekBar seekBar;
     boolean flag = true;
     private int duration;
     private boolean isSeeking;
     private Button btnSnap, btnVideo;
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (isFinishing()) {
@@ -40,38 +41,75 @@ public class PlayM3u8Activity extends Activity {
 
             txtRec.setVisibility(player.GetIsSnapVideo() ? View.VISIBLE : View.GONE);
 
-               int state = player.GetPlayerState();
+            int state = player.GetPlayerState();
+
+            Log.d("state", state + "");
+
             if (state == SDKError.Statue_PLAYING) {
 
                 int currentPosition = player.GetPlayFile_CurPlayPos();
-
-                Log.d("currentPosition", currentPosition+"");
-
                 duration = player.GetFileAllTime_Int();
                 //让进度条滚动起来
                 seekBar.setProgress(currentPosition / 1000 * 1000);
                 seekBar.setMax(duration);
                 tv_time.setText(generateTime(currentPosition) + "/" + generateTime(duration));
 
-                if(currentPosition >= duration) {
-                    iv_play.setImageResource(android.R.drawable.ic_media_play);
-                    player.StopAsync();
-                } else {
-                    iv_play.setImageResource(android.R.drawable.ic_media_pause);
-                }
+                iv_play.setImageResource(android.R.drawable.ic_media_pause);
 
-            } else if (state == SDKError.Statue_Ready || state == SDKError.Statue_STOP) {
+            } else if (state == SDKError.Statue_Ready || state == SDKError.Statue_STOP || state ==  SDKError.MERR_EOF) {
                 seekBar.setProgress(0);
                 iv_play.setImageResource(android.R.drawable.ic_media_play);
                 tv_time.setText(generateTime(0) + "/" + generateTime(duration));
 
+            } else if(state == SDKError.Statue_Pause) {
+                iv_play.setImageResource(android.R.drawable.ic_media_play);
             }
 
+            txtState.setText(GetDescription(PlayM3u8Activity.this, state));
 
 
         }
     };
 
+
+    public String GetDescription(Context con, int state) {
+        Log.i("GetDescription", "GetDescription:" + state);
+        String des = con.getString(R.string.connect_fail);
+        switch (state) {
+            case SDKError.Statue_Ready:
+                des = con.getString(R.string.ready);
+                break;
+            case SDKError.Statue_PLAYING:
+                des = con.getString(R.string.playing);
+                break;
+            case SDKError.Statue_Pause:
+                des = con.getString(R.string.pause);
+                break;
+            case SDKError.Statue_STOP:
+            case SDKError.MERR_EOF:
+                des = con.getString(R.string.stop);
+                break;
+            case SDKError.Exception_ERROR:
+            case SDKError.Statue_ConnectFail:
+            case SDKError.MERR_ALLOC:
+            case SDKError.MERR_ENCODE:
+            case SDKError.MERR_DECODE:
+            case SDKError.MERR_OPEN:
+            case SDKError.MERR_PARAM:
+            case SDKError.MERR_READ:
+            case SDKError.MERR_SEEK:
+            case SDKError.MERR_SWR:
+            case SDKError.MERR_SIZE:
+                des = con.getString(R.string.connect_fail);
+                break;
+            case SDKError.Statue_ConnectingSucess:
+                des = con.getString(R.string.buffering);
+                break;
+        }
+        des = des + "             " + player.GetPlayFrameRate() + "fps";
+        return des;
+
+    }
 
 
     public static String generateTime(long time) {
@@ -84,7 +122,6 @@ public class PlayM3u8Activity extends Activity {
     }
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,10 +130,10 @@ public class PlayM3u8Activity extends Activity {
         imgLive = findViewById(R.id.imgLive);
         tv_time = findViewById(R.id.tv_time);
         seekBar = findViewById(R.id.seekBar);
+        txtState = findViewById(R.id.txt_state);
 
-        player = new PlayerCore(this,PlayerCore.HLSSERVER);
-        player.InitParam("http://123.207.88.138:5888/tsvod/test.m3u8",imgLive);
-        player.SetOpenFFmpegLog(true);
+        player = new PlayerCore(this, PlayerCore.HLSSERVER);
+        player.InitParam("http://123.207.88.138:5888/tsvod/test.m3u8", imgLive);
         player.Play();
 
         new ProgressThread().start();
@@ -104,24 +141,21 @@ public class PlayM3u8Activity extends Activity {
         iv_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(player.GetPlayerState() == SDKError.Statue_Pause) {
-                   player.Resume();
-                   iv_play.setImageResource(android.R.drawable.ic_media_pause);
+                if (player.GetPlayerState() == SDKError.Statue_Pause) {
+                    player.Resume();
 
-               } else if(player.GetPlayerState() == SDKError.Statue_STOP) {
-                   player.Play();
-                   iv_play.setImageResource(android.R.drawable.ic_media_pause);
-               }
-               else {
-                   player.Pause();
-                   iv_play.setImageResource(android.R.drawable.ic_media_play);
-               }
+                } else if (player.GetPlayerState() == SDKError.Statue_STOP) {
+                    player.Play();
+                } else {
+                    player.Pause();
+
+                }
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(duration > 0) {
+                if (duration > 0) {
                     tv_time.setText(generateTime(progress) + "/" + generateTime(duration));
                 }
             }
@@ -136,7 +170,7 @@ public class PlayM3u8Activity extends Activity {
                 //获取拖动结束之后的位置
                 int progress = seekBar.getProgress();
                 //跳转到某个位置播放
-                player.SeekFilePos(progress/1000,0);
+                player.SeekFilePos(progress / 1000, 0);
                 isSeeking = false;
             }
         });

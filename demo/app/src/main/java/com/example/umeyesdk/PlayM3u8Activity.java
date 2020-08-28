@@ -63,7 +63,7 @@ public class PlayM3u8Activity extends Activity {
 
             } else if (state == SDKError.Statue_Pause) {
                 iv_play.setImageResource(android.R.drawable.ic_media_play);
-            } else if (state == SDKError.MERR_EOF) {
+            } else if (state != SDKError.Statue_ConnectingSucess) {
                 if(currentPosition >= duration) {
                     player.StopAsync();
 
@@ -156,7 +156,7 @@ public class PlayM3u8Activity extends Activity {
                 } else if (player.GetPlayerState() == SDKError.Statue_PLAYING) {
                     player.Pause();
 
-                } else {
+                } else if (player.GetPlayerState() != SDKError.Statue_ConnectingSucess){
                     player.StopAsync();
                     player.Play();
                 }

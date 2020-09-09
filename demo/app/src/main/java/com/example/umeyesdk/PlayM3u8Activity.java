@@ -64,7 +64,7 @@ public class PlayM3u8Activity extends Activity {
             } else if (state == SDKError.Statue_Pause) {
                 iv_play.setImageResource(android.R.drawable.ic_media_play);
             } else if (state != SDKError.Statue_ConnectingSucess) {
-                if(currentPosition >= duration) {
+                if(duration > 0 && currentPosition >= duration) {
                     player.StopAsync();
 
                     seekBar.setProgress(0);

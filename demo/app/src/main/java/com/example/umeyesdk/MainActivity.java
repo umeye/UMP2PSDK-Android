@@ -194,11 +194,6 @@ public class MainActivity extends Activity implements OnItemClickListener,
 				handler);
 
 
-		String json="{\"file_id\": \"20369276158214656_1\",\"schema\": 1,\"check_sub_file\": 0}";
-
-		WebSdkApi.sendCloudJsonStr(clientCore,"/oss/file/get", json);
-
-
 	}
 
 	void initeView() {

@@ -32,6 +32,7 @@ import com.Player.web.response.ResponseGetPublicAccountInfo;
 import com.Player.web.response.ResponseGetPublicAccountInfoBody;
 import com.Player.web.response.ResponseGetServerList;
 import com.Player.web.response.ResponseLoginThirdParty;
+import com.Player.web.response.ResponseNewBaseDictionary;
 import com.Player.web.response.ResponseQueryAlarm;
 import com.Player.web.response.ResponseQueryAlarmSettings;
 import com.Player.web.response.ResponseQueryUserPush;
@@ -1933,21 +1934,20 @@ public class WebSdkApi {
 
 	/**
 	 *  发送自定义json数据
-	 * @param function 函数识别码
+	 *  @param path 路径
 	 * @param json json字符串
-	 * @param select_key session加密key
 	 */
-	public static void sendCloudJsonStr(ClientCore clientCore,int function, String json, String select_key) {
-		clientCore.sendCloudJsonStr(function,json,select_key, new Handler(){
+	public static void sendCloudJsonStr(ClientCore clientCore, String path, String json) {
+		clientCore.sendCloudJsonStr(path, json, new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
-				ResponseBaseDictionary responseBaseDictionary = (ResponseBaseDictionary) msg.obj;
-				if (responseBaseDictionary != null && responseBaseDictionary.h != null) {
-					if (responseBaseDictionary.h.e == Errors.UM_WEB_API_SUCCESS) {
+				ResponseNewBaseDictionary responseBaseDictionary = (ResponseNewBaseDictionary) msg.obj;
+				if (responseBaseDictionary != null) {
+					if (responseBaseDictionary.code == Errors.UM_WEB_API_SUCCESS) {
 
 
 					} else {
-						if(responseBaseDictionary.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
+						if(responseBaseDictionary.code == Errors.UM_WEB_API_ERROR_NET_ERROR) {
 							return;
 						}
 

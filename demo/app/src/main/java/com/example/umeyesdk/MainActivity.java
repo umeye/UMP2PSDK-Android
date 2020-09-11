@@ -37,8 +37,11 @@ import com.Player.Source.TAlarmSetInfor;
 import com.Player.web.response.DevItemInfo;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
+import com.Player.web.response.ResponseNewBaseDictionary;
 import com.Player.web.websocket.ClientCore;
+import com.Player.web.websocket.Errors;
 import com.Player.web.websocket.IoTTokenInvalidListener;
+import com.alibaba.fastjson.JSON;
 import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.adpter.DeviceManagerAdapter;
@@ -192,7 +195,6 @@ public class MainActivity extends Activity implements OnItemClickListener,
 
 		WebSdkApi.getNodeList(clientCore, "", 0, 0,
 				handler);
-
 
 	}
 

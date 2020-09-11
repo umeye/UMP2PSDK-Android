@@ -1936,7 +1936,7 @@ public class WebSdkApi {
 
 
 	/**
-	 *  发送自定义json数据
+	 *  发送自定义json数据, 云存储专用
 	 *  @param path 路径
 	 * @param json json字符串
 	 */

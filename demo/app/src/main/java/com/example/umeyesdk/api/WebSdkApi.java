@@ -1916,8 +1916,8 @@ public class WebSdkApi {
 				if (responseBaseDictionary != null && responseBaseDictionary.h != null) {
 					if (responseBaseDictionary.h.e == Errors.UM_WEB_API_SUCCESS) {
 						//根据b类型是数组还是object来进行转换
-						JSONObject jsonObject = JSON.parseObject(responseBaseDictionary.b.toString());
-						JSONArray jsonArray = JSON.parseArray(responseBaseDictionary.b.toString());
+//						JSONObject jsonObject = JSON.parseObject(responseBaseDictionary.b.toString());
+//						JSONArray jsonArray = JSON.parseArray(responseBaseDictionary.b.toString());
 
 					} else {
 						if(responseBaseDictionary.h.e == Errors.UM_WEB_API_ERROR_NET_ERROR) {
@@ -1948,8 +1948,8 @@ public class WebSdkApi {
 				if (responseBaseDictionary != null) {
 					if (responseBaseDictionary.code == Errors.UM_WEB_API_SUCCESS) {
 						//根据data类型是数组还是object来进行转换
-						JSONObject jsonObject = JSON.parseObject(responseBaseDictionary.data.toString());
-						JSONArray jsonArray = JSON.parseArray(responseBaseDictionary.data.toString());
+//						JSONObject jsonObject = JSON.parseObject(responseBaseDictionary.data.toString());
+//						JSONArray jsonArray = JSON.parseArray(responseBaseDictionary.data.toString());
 
 					} else {
 						if(responseBaseDictionary.code == Errors.UM_WEB_API_ERROR_NET_ERROR) {

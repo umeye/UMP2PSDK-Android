@@ -143,6 +143,8 @@ public class PlayM3u8Activity extends Activity {
         player.InitParam("http://123.207.88.138:5888/tsvod/test.m3u8", imgLive);
         player.Play();
 
+        tv_time.setText(generateTime(0) + "/" + generateTime(0));
+
         new ProgressThread().start();
 
         iv_play.setOnClickListener(new View.OnClickListener() {

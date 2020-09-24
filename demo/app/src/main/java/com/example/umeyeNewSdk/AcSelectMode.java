@@ -170,7 +170,7 @@ public class AcSelectMode extends Activity {
 		editServer = (EditText) findViewById(R.id.et_server);
 		editPassword = (EditText) findViewById(R.id.et_password);
 		UserInfo userInfo = UserInfo.getUserInfo(this);
-		if(userInfo != null && userInfo.getLoginType() == 0) {//如果上次不是微信登录才显示
+		if(userInfo != null && userInfo.getLoginType() == 0 && !userInfo.isLocalMode()) {//如果上次不是微信登录才显示
 			Constants.Login_user = userInfo.getFullName();
 		} else {
 

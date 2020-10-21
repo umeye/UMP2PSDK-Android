@@ -142,7 +142,7 @@ public class PlayM3u8Activity extends Activity {
 
         player = new PlayerCore(this, PlayerCore.HLSSERVER);
         player.SetOpenFFmpegLog(true);
-        player.InitParam("https://camplat.suning.com/camplat-web/app/play.do?playCode=96272cf6b4fb70d730163aa85da4d75f6e926c99&startTime=1603123200000&endTime=1603135030323&eventType=6", imgLive);
+        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
         player.Play();
 
         tv_time.setText(generateTime(0) + "/" + generateTime(0));

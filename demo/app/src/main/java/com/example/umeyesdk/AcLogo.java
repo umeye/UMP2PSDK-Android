@@ -34,6 +34,8 @@ public class AcLogo extends Activity {
 	private Handler handler;
 	private boolean localLogin;
 
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

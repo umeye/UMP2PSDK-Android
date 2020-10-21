@@ -66,6 +66,9 @@ public class MainActivity extends Activity implements OnItemClickListener,
 	ResponseDevList responseDevList;
 	MoreFuncDialog moreFuncDialog;
 	CameraFuncDialog cameraFuncDialog;
+
+
+
 	/**
 	 * 用Handler来更新UI
 	 */

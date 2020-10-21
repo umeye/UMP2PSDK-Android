@@ -196,13 +196,6 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		WebSdkApi.getNodeList(clientCore, "", 0, 0,
 				handler);
 
-
-		String jsonstring = "{\"uids\":[\"um000000\"]}";
-
-		Log.e("asdadada", jsonstring);
-
-		WebSdkApi.sendCloudJsonStr(clientCore,"/iot/uid/date/query", jsonstring);
-
 	}
 
 	void initeView() {

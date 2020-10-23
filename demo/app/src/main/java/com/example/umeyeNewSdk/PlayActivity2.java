@@ -640,6 +640,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 		Vibrator vib = (Vibrator) context
 				.getSystemService(Context.VIBRATOR_SERVICE);
 		vib.vibrate(milliseconds);
+
 	}
 
 	public void selectChannel() {

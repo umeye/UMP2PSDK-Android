@@ -120,6 +120,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 		playClient = appMain.getPlayerclient();
 		initePlayCore();
 		EditEditetext();
+		Log.e("测试","ceshi");
 	}
 
 	public void initePlayCore() {

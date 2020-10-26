@@ -114,7 +114,10 @@ public class AcVideoPlayback extends Activity {
         player = new PlayerLocalFileCore(this);
 
         fileName = getIntent().getStringExtra("fileName");
-        tmpMp4FileInfo = player.GetMp4FileInfo(fileName);
+        player.InitParam(fileName, sv_main_surface);
+
+        duration = player.getDuration();
+        tmpMp4FileInfo = player.GetMp4FileInfoEx();
         if (tmpMp4FileInfo != null) {
             System.out.println(player.GetCurrentPlayTime() + "信息:帧"
                     + tmpMp4FileInfo.fps + ",长度" + tmpMp4FileInfo.totaltime
@@ -125,7 +128,7 @@ public class AcVideoPlayback extends Activity {
         }
 
 
-        player.InitParam(fileName, sv_main_surface);
+
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -45,7 +45,7 @@ public class PlayM3u8Activity extends Activity {
 
             Log.d("state", state + "");
 
-            if (state == SDKError.Statue_PLAYING) {
+            if (state == SDKError.Statue_PLAYING || state == SDKError.Statue_ConnectingSucess) {
 
                 currentPosition = player.GetPlayFile_CurPlayPos();
                 duration = player.GetFileAllTime_Int();
@@ -161,7 +161,7 @@ public class PlayM3u8Activity extends Activity {
 
                 } else if (player.GetPlayerState() == SDKError.Statue_STOP) {
                     player.Play();
-                } else if (player.GetPlayerState() == SDKError.Statue_PLAYING) {
+                } else if (player.GetPlayerState() == SDKError.Statue_PLAYING || player.GetPlayerState() == SDKError.Statue_ConnectingSucess) {
                     player.Pause();
 
                 } else if (player.GetPlayerState() != SDKError.Statue_ConnectingSucess){

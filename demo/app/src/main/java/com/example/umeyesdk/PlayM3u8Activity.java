@@ -144,7 +144,7 @@ public class PlayM3u8Activity extends Activity {
 //        player.SetOpenFFmpegLog(true);
 //        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-        String url = "https://camplat.suning.com/camplat-web/app/play.do?playCode=33f895ecf037ff2233681a31138252bc6dce61f8&startTime=1603641600000&endTime=1603652946600&eventType=6";
+        String url = "";
         player.InitParam(url, imgLive);
 
         player.Play();

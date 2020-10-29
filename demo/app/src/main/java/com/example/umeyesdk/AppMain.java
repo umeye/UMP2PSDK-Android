@@ -34,7 +34,7 @@ public class AppMain extends UmeyeApplication {
 		// TODO Auto-generated method stub
 		nodeList = new ArrayList<PlayNode>();
 		ClientCore.getInstance().init(this);
-		PlayerCore.isNewRecordMode = true;
+		PlayerCore.isNewRecordMode = false;
 //		CommenUtil.isAcceptTargetQFileStorage = true;//是否使用androidQ兼容方案，如果不使用，在targetsdk=29时候须设置android:requestLegacyExternalStorage="true"
 
 //		ClientCore.ver_api = "1.0.1";

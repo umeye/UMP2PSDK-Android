@@ -1937,11 +1937,12 @@ public class WebSdkApi {
 
 	/**
 	 *  发送自定义json数据, 云存储专用
+	 * @param version 版本号
 	 *  @param path 路径
 	 * @param json json字符串
 	 */
-	public static void sendCloudJsonStr(ClientCore clientCore, String path, String json) {
-		clientCore.sendCloudJsonStr(path, json, new Handler(){
+	public static void sendCloudJsonStr(ClientCore clientCore, String version, String path, String json) {
+		clientCore.sendCloudJsonStr(version, path, json, new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
 				ResponseNewBaseDictionary responseBaseDictionary = (ResponseNewBaseDictionary) msg.obj;

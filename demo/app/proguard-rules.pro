@@ -10,3 +10,7 @@
 -keep class com.stream.** { *; }
 -keep class com.video.** { *; }
 -keep class com.yuv.** { *; }
+-keep class com.tool.websocket.** { *; }
+-keep class com.context.UmeyeApplication { *; }
+-dontwarn org.apache.commons.**
+-dontwarn com.jcraft.jsch.**

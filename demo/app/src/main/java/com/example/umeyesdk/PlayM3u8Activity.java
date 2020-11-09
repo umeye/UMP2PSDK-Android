@@ -144,7 +144,7 @@ public class PlayM3u8Activity extends Activity {
 //        player.SetOpenFFmpegLog(true);
 //        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-        String url = "";
+        String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
         player.InitParam(url, imgLive);
 
         player.Play();

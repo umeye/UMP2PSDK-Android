@@ -1,6 +1,6 @@
 #其它需要混淆的类参照网上写法，这里不多阐述
 
-#忽略sdk
+#aar引用需要的混淆
 -keep class com.audio.** { *; }
 -keep class com.audio2.** { *; }
 -keep class com.hkstreamSB.** { *; }
@@ -12,5 +12,7 @@
 -keep class com.yuv.** { *; }
 -keep class com.tool.websocket.** { *; }
 -keep class com.context.UmeyeApplication { *; }
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }
 -dontwarn org.apache.commons.**
 -dontwarn com.jcraft.jsch.**

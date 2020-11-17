@@ -62,5 +62,5 @@ dependencies {
     //    implementation 'com.getui:sdk:2.13.3.0'
     //	implementation 'com.getui:sdk-for-google-play:4.3.5.0'
     implementation files('libs/GetuiSDK4.3.5.6.jar')
-    implementation 'com.github.umeye:umeye-aar:1.0.8'
+    implementation 'com.github.umeye:umeye-aar:1.0.8.1'
 }

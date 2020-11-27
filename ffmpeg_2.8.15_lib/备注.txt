@@ -1,1 +1,0 @@
-libs目录的是ffmpeg4.2.2版本，使用ffmpeg2.8.15只需要在libs的so基础上替换这些库即可

@@ -1,1 +1,0 @@
-PlayerCore.isFFMPEG_2_8_15=true;

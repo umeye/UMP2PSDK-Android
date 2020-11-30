@@ -35,7 +35,7 @@ public class AppMain extends UmeyeApplication {
 		nodeList = new ArrayList<PlayNode>();
 		ClientCore.getInstance().init(this);
 		PlayerCore.isNewRecordMode = true;
-		PlayerCore.isFFMPEG_2_8_15 = false;
+//		PlayerCore.isFFMPEG_2_8_15 = false;
 //		CommenUtil.isAcceptTargetQFileStorage = true;//是否使用androidQ兼容方案，如果不使用，在targetsdk=29时候须设置android:requestLegacyExternalStorage="true"
 
 //		ClientCore.ver_api = "1.0.1";

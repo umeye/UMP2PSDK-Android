@@ -1,16 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
-        mavenCentral()
-        maven { url 'https://maven.google.com' }
-        jcenter()
     }
     dependencies {
 
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -18,10 +19,13 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
-        maven {    url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url "https://jitpack.io" }
+        maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+        google()
     }
 }
 

@@ -5,9 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -24,6 +22,10 @@ import com.Player.Core.PlayGlCore;
 import com.Player.Core.Utils.Imagedeal;
 import com.Player.Source.SDKError;
 import com.SPWipet.Jni.GLViewFragment;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class AcVrPlay extends FragmentActivity implements OnTouchListener,
 		OnClickListener {

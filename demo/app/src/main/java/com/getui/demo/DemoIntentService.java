@@ -9,15 +9,12 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.NotificationCompat;
+
+import androidx.core.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.Player.Source.LogOut;
-import com.Player.web.response.ResponseCommon;
 import com.Player.web.websocket.ClientCore;
 import com.alibaba.fastjson.JSONObject;
 import com.example.umeyesdk.AcLogo;

@@ -3,7 +3,6 @@ package com.example.umeyeNewSdk;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +15,8 @@ import com.example.umeyesdk.R;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.ShowProgress;
+
+import androidx.fragment.app.FragmentActivity;
 
 public class AcAlertSettings extends FragmentActivity {
 	public static final int NOTIFY_SAVE_OK = 0;

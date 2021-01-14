@@ -65,7 +65,7 @@ public class PlayM3u8Activity extends Activity {
             } else if (state == SDKError.Statue_Pause) {
                 iv_play.setImageResource(android.R.drawable.ic_media_play);
             } else if (state != SDKError.Statue_ConnectingSucess) {
-                if(duration > 0 && currentPosition >= duration) {
+                if (duration > 0 && currentPosition >= duration) {
                     player.StopAsync();
 
                     seekBar.setProgress(0);
@@ -145,9 +145,11 @@ public class PlayM3u8Activity extends Activity {
 //        player.SetOpenFFmpegLog(true);
 //        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-        String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
+       // String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
+        String url="http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
+        //String url = "http://cctvalih5ca.v.myalicdn.com/live/cctv5_2/index.m3u8";
         player.InitParam(url, imgLive);
-
+        //player.SetOpenLog(true);
         player.Play();
 
         tv_time.setText(generateTime(0) + "/" + generateTime(0));
@@ -165,7 +167,7 @@ public class PlayM3u8Activity extends Activity {
                 } else if (player.GetPlayerState() == SDKError.Statue_PLAYING || player.GetPlayerState() == SDKError.Statue_ConnectingSucess) {
                     player.Pause();
 
-                } else if (player.GetPlayerState() != SDKError.Statue_ConnectingSucess){
+                } else if (player.GetPlayerState() != SDKError.Statue_ConnectingSucess) {
                     player.StopAsync();
                     player.Play();
                 }

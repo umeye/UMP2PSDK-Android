@@ -118,6 +118,7 @@ public class PlayActivity extends Activity implements OnTouchListener,
 		pc = new PlayerCore(this);
 		pc.InitParam("", -1, img);
 		pc.SetPPtMode(false);
+		pc.SetOpenLog(true);
 		pc.isQueryDevInfo = true;
 	}
 

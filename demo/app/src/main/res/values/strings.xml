@@ -6,6 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="positive">确定</string>
     <string name="cancel">取消</string>
+
     <!-- 登陆返回的各种状态码 -->
     <string name="UNKNOWN_ERROR">未知错误</string>
     <string name="LOGIN_OK">登陆成功</string>

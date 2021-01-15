@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +36,8 @@ import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.LocalFile;
 import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.ShowProgress;
+
+import androidx.core.content.FileProvider;
 
 public class AcSearchDownLoadList extends Activity {
 	private ListView lvResult;
@@ -78,21 +82,27 @@ public class AcSearchDownLoadList extends Activity {
 
 	public void OpenDownFile(String fileName) {
 		if (fileName.endsWith(".3gp")) {
-			Intent it = new Intent(Intent.ACTION_VIEW);
-			File f = new File(fileName);
-			Uri uri = Uri.fromFile(f);
-			it.setDataAndType(uri, "video/3gp");
-			startActivity(it);
+			startActivity(getFileUriIntent(this,fileName,"video/3gp"));
 		} else if (fileName.endsWith(".jpg")) {
-			Intent it = new Intent(Intent.ACTION_VIEW);
-			File f = new File(fileName);
-			Uri uri = Uri.fromFile(f);
-			it.setDataAndType(uri, "image/*");
-			startActivity(it);
+			startActivity(getFileUriIntent(this,fileName,"image/*"));
 		}
 
 	}
-
+	public Intent getFileUriIntent(Context mContext, String fileName, String fileType) {
+		File file = new File(fileName);
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		Uri contentUri;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			contentUri = FileProvider.getUriForFile(mContext, getString(R.string.authorities), file);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		} else {
+			contentUri = Uri.fromFile(file);
+		}
+		intent.setDataAndType(contentUri, fileType);
+		return intent;
+	}
 	/**
 	 * 启动文件下载
 	 *

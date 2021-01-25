@@ -14,7 +14,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.Player.Core.PlayerCore;
+import com.Player.Source.LogOut;
 import com.Player.Source.SDKError;
+import com.video.h264.Streamtomp4;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -145,9 +151,9 @@ public class PlayM3u8Activity extends Activity {
 //        player.SetOpenFFmpegLog(true);
 //        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-       // String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
-        String url="http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
-        //String url = "http://cctvalih5ca.v.myalicdn.com/live/cctv5_2/index.m3u8";
+        // String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
+        String url = "http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
+        // String url = "http://umeyecloudtest2.oss-cn-shenzhen.aliyuncs.com/m3u8/2021/1/21/1611227391406369800.m3u8?Expires=1611230991&OSSAccessKeyId=LTAInrRL8Hn8A8Rz&Signature=OYRn%2FilazyVKJhtpGRna1nStvi8%3D";
         player.InitParam(url, imgLive);
         //player.SetOpenLog(true);
         player.Play();
@@ -203,7 +209,9 @@ public class PlayM3u8Activity extends Activity {
         btnSnap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                player.SetSnapPicture(true);
+                 player.SetSnapPicture(true);
+
+
             }
         });
 

@@ -26,6 +26,7 @@ import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.Utility;
+import com.stream.NewAllStreamParser;
 import com.video.h264.DefualtRecoredThread;
 
 import java.io.File;
@@ -174,7 +175,8 @@ public class AcLogo extends Activity {
         clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
                 language, Constants.custom_flag,
                 String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空
-
+        ClientCore.setClientCustomFlag("20000079",1);
+        NewAllStreamParser.SetVendorClientFlag("def", Constants.custom_flag);
 
         // 获取最优服务器，然后启动sdk
         clientCore.getCurrentBestServer(new Handler() {

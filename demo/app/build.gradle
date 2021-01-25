@@ -67,8 +67,8 @@ dependencies {
 //    implementation files('libs/fastjson-1.1.43.android.jar')
 //    implementation files('libs/WebSocket.jar')
 //
-    implementation files('libs/libumbase.jar')
-    implementation files('libs/libumaccount.jar')
-    implementation files('libs/libump2pvideo.jar')
+//    implementation files('libs/libumbase.jar')
+//    implementation files('libs/libumaccount.jar')
+//    implementation files('libs/libump2pvideo.jar')
 
 }

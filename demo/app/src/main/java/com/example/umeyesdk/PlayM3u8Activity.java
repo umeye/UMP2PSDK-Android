@@ -17,6 +17,7 @@ import com.Player.Core.PlayerCore;
 import com.Player.Source.LogOut;
 import com.Player.Source.SDKError;
 import com.video.h264.Streamtomp4;
+import com.video.hls.HlsDecode;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -151,8 +152,8 @@ public class PlayM3u8Activity extends Activity {
 //        player.SetOpenFFmpegLog(true);
 //        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-        // String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
-        String url = "http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
+       //  String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
+         String url = "https://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
         player.InitParam(url, imgLive);
         //player.SetOpenLog(true);
         player.Play();
@@ -160,7 +161,7 @@ public class PlayM3u8Activity extends Activity {
         tv_time.setText(generateTime(0) + "/" + generateTime(0));
 
         new ProgressThread().start();
-
+      //  HlsDecode.openFFmpegLog(1);
         iv_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,6 +229,9 @@ public class PlayM3u8Activity extends Activity {
                     if (player.GetPlayerState() == SDKError.Statue_PLAYING)
                         player.SetSnapVideo(true);
                 }
+//                String cmds[]=new String[]{"ffmpeg","-i","https://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8","-c","copy","/sdcard/test.m3u8"};
+//                Streamtomp4.ffmpegExecute(cmds.length,cmds);
+                // http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8 -c:a copy -c:v copy
             }
         });
 

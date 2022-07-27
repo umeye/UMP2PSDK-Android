@@ -13,7 +13,6 @@ import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.utils.Constants;
-import com.macrovideo.smartlink.SmarkLinkTool;
 
 public class AcMenu extends Activity implements OnClickListener {
 	private AppMain appMain;
@@ -156,7 +155,7 @@ public class AcMenu extends Activity implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_smartLink:
-				smartLink();
+				//smartLink();
 				break;
 			case R.id.btn_change_dev_pwd:
 				changeDevPassword();
@@ -201,27 +200,27 @@ public class AcMenu extends Activity implements OnClickListener {
 		}.start();
 	}
 
-	public void smartLink() {
-		new Thread() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				SmarkLinkTool
-						.StartSmartConnection("HSKJ-DevlopeAP", "h123h123");
-
-				try {
-					Thread.sleep(20000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				SmarkLinkTool.StopSmartConnection();
-				super.run();
-			}
-
-		}.start();
-	}
+//	public void smartLink() {
+//		new Thread() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				SmarkLinkTool
+//						.StartSmartConnection("HSKJ-DevlopeAP", "h123h123");
+//
+//				try {
+//					Thread.sleep(20000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//				SmarkLinkTool.StopSmartConnection();
+//				super.run();
+//			}
+//
+//		}.start();
+//	}
 
 }

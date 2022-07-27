@@ -18,7 +18,7 @@ import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
-import com.audio2.aacEncode;
+import com.audio2.AacEncode;
 import com.example.umeyeNewSdk.PlayActivity2;
 import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
@@ -26,7 +26,7 @@ import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.Utility;
-import com.stream.NewAllStreamParser;
+import com.stream.UmProtocol;
 import com.video.h264.DefualtRecoredThread;
 
 import java.io.File;
@@ -66,7 +66,7 @@ public class AcLogo extends Activity {
         localLogin = userInfo != null && userInfo.isLocalMode();
 
         ClientCore clientCore = ClientCore.getInstance();
-
+        ClientCore.setLimitUmidLength(true);
         if (clientCore != null && clientCore.IsLogin()) {// 判断是否处于登录状态，直接进入主界面
             if (!localLogin) {
                 startActivity(new Intent(AcLogo.this, MainActivity.class));
@@ -175,8 +175,8 @@ public class AcLogo extends Activity {
         clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
                 language, Constants.custom_flag,
                 String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空
-        ClientCore.setClientCustomFlag("20000079",1);
-        NewAllStreamParser.SetVendorClientFlag("def", Constants.custom_flag);
+       // ClientCore.setClientCustomFlag("20000079",1);
+       // UmProtocol.SetVendorClientFlag("def", Constants.custom_flag);
 
         // 获取最优服务器，然后启动sdk
         clientCore.getCurrentBestServer(new Handler() {

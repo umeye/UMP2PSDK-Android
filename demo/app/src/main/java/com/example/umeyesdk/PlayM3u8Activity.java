@@ -14,14 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.Player.Core.PlayerCore;
-import com.Player.Source.LogOut;
 import com.Player.Source.SDKError;
-import com.video.h264.Streamtomp4;
-import com.video.hls.HlsDecode;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,9 +46,9 @@ public class PlayM3u8Activity extends Activity {
 
             Log.d("state", state + "");
 
+            currentPosition = player.GetPlayFile_CurPlayPos();
             if (state == SDKError.Statue_PLAYING || state == SDKError.Statue_ConnectingSucess) {
 
-                currentPosition = player.GetPlayFile_CurPlayPos();
                 duration = player.GetFileAllTime_Int();
                 //让进度条滚动起来
                 seekBar.setProgress(currentPosition / 1000 * 1000);
@@ -63,6 +56,13 @@ public class PlayM3u8Activity extends Activity {
                 tv_time.setText(generateTime(currentPosition) + "/" + generateTime(duration));
 
                 iv_play.setImageResource(android.R.drawable.ic_media_pause);
+                if (duration > 0 && currentPosition >= duration) {
+                    player.StopAsync();
+                    seekBar.setProgress(0);
+                    tv_time.setText(generateTime(0) + "/" + generateTime(duration));
+                    iv_play.setImageResource(android.R.drawable.ic_media_play);
+                }
+
 
             } else if (state == SDKError.Statue_Ready || state == SDKError.Statue_STOP) {
                 seekBar.setProgress(0);
@@ -72,14 +72,7 @@ public class PlayM3u8Activity extends Activity {
             } else if (state == SDKError.Statue_Pause) {
                 iv_play.setImageResource(android.R.drawable.ic_media_play);
             } else if (state != SDKError.Statue_ConnectingSucess) {
-                if (duration > 0 && currentPosition >= duration) {
-                    player.StopAsync();
 
-                    seekBar.setProgress(0);
-                    tv_time.setText(generateTime(0) + "/" + generateTime(duration));
-                }
-
-                iv_play.setImageResource(android.R.drawable.ic_media_play);
             }
             txtState.setText(GetDescription(PlayM3u8Activity.this, state));
 
@@ -150,18 +143,21 @@ public class PlayM3u8Activity extends Activity {
 
         player = new PlayerCore(this, PlayerCore.HLSSERVER);
 //        player.SetOpenFFmpegLog(true);
-//        player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
+        // player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-       //  String url = "https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8";
-         String url = "https://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
+        String url = "http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
+
+        //String url = "https://camplat.suning.com/camplat-web/app/play.do?playCode=ffe4e50f96162cbe9350801bd68594794f6787d7&startTime=1638201600000&endTime=1638205201621&eventType=6";
+        //String url = "https://sod.bunediy.com/20211112/L57EDNF2/index.m3u8";
         player.InitParam(url, imgLive);
-        //player.SetOpenLog(true);
+        player.SetOpenLog(false);
+        player.OpenAudio();
         player.Play();
 
         tv_time.setText(generateTime(0) + "/" + generateTime(0));
 
         new ProgressThread().start();
-      //  HlsDecode.openFFmpegLog(1);
+        //  HlsDecode.openFFmpegLog(1);
         iv_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,11 +206,11 @@ public class PlayM3u8Activity extends Activity {
             @Override
             public void onClick(View view) {
                 player.SetSnapPicture(true);
-                if (ffmpegLog == 0) {
-                    ffmpegLog = 1;
-                } else
-                    ffmpegLog = 0;
-                Streamtomp4.ffmpegExecuteLog(ffmpegLog);
+
+                if (player.GetIsVoicePause())
+                    player.OpenAudio();
+                else
+                    player.CloseAudio();
 
 
             }

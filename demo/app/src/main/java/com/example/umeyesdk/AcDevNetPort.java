@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.stream.NewAllStreamParser;
+import com.stream.UmProtocol;
 
 public class AcDevNetPort extends Activity {
 	String serverIP = "119.29.237.152";
@@ -78,14 +78,14 @@ public class AcDevNetPort extends Activity {
 
 			@Override
 			public void run() {
-				clientHandle = NewAllStreamParser.DNPCreatePortServer(serverIP,
+				clientHandle = UmProtocol.DNPCreatePortServer(serverIP,
 						8300, "sdktest", "sdktest");
 				if (clientHandle == 0) {
 					postMainThread("创建映射服务失败");
 					return;
 				} else
 					postMainThread("创建映射服务成功");
-				int state = NewAllStreamParser
+				int state = UmProtocol
 						.DNPCheckSrvConnState(clientHandle);
 				int checkTimes = 0;
 				try {
@@ -96,12 +96,12 @@ public class AcDevNetPort extends Activity {
 						}
 						Thread.sleep(1000);
 						checkTimes++;
-						state = NewAllStreamParser
+						state = UmProtocol
 								.DNPCheckSrvConnState(clientHandle);
 					}
 					postMainThread("连接成功");
 
-					int port1 = NewAllStreamParser.DNPAddPortByChNo(
+					int port1 = UmProtocol.DNPAddPortByChNo(
 							clientHandle, umid, 0);
 					if (port1 == 0) {
 						postMainThread("创建端口失败:" + port1);
@@ -168,9 +168,9 @@ public class AcDevNetPort extends Activity {
 		}
 		if (clientHandle != 0 && port1 != 0) {
 
-			NewAllStreamParser.DNPDelPort(clientHandle, port1);
+			UmProtocol.DNPDelPort(clientHandle, port1);
 			postMainThread("删除端口");
-			NewAllStreamParser.DNPDestroyPortServer(clientHandle);
+			UmProtocol.DNPDestroyPortServer(clientHandle);
 			postMainThread("销毁映射服务");
 		}
 		super.onDestroy();

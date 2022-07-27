@@ -5,13 +5,13 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.Player.Core.CoustomFun.Entity.CFResponse;
+import com.Player.Core.CoustomFun.Entity.DevResponse;
 import com.Player.Core.PlayerClient;
 import com.alibaba.fastjson.JSON;
 
 import java.io.UnsupportedEncodingException;
 
-public class DevSettingsTask extends AsyncTask<Void, Void, CFResponse> {
+public class DevSettingsTask extends AsyncTask<Void, Void, DevResponse> {
 
     private String connParams;
     private String reqJson;
@@ -42,7 +42,7 @@ public class DevSettingsTask extends AsyncTask<Void, Void, CFResponse> {
     }
 
     @Override
-    protected CFResponse doInBackground(Void... params) {
+    protected DevResponse doInBackground(Void... params) {
         try {
             return playerClient.CallCustomFuncExExEx(connParams, functionId, reqJson.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -52,7 +52,7 @@ public class DevSettingsTask extends AsyncTask<Void, Void, CFResponse> {
     }
 
     @Override
-    protected void onPostExecute(CFResponse cfResponse) {
+    protected void onPostExecute(DevResponse cfResponse) {
         if(activity != null && !activity.isFinishing()) {
             progressDialog.dismiss();
         }

@@ -1,61 +1,78 @@
 package com.example.umeyesdk.utils;
 
-import java.nio.ByteBuffer;
-
-import com.Player.Core.PlayerCore;
-import com.audio.g711adec;
-import com.audio.junjiadpcmdec;
-
 import android.media.AudioFormat;
 import android.media.AudioRecord;
-import android.media.MediaRecorder;
 import android.util.Log;
 
-public class MyRecoredThread extends Thread{
+import com.Player.Core.PlayerCore;
+import com.audio2.AacEncode;
+import com.stream.UmRtc;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
+
+public class MyRecoredThread extends Thread {
 	private PlayerCore playercore;
-	private junjiadpcmdec junjiadpcm_dec = null;
-	private g711adec g711a_dec = null;
-	private ByteBuffer pG711aBuffer = ByteBuffer.allocate(80 * 10 * 36);
+	private AacEncode aacEncode2 = null;
+	private ByteBuffer sendBuffer = ByteBuffer.allocate(80 * 10 * 36);
+	private UmRtc webRtc;
+	public static boolean needCompareData = false;
+
 	public MyRecoredThread(PlayerCore playercore) {
 		super();
 		this.playercore = playercore;
+		// webRtc = UmRtc.getInstance();
+		needCompareData = true;
 	}
+
 	@Override
 	public synchronized void run() {
-		Log.d("auDecoder", "run");
+		Log.d("RecordThread", "run");
 		ThreadRecordAudio();
-		/*
-		 * try { while(true)//知道录音线程结束 { Thread.sleep(20); } }catch
-		 * (Exception e) { e.printStackTrace(); }
-		 */
+		Log.d("RecordThread", "end");
 	}
+
+
 	@SuppressWarnings("deprecation")
 	public void ThreadRecordAudio()// 录音时候一定要插上耳机否则全是噪音
 	{
 		AudioRecord recorder = null;
 		try {
+			//           WebRtcUtils.webRtcNsInit(8000);
+//            FileOutputStream tempaudioFileOutputStream = null;
+//            FileOutputStream tempaudioFileOutputStream1 = null;
+//            try {
+//                tempaudioFileOutputStream = new FileOutputStream(CommenUtil.getExternalStorageFile(playercore.mContext) + "/tempaudio.pcm",
+//                        true);
+//                tempaudioFileOutputStream1 = new FileOutputStream(CommenUtil.getExternalStorageFile(playercore.mContext) + "/tempaudio1.pcm",
+//                        true);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+
+			int RecordSamplingRate = (playercore.audiotype == 5 ? 44100 : playercore.RecordSamplingRate);//许总说的
 			// 获得录音缓冲区大小
 			int bufferSize = AudioRecord.getMinBufferSize(
-					playercore.RecordSamplingRate,
+					RecordSamplingRate,
 					AudioFormat.CHANNEL_CONFIGURATION_MONO,
 					AudioFormat.ENCODING_PCM_16BIT);
-
-			Log.e("", "录音缓冲区大小" + bufferSize);
+			Log.e("RecordThread", "录音缓冲区大小" + bufferSize);
 
 			// 获得录音机对象
-			recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
-					playercore.RecordSamplingRate,
+			recorder = new AudioRecord(PlayerCore.RECORDER_VOICE,
+					RecordSamplingRate,
 					AudioFormat.CHANNEL_CONFIGURATION_MONO,
 					AudioFormat.ENCODING_PCM_16BIT, bufferSize * 10);
 
 			recorder.startRecording();// 开始录音
 
-			byte[] readBuffer = new byte[640 * 5];// 录音缓冲区
+			byte[] readBuffer = playercore.audiotype == 5 ? new byte[2048] : new byte[640 * 5];// 录音缓冲区
 			int length = 0;
 			int G711asize = 0;
 			playercore.PPTisover = false;
 			while (playercore.IsPPTaudio && playercore.ThreadisTrue) {
-
+				// Log.d("RecordThread", "while run");
 				if (playercore.audioppttype == PlayerCore.AUDIOPPT_G711A) {
 					length = recorder.read(readBuffer, 0,
 							playercore.RecordVocSize);// 1024);//640*2);//
@@ -66,64 +83,129 @@ public class MyRecoredThread extends Thread{
 						ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0,
 								length);
 						pInBuffer.position(0);
-						if (g711a_dec == null) { // 语音
-							g711a_dec = new g711adec();
-						}
-						G711asize = g711a_dec.EncodeOneFrame(pInBuffer,
-								pG711aBuffer);
+
 						if (playercore.GetOpenLog())
 							Log.w("录音", "压缩后的录音数据 长度是：" + G711asize);
-						playercore.SendPPTAudio(pG711aBuffer, G711asize, 1);
+						playercore.SendPPTAudio(sendBuffer, G711asize, 1);
+
+
 					}
 				} else if (playercore.audioppttype == PlayerCore.AUDIOPPT_JUNJIADPCM)// 军集
-				// ADPCM
 				{
-					length = recorder.read(readBuffer, 0,
-							playercore.RecordVocSize);// 从mic读取音频数据
+					length = recorder.read(readBuffer, 0, playercore.RecordVocSize);// 从mic读取音频数据
 					if (length > 0 && length % 2 == 0) {
-						ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0,
-								length);
+						ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0, length);
 						pInBuffer.position(0);
-						if (junjiadpcm_dec == null) { // 语音
-							junjiadpcm_dec = new junjiadpcmdec();
-						}
-						synchronized (junjiadpcm_dec) {
-							G711asize = junjiadpcm_dec.EncodeOneFrame(
-									pInBuffer, pG711aBuffer);
-						}
 						if (playercore.GetOpenLog())
 							Log.w("录音", "压缩后的录音数据 长度是：" + G711asize);
-						playercore.SendPPTAudio(pG711aBuffer, G711asize, 1);
+						playercore.SendPPTAudio(sendBuffer, G711asize, 1);
+
 					}
 				} else {
-					length = recorder.read(readBuffer, 0,
-							playercore.RecordVocSize);// 1024);//640*2);//
-					// 从mic读取音频数据
-					if (length > 0 && length % 2 == 0) {
-						ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0,
-								length);
+					//对讲
+					if (playercore.audiotype == 5) {// AAC
+						length = recorder.read(readBuffer, 0, 2048);
+						ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0, length);
 						pInBuffer.position(0);
-						if (playercore.GetOpenLog())
-							Log.w("录音", "压缩后的录音数据 长度是：" + length);
-						// FileOutputStream outputStream = new FileOutputStream(
-						// file, true);
-						// //outputStream.write(pInBuffer.array());
-						// outputStream.write(pInBuffer.array(), 0, length);
-						// outputStream.close();
-						playercore.SendPPTAudio(pInBuffer, length, 0);
+
+						if (aacEncode2 == null) {
+							aacEncode2 = AacEncode.createAudioType(1, RecordSamplingRate, playercore.RecordEncodePcmBitRate);
+						}
+						synchronized (aacEncode2) {
+							sendBuffer.clear();
+							G711asize = aacEncode2.aacEncode_EncodeFrame(pInBuffer, pInBuffer.array().length, sendBuffer);//G711asize为200-300
+						}
+						playercore.SendPPTAudio(sendBuffer, G711asize, 1);
+
+					}
+//                    else if (playercore.audiotype == 0) {// amr
+//                        length = recorder.read(readBuffer, 0, 2048);
+//                        ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0, length);
+//                        pInBuffer.position(0);
+//                        if (playercore.GetOpenLog())
+//                            Log.w("RecordThread", "amr录音数据 长度是：" + length);
+//                        if (aacEncode2 == null) {
+//                            aacEncode2 = AacEncode.createAudioType(HlsDecode.MEDIA_AUDIO_FORMAT_AMR, 1, RecordSamplingRate, playercore.RecordEncodePcmBitRate);
+//                        }
+//                        synchronized (aacEncode2) {
+//                            sendBuffer.clear();
+//                            G711asize = aacEncode2.aacEncode_EncodeFrame(pInBuffer, pInBuffer.array().length, sendBuffer);//G711asize为200-300
+//                        }
+//                        if (playercore.GetOpenLog())
+//                            Log.w("RecordThread", "压缩后的amr录音数据 长度是：" + G711asize);
+//                        if (G711asize > 0)
+//                            playercore.SendPPTAudio(sendBuffer, G711asize, 1);
+//                        else
+//                            Log.e("SendPPTAudio", "发送非法数据");
+//
+//                    }
+					else {
+						length = recorder.read(readBuffer, 0, playercore.RecordVocSize);// 1024);//640*2);从mic读取音频数据
+						if (length > 0 && length % 2 == 0) {
+							ByteBuffer pInBuffer = ByteBuffer.wrap(readBuffer, 0, length);
+							pInBuffer.position(0);
+							if (playercore.GetOpenLog()) Log.w("录音", "压缩后的录音数据 长度是：" + length);
+							if (webRtc != null && playercore.DoublePPT && UmRtc.enbaleUse) {//双向对讲,且开启webrtc的使用
+
+								byte[] outArray = new byte[length];
+								byte[] inArray = Arrays.copyOf(readBuffer, length);//获取数组指定长度
+								//createFileWithByte(inArray,"process_before.pcm");
+								webRtc.AecmProcess(inArray, outArray);//进行回音消除
+								//createFileWithByte(outArray,"process_after.pcm");//写入本地文件测试
+								ByteBuffer pOutBuffer = ByteBuffer.wrap(outArray, 0, length);
+								pOutBuffer.position(0);
+								playercore.SendPPTAudio(pOutBuffer, length, 0);
+
+							} else {
+
+//                                if (playercore.openWebRtcNs) {     //开启噪音消除
+//                                    short[] shortData = new short[length >> 1];
+//                                    pInBuffer.order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shortData);
+//                                    Log.i("webrtc", "RecordSamplingRate ：" + RecordSamplingRate);
+//                                    byte[] nsProcessData = shortToBytes(WebRtcUtils.webRtcNsProcess(8000, shortData.length, shortData));
+//                                    ByteBuffer pOutBuffer = ByteBuffer.wrap(nsProcessData, 0, length);
+////                                    tempaudioFileOutputStream1.write(nsProcessData);
+////                                    tempaudioFileOutputStream.write(readBuffer,0,length);
+//                                    playercore.SendPPTAudio(pOutBuffer, length, 0);
+//                                } else {
+								playercore.SendPPTAudio(pInBuffer, length, 0);
+								//                              }
+
+							}
+						}
 					}
 				}
-
 				Thread.sleep(10);
 			}
-
+//            tempaudioFileOutputStream.close();
+//            tempaudioFileOutputStream1.close();
 			recorder.stop();
 			recorder.release();
+			// WebRtcUtils.webRtcNsFree();
 			recorder = null;
 			playercore.PPTisover = true;
 			playercore.IsPPTaudio = false;
+			needCompareData = false;
+			if (aacEncode2 != null) {
+				synchronized (aacEncode2) {
+					aacEncode2.destroy();
+					aacEncode2 = null;
+				}
+			}
+			Thread.sleep(50);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	public static byte[] shortToBytes(short[] shorts) {
+		if (shorts == null) {
+			return null;
+		}
+		byte[] bytes = new byte[shorts.length * 2];
+		ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().put(shorts);
+
+		return bytes;
+	}
 }
+

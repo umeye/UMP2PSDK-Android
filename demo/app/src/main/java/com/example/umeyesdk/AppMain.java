@@ -15,13 +15,13 @@ import com.Player.Core.PlayerCore;
 import com.Player.Core.Utils.CommenUtil;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
-import com.context.UmeyeApplication;
+import com.context.HsUmApplication;
 import com.example.umeyeNewSdk.AcSelectMode;
 import com.example.umeyesdk.api.WebSdkApi;
 import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
 
-public class AppMain extends UmeyeApplication {
+public class AppMain extends HsUmApplication {
 	public static final String FILTER = "com.example.umeyesdk.RefreshData";
 	private PlayerClient playerclient;
 	private List<PlayNode> nodeList;

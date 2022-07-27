@@ -1,98 +1,95 @@
 package com.example.umeyesdk.utils;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.Process;
 import android.util.Log;
 
 import com.Player.Core.PlayerCore;
 import com.Player.Source.SDKError;
 import com.Player.Source.TSourceFrame;
-import com.audio.aacDecode;
-import com.audio.adpcmdec;
-import com.audio.amrnbdec;
-import com.audio.amrwbdec;
-import com.audio.g711adec;
-import com.audio.junjiadpcmdec;
-import com.video.h264.DecodeDisplay;
+import com.audio2.AacDecode;
 
-public class MyAudioDecodeThread extends Thread {
-	private g711adec g711a_dec = null;
-	private aacDecode aAcDecode = null;
+import com.audio2.AacEncode;
+import com.stream.UmRtc;
+import com.stream.WebRtcUtils;
+import com.video.h264.DecodeDisplay;
+import com.video.h264.DecodeTimeStampLisenter;
+import com.video.h264.DefualtRecoredThread;
+import com.video.hls.HlsDecode;
+
+public class MyAudioDecodeThread extends Thread implements DecodeTimeStampLisenter {
+	private AacDecode aAcDecode = null;
+	private AacEncode aacEncode2 = null;
+	public static boolean openCancerNoise = false;
 	private AudioTrack audioTrack = null;
-	private amrnbdec amrnb_dec = null;
-	private amrwbdec amrwb_dec = null;
-	private adpcmdec adpcm_dec = null;
-	private junjiadpcmdec junjiadpcm_dec = null;
 	private PlayerCore playercore;
 	private Boolean firstaudio = true;
 	int iMinBufSize = 0;
 	private ByteBuffer pPcmBuffer = ByteBuffer.allocate(160 * 10 * 36);
+	private ByteBuffer pAacInBuffer = ByteBuffer.allocate(2048 * 10);
+	private ByteBuffer pAacWriteMP4Buffer = ByteBuffer.allocate(80 * 10 * 36);
 	DecodeDisplay decodeDisplay;
+	//播放显示的时间戳，当前用来HLS音视频同步
+	private long displayTimeStamps;
 
 	public MyAudioDecodeThread(PlayerCore playercore,
-							   DecodeDisplay decodeDisplay) {
+									 DecodeDisplay decodeDisplay) {
 		this.playercore = playercore;
 		this.decodeDisplay = decodeDisplay;
 	}
 
 	@Override
 	public void run() {
-
+		Process.setThreadPriority(Process.THREAD_PRIORITY_AUDIO);
 		Log.d("auDecoder", "run");
 		AudioDecode();
 		if (aAcDecode != null) {
 			synchronized (aAcDecode) {
 				if (aAcDecode != null) {
-					aAcDecode.Cleanup();
+					aAcDecode.destroy();
 					aAcDecode = null;
 				}
 			}
 		}
-		if (amrnb_dec != null) {
-			synchronized (amrnb_dec) {
-				if (amrnb_dec != null) {
-					amrnb_dec.Cleanup();
-					amrnb_dec = null;
-				}
-			}
-		}
 
-		if (amrwb_dec != null) {
-			synchronized (amrwb_dec) {
-				if (amrwb_dec != null) {
-					amrwb_dec.Cleanup();
-					amrwb_dec = null;
-				}
-
-			}
-		}
 
 		if (audioTrack != null) {
 			synchronized (audioTrack) {
 				if (audioTrack != null) {
-					audioTrack.stop();
-					audioTrack.release();
+					try {
+						audioTrack.stop();
+						audioTrack.release();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					audioTrack = null;
 				}
 			}
 		}
+
+		if (aacEncode2 != null) {
+			synchronized (aacEncode2) {
+				aacEncode2.destroy();
+				aacEncode2 = null;
+			}
+		}
 	}
+
 
 	@SuppressWarnings("deprecation")
 	void AudioDecode() {
+
 		while (playercore.ThreadisTrue) {
 			try {
-				// Thread.sleep(30);
+				//Thread.sleep(20);
 				Thread.sleep(2);
 				if (!playercore.ThreadisTrue)
 					return;
-				// if (playercore.voicePause) {
-				// Thread.sleep(100);
-				// continue;
-				// }
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -110,12 +107,14 @@ public class MyAudioDecodeThread extends Thread {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				TSourceFrame mFrame = null;// new TSourceFrame();
-				// mFrame = playercore.mPacketaudio.deQueue();
-				// playercore.GetAudioFrameLeft()
+				TSourceFrame mFrame = null;
+				long startDecodeTime = 0;
 				try {
+					startDecodeTime = System.currentTimeMillis();
 					mFrame = playercore.GetNextAudioFrame();// null;//playercore.mPacketaudio.getAudiocurrent();
-
+//                    if (playercore.GetOpenLog())
+//                        Log.d("AudioDecode", "mPacket_au left "
+//                                + playercore.GetAudioFrameLeft());
 				} catch (OutOfMemoryError e) {
 					Log.e("OutOfMemoryError",
 							"AudioDecode OutOfMemoryError.........");
@@ -124,22 +123,44 @@ public class MyAudioDecodeThread extends Thread {
 				}
 				if (mFrame == null) {
 					break;
+				} else {
+					// Log.e("GetNextAudioFrame", "mFrame.iLen :" + mFrame.iLen);
+					if (playercore.GetOpenLog())
+						Log.d("GetNextFrame", "AudioFrame timestamp:" + mFrame.iPTS + ",mFrame.iFrameFlag=" + mFrame.iFrameFlag);
 				}
-				// Log.d("mFrame", "audio frameFlag："+mFrame.iFrameFlag );
+				if (playercore.audioToUpCallBack != null) {// 存在音频上层处理回调，底层不再进行处理。
+					playercore.audioToUpCallBack.getFrameData(mFrame);
+					continue;
+				}
 				if (mFrame.iFrameFlag == 2 || mFrame.iFrameFlag == 1) {// 因播放完或错误导致停止
-					decodeDisplay.SetCurrentPlayTime(playercore
-							.GetFileAllTime_Int());
-					Log.d("total and current", "GetFileAllTime_Int:因播放完或错误导致停止");
+					decodeDisplay.CurrentPlayTime = playercore
+							.GetFileAllTime_Int();
+					if (playercore.onFinishListener != null) {
+						if (mFrame.iFrameFlag == 2) {
+							playercore.onFinishListener.onComplete();
+						} else {
+							playercore.onFinishListener.onError();
+						}
+					}
+
+					Log.d("total and current", "Audio GetFileAllTime_Int:"
+							+ decodeDisplay.CurrentPlayTime + ",因播放完或错误导致停止");
 					break;
 				}
 				try {
 					if (firstaudio)// 第一次缓冲一下这样可以不卡点
 					{
+						Log.e("mFrame.iAudioSampleRate", "mFrame.iAudioSampleRate--->" + mFrame.iAudioSampleRate);
 						if (mFrame.iAudioSampleRate == 32000) {// 如果音频的采样率是3200，播放音频采样率为3200，默认为8000
 							Log.e("mFrame.iAudioSampleRate",
 									"mFrame.iAudioSampleRate--->3200");
 							playercore.PlayerSamplingRate = 32000;
 						}
+						if (mFrame.iAudioSampleRate <= 0) {
+							mFrame.iAudioSampleRate = 8000;
+						}
+						playercore.PlayerSamplingRate = mFrame.iAudioSampleRate;
+
 						iMinBufSize = android.media.AudioTrack
 								.getMinBufferSize(
 										playercore.PlayerSamplingRate,// 8000,
@@ -160,21 +181,73 @@ public class MyAudioDecodeThread extends Thread {
 					e1.printStackTrace();
 				}
 
+				//如果非aac要用各自解码库转PCM(除了aac外其他编码，底层已对它们处理，上层不用再处理)，所以直接对pcm编码aac,丢给mp4编码库
 				try {
+					//录像
 					if (decodeDisplay != null && decodeDisplay.mp4make != null) {
-						if (playercore.GetIsSnapVideo()) {
+						if (playercore.GetIsSnapVideo()
+								&& !playercore.IsOnPauseSnapVideo) {
 							decodeDisplay.mp4make.initAudioParam(
 									mFrame.EncodeType, mFrame.iAudioSampleRate,
 									mFrame.iLen);
-							decodeDisplay.mp4make.writeaudioframe(
-									mFrame.iData.clone(), mFrame.iLen, mFrame.iPTS);
+							if (playercore != null
+									&& playercore.mp4RecordInfo != null)
+								playercore.mp4RecordInfo.size = mFrame.iData.length
+										+ playercore.mp4RecordInfo.size;
+							byte[] buffer = mFrame.iData.clone();
+							if (playercore.audiotype != 5 && PlayerCore.isNewRecordMode) {//设备非aac，底层返pcm；设备aac，底层返aac
+								int aacEncodePriorSize = 2048;
+								int iLength;
+								if (pAacInBuffer.position() + buffer.length > aacEncodePriorSize) {//如果当前的指针加上输入数组长度大于2048个字节
+									iLength = pAacInBuffer.position() + buffer.length - aacEncodePriorSize;
+									pAacInBuffer.put(buffer, 0, buffer.length - iLength);//先填完2048个长度
+								} else {
+									iLength = buffer.length;
+									pAacInBuffer.put(buffer, 0, buffer.length);//当前position没到2048，则继续填充，每次填充后position自动为最后+1个位置
+								}
+
+								if (pAacInBuffer.position() >= aacEncodePriorSize) {//当塞到2048个字节了
+									if (aacEncode2 == null) {
+										aacEncode2 = AacEncode.createAudioType(1, playercore.PlayerSamplingRate, 16000);
+									}
+
+									pAacInBuffer.position(0);//将指针置为0
+									pAacInBuffer.limit(aacEncodePriorSize);//aac输入每次取2048进行编码，因此limit设为2048
+
+									int size;
+									synchronized (aacEncode2) {
+										pAacWriteMP4Buffer.clear();
+										size = aacEncode2.aacEncode_EncodeFrame(pAacInBuffer, aacEncodePriorSize, pAacWriteMP4Buffer);
+									}
+									if (iLength < buffer.length) {//然后超过2048的多余部分则从position=0指针位置覆盖填充
+										pAacInBuffer.put(buffer, iLength, buffer.length - iLength);
+									}
+									decodeDisplay.mp4make.writeaudioframe(
+											pAacWriteMP4Buffer.array(), size);
+								}
+							} else {
+								if (PlayerCore.isNewRecordMode) {
+									decodeDisplay.mp4make.writeaudioframe(
+											buffer, buffer.length);
+								} else {
+									decodeDisplay.mp4make.writeaudioframe(
+											buffer, buffer.length, mFrame.iPTS);
+								}
+							}
+						} else {
+							pAacInBuffer.clear();
 						}
+					} else {
+						pAacInBuffer.clear();
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				// Log.w("mFrame.EncodeType",
-				// "mFrame.EncodeType:"+mFrame.EncodeType);
+				if (playercore.GetOpenLog()) {
+					Log.w("mFrame.EncodeType", "mFrame.EncodeType:"
+							+ mFrame.EncodeType);
+				}
+
 				if (mFrame.EncodeType == 11)
 					playercore.audiotype = 2;
 
@@ -194,65 +267,76 @@ public class MyAudioDecodeThread extends Thread {
 				{
 					if (playercore.audiotype == 1)// wb
 					{
+						WebRtcUtils.webRtcNsInit(1600);
 						audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
 								16000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
 								AudioFormat.ENCODING_PCM_16BIT, iMinBufSize,
 								AudioTrack.MODE_STREAM);
 
+//                        Log.e("new AudioTrack111", "  AudioManager.STREAM_MUSIC: "+AudioManager.STREAM_MUSIC
+//                                +"  16000: "+16000
+//                                +"  AudioFormat.CHANNEL_CONFIGURATION_MONO: "+AudioFormat.CHANNEL_CONFIGURATION_MONO
+//                                +"  AudioFormat.ENCODING_PCM_16BIT: "+AudioFormat.ENCODING_PCM_16BIT
+//                                +"  iMinBufSize: "+iMinBufSize
+//                                +"  AudioTrack.MODE_STREAM: "+AudioTrack.MODE_STREAM);
+
 						Log.e("AudioTrack",
 								"AudioTrack: PlayerSamplingRate=16000");
 					} else {
 						try {
-
+							playercore.PlayerSamplingRate = mFrame.iAudioSampleRate;
+							WebRtcUtils.webRtcNsInit(playercore.PlayerSamplingRate);
 							audioTrack = new AudioTrack(
 									AudioManager.STREAM_MUSIC,
 									playercore.PlayerSamplingRate,
 									AudioFormat.CHANNEL_CONFIGURATION_MONO,
 									AudioFormat.ENCODING_PCM_16BIT,
 									iMinBufSize, AudioTrack.MODE_STREAM);
+
+//                            Log.e("new AudioTrack222", "  AudioManager.STREAM_MUSIC: "+AudioManager.STREAM_MUSIC
+//                                    +"  playercore.PlayerSamplingRate: "+playercore.PlayerSamplingRate
+//                                    +"  AudioFormat.CHANNEL_CONFIGURATION_MONO: "+AudioFormat.CHANNEL_CONFIGURATION_MONO
+//                                    +"  AudioFormat.ENCODING_PCM_16BIT: "+AudioFormat.ENCODING_PCM_16BIT
+//                                    +"  iMinBufSize: "+iMinBufSize
+//                                    +"  AudioTrack.MODE_STREAM: "+AudioTrack.MODE_STREAM);
+
 						} catch (OutOfMemoryError e) {
 							Log.d("AudioDecode ",
 									"new AudioTrack OutOfMemoryError.........");
+							continue;
+						} catch (Exception e) {
+
+//                            Log.d("AudioTrack",
+//                                    "init Exception.........");
 							e.printStackTrace();
 							continue;
 						}
 					}
 
 					if (audioTrack != null)
-						audioTrack.play();
+						try {
+							audioTrack.play();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
 				}
 				if (playercore.voicePause) {
 					if (audioTrack.getPlayState() == AudioTrack.PLAYSTATE_PLAYING) {
-						audioTrack.stop();
-
+						try {
+							audioTrack.stop();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				} else {
 					if (audioTrack.getPlayState() == AudioTrack.PLAYSTATE_STOPPED) {
 						audioTrack.play();
 					}
 				}
-
-				// playercore.mPacketPPTaudio.enQueue(mFrame);
-				/*
-				 * if(true) { break; }
-				 */
-
-				if (mFrame == null)
-					continue;
 				try {
-					// ByteBuffer pInBuffer
-					// =ByteBuffer.wrap(mFrame.iData,0,mFrame.iLen);
 					ByteBuffer pInBuffer = ByteBuffer.wrap(
-							mFrame.iData.clone(), 0, mFrame.iLen);// 这个地方不加个克隆直播回退就会出问题
-					// 解码器会修改里面的内容
-					// ByteBuffer pInBuffer
-					// =ByteBuffer.wrap(mFrame.iData,320,mFrame.iLen-320);
-					/*
-					 * for(int i=0;i<mFrame.iLen;i++) { int
-					 * datavalue=(mFrame.iData[i]+256)%256; if(datavalue!=0x96
-					 * && datavalue!=0x97) Log.e("噪音","噪音值 is:"+datavalue);
-					 * //else // Log.e("非噪音","iData[i] is:"+mFrame.iData[i]); }
-					 */
+							mFrame.iData.clone(), 0, mFrame.iLen);// 这个地方不加个克隆直播回退就会出问题,解码器会修改里面的内容
 					pInBuffer.position(0);
 					int Pcmsize = 0;
 					if (playercore.voicePause)// 声音不播放
@@ -264,76 +348,42 @@ public class MyAudioDecodeThread extends Thread {
 						}
 						continue;
 					} else if (playercore.audiotype == 0) {
-						if (amrnb_dec == null) {
-							amrnb_dec = new amrnbdec();
+						if (aAcDecode == null) { // 语音
+							aAcDecode = AacDecode.createAudioType(HlsDecode.MEDIA_AUDIO_FORMAT_AMR, audioTrack.getChannelCount(), audioTrack.getSampleRate());
 						}
-						Pcmsize = amrnb_dec.DecodeOneFrame(pInBuffer,
-								pPcmBuffer);
+						synchronized (aAcDecode) {
+							pPcmBuffer.clear();
+							Pcmsize = aAcDecode.aacDecode_DecodeFrame(pInBuffer, pInBuffer.array().length,//10 * 1024,
+									pPcmBuffer);
+
+						}
 					} else if (playercore.audiotype == 1)// amrwb
 					{
-						if (amrwb_dec == null) {
-							amrwb_dec = new amrwbdec();
-						}
-						Pcmsize = amrwb_dec.DecodeOneFrame(pInBuffer,
-								pPcmBuffer);
+
 					} else if (playercore.audiotype == 2)// g711
 					{
-						if (playercore.GetOpenLog())
-							Log.w("g711a", "audio is g711a");
-						if (g711a_dec == null) { // 语音
-							g711a_dec = new g711adec();
-						}
-						synchronized (g711a_dec) {
-							Pcmsize = g711a_dec.DecodeOneFrame(pInBuffer,
-									pPcmBuffer);
-						}
+
 					} else if (playercore.audiotype == 3)// IMA adpcm 是4:1的压缩比率
 					{
-						if (playercore.GetOpenLog())
-							Log.w("adpcm", "audio is adpcm");
-						if (adpcm_dec == null) { // 语音
-							adpcm_dec = new adpcmdec();
-						}
-						synchronized (adpcm_dec) {
-							// Pcmsize=adpcm_dec.DecodeOneFrame(pInBuffer,
-							// pPcmBuffer);
-							Pcmsize = adpcm_dec.DecodeOneFrame(pInBuffer,
-									pPcmBuffer);
-						}
-						/*
-						 * if(junjiadpcm_dec==null) { //语音 junjiadpcm_dec=new
-						 * junjiadpcmdec(); } synchronized (junjiadpcm_dec) {
-						 * Pcmsize=junjiadpcm_dec.DecodeOneFrame(pInBuffer,
-						 * pPcmBuffer); }
-						 */
 
-						int endtime = (int) (System.currentTimeMillis());
 					} else if (playercore.audiotype == 4)// DONGJI IMA adpcm
 					// 是4:1的压缩比率
 					{
-						if (playercore.GetOpenLog())
-							Log.w("adpcmdj", "audio is adpcmdj");
-						if (junjiadpcm_dec == null) { // 语音
-							junjiadpcm_dec = new junjiadpcmdec();
-						}
-						synchronized (junjiadpcm_dec) {
-							Pcmsize = junjiadpcm_dec.DecodeOneFrame(pInBuffer,
-									pPcmBuffer);
-						}
-						int endtime = (int) (System.currentTimeMillis());
+
 					} else if (playercore.audiotype == 5) {
 
 						if (playercore.GetOpenLog())
 							Log.w("aAcDecode", "audio is AAcDecode");
 						if (aAcDecode == null) { // 语音
-							aAcDecode = new aacDecode();
+							aAcDecode = AacDecode.createAudioType(audioTrack.getChannelCount(), audioTrack.getSampleRate());
 						}
 						synchronized (aAcDecode) {
-							Pcmsize = aAcDecode.DecodeOneFrame(pInBuffer,
-									pPcmBuffer, 10 * 1024);
+							pPcmBuffer.clear();
+							Pcmsize = aAcDecode.aacDecode_DecodeFrame(pInBuffer, pInBuffer.array().length,//10 * 1024,
+									pPcmBuffer);
 
 						}
-					} else {
+					} else {//目前除了aac，其他设备编码的底层都是返回pcm给上层
 						if (playercore.GetOpenLog())
 							Log.w("adpcm", "audio is pcm");
 						Pcmsize = mFrame.iLen;
@@ -343,77 +393,104 @@ public class MyAudioDecodeThread extends Thread {
 
 					if (Pcmsize > 0) {
 						if (playercore.GetOpenLog())
-							Log.d("AudioDecode", "mPacket_au left "
+							Log.d("AudioDecode", "audiotype=" + playercore.audiotype + "mPacket_au left "
 									+ playercore.GetAudioFrameLeft()
 									+ " Pcmsize is:" + Pcmsize);
+
 						if (pPcmBuffer != null)
 							pPcmBuffer.position(0);
 
 						byte[] pcmData = new byte[Pcmsize];
 						pPcmBuffer.get(pcmData, 0, Pcmsize);
+						//真正的播放时间为时间戳+解码时间
+						displayTimeStamps = mFrame.iPTS + System.currentTimeMillis() - startDecodeTime;
 						if (audioTrack == null)
 							return;
-
-						if (playercore.DoublePPT) {
-							audioTrack.write(pcmData, 0, Pcmsize);
+						if (playercore.DoublePPT) {// 双向对讲
+							if (playercore.openWebRtcNs) {     //开启噪音消除
+								short[] shortData = new short[pcmData.length >> 1];
+								ByteBuffer.wrap(pcmData).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shortData);
+								byte[] nsProcessData = shortsToBytes(WebRtcUtils.webRtcNsProcess(audioTrack.getSampleRate(), shortData.length, shortData));
+								audioTrack.write(nsProcessData, 0, nsProcessData.length);// 输入数据到播放队列
+							} else {
+								audioTrack.write(pcmData, 0, Pcmsize);// 输入数据到播放队列
+							}
+							if (DefualtRecoredThread.needCompareData
+									&& UmRtc.enbaleUse) {// 需要进行回音消除
+								Log.i("webrtc", "java compare data"
+										+ pcmData.length + "");
+								UmRtc.getInstance().AcemCompareData(pcmData);// 写入参考数据
+							}
 						} else {
-							if (!playercore.IsPPTaudio) {
-								audioTrack.write(pcmData, 0, Pcmsize);
+							if (!playercore.IsPPTaudio) {// 对讲关闭情况下
+								if (playercore.openWebRtcNs) { //开启噪音消除
+									short[] shortData = new short[pcmData.length >> 1];
+									ByteBuffer.wrap(pcmData).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shortData);
+									byte[] nsProcessData = shortsToBytes(WebRtcUtils.webRtcNsProcess(audioTrack.getSampleRate(), shortData.length, shortData));
+									audioTrack.write(nsProcessData, 0, nsProcessData.length);// 输入数据到播放队列
+								} else {
+									audioTrack.write(pcmData, 0, Pcmsize);// 输入数据到播放队列
+								}
 							}
 						}
-						// if (!playercore.IsPPTaudio || playercore.DoublePPT)//
-						// 在PPT时候不播放出声音
-						// // 当DoublePPT是双向语音时候也播放出声音
-						// {
-						// //
-						// Log.d("AudioDecode","mPacket_au left "+playercore.mPacketaudio.size()+" Pcmsize is:"+Pcmsize);
-						// // audioTrack.write(pcmData, 0, Pcmsize);
-						// audioTrack.write(pcmData, 0, Pcmsize);
-						// }
-
 						int leftvideoframe = playercore.GetAudioFrameLeft();
 						if (playercore.GetOpenLog())
 							Log.w("Audio Decode", "Audio left:"
-									+ leftvideoframe);
+									+ leftvideoframe + ",coast time:" + (System.currentTimeMillis() - startDecodeTime));
 					} else {
-						if (playercore.audiotype == 0) {
-							if (amrnb_dec != null) {
-								synchronized (amrnb_dec) {
-									amrnb_dec.Cleanup();
-									amrnb_dec = null;
-								}
-							}
-							amrnb_dec = new amrnbdec();
-						} else if (playercore.audiotype == 1) {
-							if (amrwb_dec != null) {
-								synchronized (amrwb_dec) {
-									amrwb_dec.Cleanup();
-									amrwb_dec = null;
-								}
-							}
-							amrwb_dec = new amrwbdec();
-						} else if (playercore.audiotype == 2)// g711
-						{
-							g711a_dec = null;
-							g711a_dec = new g711adec();
-						} else if (playercore.audiotype == 5) {
+						if (playercore.audiotype == 0) {//amr
 							if (aAcDecode != null) {
 								synchronized (aAcDecode) {
-									aAcDecode.Cleanup();
+									aAcDecode.destroy();
 									aAcDecode = null;
 								}
 							}
-							aAcDecode = new aacDecode();
+							aAcDecode = AacDecode.createAudioType(HlsDecode.MEDIA_AUDIO_FORMAT_AMR, audioTrack.getChannelCount(), audioTrack.getSampleRate());
+						} else if (playercore.audiotype == 1) {
+
+						} else if (playercore.audiotype == 2)// g711
+						{
+						} else if (playercore.audiotype == 5) {
+							if (aAcDecode != null) {
+								synchronized (aAcDecode) {
+									aAcDecode.destroy();
+									aAcDecode = null;
+								}
+							}
+							aAcDecode = AacDecode.createAudioType(audioTrack.getChannelCount(), audioTrack.getSampleRate());
 						}
 						Log.d("Audiodecode statu", "Audiodecode fail.........");
 					}
 					mFrame = null;
 				} catch (OutOfMemoryError e1) {
 					mFrame = null;
-					Log.d("AudioDecode ",
+					Log.e("AudioDecode ",
 							"AudioDecode OutOfMemoryError.........");
+					e1.printStackTrace();
+				} catch (Exception e) {
+					mFrame = null;
+					e.printStackTrace();
 				}
 			}
 		}
+		WebRtcUtils.webRtcNsFree();
+	}
+
+	private byte[] shortsToBytes(short[] data) {
+		byte[] buffer = new byte[data.length * 2];
+		int shortIndex, byteIndex;
+		shortIndex = byteIndex = 0;
+		for (; shortIndex != data.length; ) {
+			buffer[byteIndex] = (byte) (data[shortIndex] & 0x00FF);
+			buffer[byteIndex + 1] = (byte) ((data[shortIndex] & 0xFF00) >> 8);
+			++shortIndex;
+			byteIndex += 2;
+		}
+		return buffer;
+	}
+
+	@Override
+	public long getDisplayTimeStamps() {
+		return displayTimeStamps;
 	}
 }

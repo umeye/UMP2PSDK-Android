@@ -10,11 +10,12 @@ import com.Player.Core.PlayerCore;
 import com.Player.Source.TSourceFrame;
 import com.video.VideoFrameInfor;
 import com.video.h264.DecodeDisplay;
+import com.video.h264.DecodeTimeStampLisenter;
 import com.video.h264.DisplayHandler;
 import com.video.h264.H264DecodeInterface;
-import com.video.h264.LysH264Decode;
+import com.video.h264.UmVideoDecode;
 
-public class MyVideoDecodeThread extends Thread {
+public class MyVideoDecodeThread extends Thread implements DecodeTimeStampLisenter {
 	DecodeDisplay decodeDisplay;
 	PlayerCore playercore;
 	private H264DecodeInterface myH264Decode = null;
@@ -29,21 +30,31 @@ public class MyVideoDecodeThread extends Thread {
 	private int LastDecodeVideoWidth = 352;// 176;// 352;
 	private int LastDecodeVideoHeight = 288;// 144; // 288;
 
+	////播放显示的时间戳，当前用来HLS音视频同步
+	private long displayTimeStamps;
+
+	DecodeTimeStampLisenter decodeTimeStampLisenter;
+
 	public MyVideoDecodeThread(DecodeDisplay decodeDisplay) {
 		this.playercore = decodeDisplay.playercore;
 		this.decodeDisplay = decodeDisplay;
 		this.displayHandler = decodeDisplay.displayHandler;
+		//yuvThreads = new Yuv2RGBThreads(PlayerCore.decodeCpuNums);
+	}
+
+	public void setDecodeTimeStampLisenter(DecodeTimeStampLisenter decodeTimeStampLisenter) {
+		this.decodeTimeStampLisenter = decodeTimeStampLisenter;
 	}
 
 	@Override
 	public void run() {
-
 		Log.d("VideoThreadDecode", "VideoThreadDecode run");
 		VideoDecode();
 		FrameRate = 0;
 		RgbOutOfMemoryIndex = 0;
 		RgbHaveOutOfMemory = false;
 		decodeDisplay.pYuvBuffer = null;
+		//yuvThreads.stopDecode();
 		if (myH264Decode != null) {
 			synchronized (myH264Decode) {
 				if (myH264Decode != null) {
@@ -56,6 +67,7 @@ public class MyVideoDecodeThread extends Thread {
 		Log.d("VideoThreadDecode", "VideoThreadDecode exit");
 	}
 
+
 	synchronized void VideoDecode() {
 		decodeDisplay.CurrentPlayTime = 0;
 		int decodeindex = 0;
@@ -67,6 +79,8 @@ public class MyVideoDecodeThread extends Thread {
 		int onSecondFrame = 0;
 		long onSecondTimeMiles = 0;
 		playercore.isHaveVideodata = false;
+		boolean isLostIFrame = false;
+
 		while (playercore.ThreadisTrue) {
 			try {
 				decodeDisplay.isSnap();
@@ -78,34 +92,78 @@ public class MyVideoDecodeThread extends Thread {
 
 				TSourceFrame mFrame = null;
 				int leftvideo = playercore.GetVideoFrameLeft();
-				if (leftvideo > 120 && playercore.GetPlayModel() == 0)// 丢帧机制
+
+
+				// 超过PlayerCore.frameLostMax开始丢帧
+				if (leftvideo > PlayerCore.LostFrameMax && playercore.GetPlayModel() == 0 && playercore.ServerType != 100
+						&& playercore.ServerType != PlayerCore.HLSSERVER)// 丢帧机制
 				{
+					isLostIFrame = true;
 					while (leftvideo > 0) {
+
 						leftvideo = playercore.GetVideoFrameLeft();
 						mFrame = playercore.GetNextVideoFrame();
-						if (mFrame == null)
+						Log.d("VideoDecode", "缓冲区还剩余多少帧: " + leftvideo);
+						if (mFrame == null) {
+							if (playercore.GetOpenLog())
+								Log.d("VideoDecode", "取完缓存队列，退出丢帧");
 							break;
-						if (mFrame.Framekind == 1)// 等到遇到I帧时候才退出丢帧
+						}
+						if (mFrame.Framekind == 1)// 等到遇到I帧,VI帧时候才退出丢帧
+						{
+							if (playercore.GetOpenLog())
+								Log.d("VideoDecode", "遇到I帧，退出丢帧");
 							break;
+						}
 						decodeDisplay.isRecord(mFrame);
 						if (!playercore.ThreadisTrue)
 							return;
 					}
 				} else {
 					mFrame = playercore.GetNextVideoFrame();// 新加入
+					//if(mFrame != null){
+					//Log.i("frame kind->",mFrame.Framekind + "");
+					//}
 				}
 
 				if (mFrame == null) {
 					Thread.sleep(10);
 					continue;
+				} else {
+					displayTimeStamps = mFrame.iPTS;
+					if (playercore.GetOpenLog())
+						Log.d("GetNextFrame", "VideoFrame timestamp:" + mFrame.iPTS);
 				}
+
+				if (playercore.ServerType == PlayerCore.HLSSERVER) {
+
+					if (mFrame.iVideoFrameRate <= 0) {
+						mFrame.iVideoFrameRate = 15;
+					}
+				} else {
+					if (mFrame.iVideoFrameRate <= 0) {
+						mFrame.iVideoFrameRate = 25;
+					}
+				}
+
+
+//				Log.d("frame_rate", "mFrame: " + mFrame.iVideoFrameRate);
+
 				videoStarTime = System.currentTimeMillis();
 				decodeindex++;
-				decodetimeaverage += System.currentTimeMillis() - videoStarTime;
 
+//				mFrame.index = decodeindex;
+				//小心设备给的帧的帧率与实际不符合，导致录像时候跳帧
 				if (mFrame.iFrameFlag == 2 || mFrame.iFrameFlag == 1) {// 因播放完或错误导致停止
 					decodeDisplay.CurrentPlayTime = playercore
 							.GetFileAllTime_Int();
+					if (playercore.onFinishListener != null) {
+						if (mFrame.iFrameFlag == 2) {
+							playercore.onFinishListener.onComplete();
+						} else {
+							playercore.onFinishListener.onError();
+						}
+					}
 					Log.d("total and current", "GetFileAllTime_Int:"
 							+ decodeDisplay.CurrentPlayTime + ",因播放完或错误导致停止");
 					continue;
@@ -117,12 +175,28 @@ public class MyVideoDecodeThread extends Thread {
 				{
 					mFrame.EncodeType = 3;
 				}
+				if (isLostIFrame) {
+					if (mFrame.Framekind == 1) {
+						if (playercore.GetOpenLog())
+							Log.d("VideoDecode", "丢帧后，遇到I帧:" + mFrame.Framekind);
+						isLostIFrame = false;
 
+					} else {
+						if (playercore.GetOpenLog())
+							Log.d("VideoDecode", "丢帧后，继续寻找下一I帧");
+						decodeDisplay.isRecord(mFrame);
+
+						continue;
+					}
+				}
 				if (playercore.GetPlayModel() == 2) { // i帧模式
 					if (mFrame.Framekind != 1) {
 						decodeDisplay.isRecord(mFrame);
 						continue;
 					}
+				} else {
+
+					decodeDisplay.isRecord(mFrame);
 				}
 				decodeDisplay.dataCount += (mFrame.iLen);
 				ByteBuffer pInBuffer = ByteBuffer.wrap(mFrame.iData, 0,
@@ -146,54 +220,16 @@ public class MyVideoDecodeThread extends Thread {
 									myH264Decode.destroy();
 								myH264Decode = null;
 								System.gc();
-								myH264Decode = new LysH264Decode();
-								myH264Decode.initEx(mFrame.EncodeType);
 							}
-
 						}
 					}
 					lastvideoencode = mFrame.EncodeType;
-					if (mFrame.EncodeType == 4)// H265
-					{
+
+					if (myH264Decode == null) {
+						myH264Decode = UmVideoDecode.createDecodeByType(
+								playercore, mFrame.EncodeType, displayHandler);
 						if (myH264Decode == null) {
-							myH264Decode = new LysH264Decode();
-							int ret = myH264Decode.initEx(4);
-							if (ret == -1) {
-								return;
-							}
-						}
-					} else if (mFrame.EncodeType == 3 || mFrame.EncodeType == 2)// MJPG
-					{
-						if (myH264Decode == null) {
-							myH264Decode = new LysH264Decode();
-							int ret = myH264Decode.initEx(3);
-							if (ret == -1) {
-								return;
-							}
-						}
-					} else if (mFrame.EncodeType == 1)// MPEG4
-					{
-						if (myH264Decode == null) {
-							myH264Decode = new LysH264Decode();
-							int ret = myH264Decode.initEx(1);
-							if (ret == -1) {
-								return;
-							}
-						}
-					} else// h264
-					{
-						if (myH264Decode == null) {
-							myH264Decode = new LysH264Decode();
-							if (playercore.GetOpenLog())
-								Log.d("OpenLog",
-										"L264Decode_InitExEx new LysH264Decode()");
-							int ret = myH264Decode.initEx(0);//
-							if (playercore.GetOpenLog())
-								Log.d("OpenLog",
-										" L264Decode_InitExEx L264Decode_InitExEx finish");
-							if (ret == -1) {
-								return;
-							}
+							return;
 						}
 					}
 
@@ -261,7 +297,7 @@ public class MyVideoDecodeThread extends Thread {
 								Log.w("DisplayThread", "Decode fail....");//
 							}
 						}
-						decodeDisplay.isRecord(mFrame);
+
 						if (playercore.DisplayMode == 0) {
 							if (tmpFrameInfor != null) {
 								decodeDisplay.VideoWidth = tmpFrameInfor.VideoWidth;
@@ -276,11 +312,11 @@ public class MyVideoDecodeThread extends Thread {
 					}
 				}
 				// 如果解码成功，把解码出来的图片显示出来
-				if (decodeDisplay.mImageView.getVisibility() != View.VISIBLE)// 如果所属的ImageView隐藏就不贴图
+				if (decodeDisplay.mImageView != null && decodeDisplay.mImageView.getVisibility() != View.VISIBLE)// 如果所属的ImageView隐藏就不贴图
 				{
 					Thread.sleep(20);
-					Log.e("mImageView",
-							"mImageView.getVisibility() == View.GONE");
+//					Log.e("mImageView",
+//							"mImageView.getVisibility() == View.GONE");
 					continue;
 				}
 
@@ -291,8 +327,6 @@ public class MyVideoDecodeThread extends Thread {
 				if (mFrame.iPTS != 0) {
 					decodeDisplay.CurrentTime = mFrame.iPTS;
 				}
-				// Log.d("total and current", "current is:" + CurrentPlayTime
-				// + ",帧标识：" + mFrame.iFrameFlag);
 
 				if (playercore.DisplayMode == 1)
 					DecodeLength = 1;
@@ -308,11 +342,13 @@ public class MyVideoDecodeThread extends Thread {
 								Message msg = displayHandler.obtainMessage(1);
 								msg.arg1 = decodeDisplay.VideoWidth;
 								msg.arg2 = decodeDisplay.VideoHeight;
+								msg.obj = decodeDisplay.isRecord;
 								displayHandler.sendMessage(msg);// DisplayHandler.obtainMessage());
 							}
 						}
 					}
-
+					decodetimeaverage += System.currentTimeMillis()
+							- videoStarTime;
 					int leftvideoframe = playercore.GetVideoFrameLeft();
 					if (decodeindex < 1)
 						Log.w("Decode", "decodeindex:" + decodeindex
@@ -335,7 +371,7 @@ public class MyVideoDecodeThread extends Thread {
 					// 直播或者监控
 					{
 						if (playercore.GetPlayModel() == 0
-								&& playercore.ServerType != 100)// 实时模式
+								&& playercore.ServerType != 100 && playercore.ServerType != PlayerCore.HLSSERVER)// 实时模式
 						{
 							if (playercore.GetOpenLog())
 								Log.w("Decode", "实时模式");
@@ -353,28 +389,7 @@ public class MyVideoDecodeThread extends Thread {
 								playercore.FrameRate = (int) ((1000 * decodeindex) / (System
 										.currentTimeMillis() - videoDecodeStarTime));
 							} else {
-								int m_dwShouldSpanMS = 0;
-								if (leftvideoframe > FrameRate * 1.5) {
-									FrameRate += 1;
-									if (FrameRate > 25)
-										FrameRate = 25;
-								} else if (leftvideoframe < FrameRate * 1.5) {
-									FrameRate -= 1;
-									if (FrameRate < 3)
-										FrameRate = 3;
-								}
-								m_dwShouldSpanMS = GetFrameTime(FrameRate);
-								int iSpan = (int) (System.currentTimeMillis() - videoStarTime);
-								int iShoud = m_dwShouldSpanMS - iSpan;
-
-								if (FrameRate < 4)
-									FrameRate = 4;
-								if (iShoud <= 0)
-									iShoud = 0;
-								// Log.d("Decode_PlayModel", "流畅模式,剩余帧:"
-								// + leftvideoframe + ",偏移时间:" + iShoud
-								// + ",动态帧率：" + FrameRate);
-								Thread.sleep(iShoud);
+								Thread.sleep(getNextSleepTime(videoStarTime, System.currentTimeMillis(), leftvideoframe));
 							}
 						} else if (playercore.GetPlayModel() == 2)// I帧模式
 						{
@@ -388,8 +403,33 @@ public class MyVideoDecodeThread extends Thread {
 							int iSpan = (int) (System.currentTimeMillis() - videoStarTime);
 							int times = 1000 / playercore.ControlMp4PlaySpeed
 									- iSpan;
-							Log.w("Decode", "录像延时：" + times);
-							Thread.sleep(times);
+							// Log.w("Decode", "录像延时：" + times);
+							if (times > 0) {
+								Thread.sleep(times);
+							}
+
+						} else if (playercore.ServerType == PlayerCore.HLSSERVER) {
+
+							playercore.FrameRate = mFrame.iVideoFrameRate;
+							int m_dwShouldSpanMS = GetFrameTime(mFrame.iVideoFrameRate);//根据帧率确定显示时间
+							int iSpan = (int) (System.currentTimeMillis() - videoStarTime);
+							int iShoud = m_dwShouldSpanMS - iSpan;
+							//真正的视频显示时间为时间戳+解码时间
+							displayTimeStamps = displayTimeStamps + iSpan;
+							long audioTimeStamps = decodeTimeStampLisenter.getDisplayTimeStamps();
+							if (iShoud > 0) {
+								//以音频时间戳为基准，控制下一帧视频解码时间，以此来音视频同步
+								if (audioTimeStamps > 0 && audioTimeStamps - displayTimeStamps > iShoud) {
+									if (playercore.GetOpenLog())
+										Log.d("HlsVideoDecode", "Audio is faster than video");
+									Thread.sleep(iShoud / 2);
+								} else {
+									if (playercore.GetOpenLog())
+										Log.d("HlsVideoDecode", "video display delay:" + iShoud + "ms");
+									Thread.sleep(iShoud);
+								}
+
+							}
 
 						}
 					}
@@ -412,13 +452,14 @@ public class MyVideoDecodeThread extends Thread {
 					playercore.isHaveVideodata = true;// 获得了正确的视频数据
 				} else {
 					Log.w("Decode statu", "Decode fail... mFrame.iLen is:"
-							+ mFrame.iLen + ",编码类型：" + mFrame.EncodeType);
+							+ mFrame.iLen + ",编码类型：" + mFrame.EncodeType + ",帧类型：" + mFrame.Framekind);
 				}
 				mFrame = null;
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
+
 		displayHandler.sendMessage(displayHandler.obtainMessage(0));
 	}
 
@@ -448,14 +489,17 @@ public class MyVideoDecodeThread extends Thread {
 						decodeDisplay.pYuvBuffer = ByteBuffer
 								.allocate((tmpwidht * tmpheight * 3) >> 1);
 					displayHandler.pRGBBuffer = ByteBuffer
-							.allocate((tmpwidht + 10) * tmpheight << 1);
+							.allocate((tmpwidht + 10) * tmpheight * 3 << 1);
 				} else {
 					if (playercore.FMT_RGB == H264DecodeInterface.FMT_RGBA32) {
 						displayHandler.pRGBBuffer = ByteBuffer
 								.allocate((tmpwidht + 10) * tmpheight << 2);
 					} else {
+						if (decodeDisplay.pYuvBuffer == null)
+							decodeDisplay.pYuvBuffer = ByteBuffer
+									.allocate((tmpwidht * tmpheight * 3) >> 1);
 						displayHandler.pRGBBuffer = ByteBuffer
-								.allocate((tmpwidht + 10) * tmpheight << 1);
+								.allocate((tmpwidht + 10) * tmpheight * 3 << 1);
 					}
 				}
 			} catch (OutOfMemoryError e) {
@@ -484,8 +528,7 @@ public class MyVideoDecodeThread extends Thread {
 						System.gc();
 						if (playercore.DisplayMode == 1)// 只支持565的RGB
 						{
-							decodeDisplay.pYuvBuffer = ByteBuffer
-									.allocate((tmpwidht * tmpheight * 3) >> 1);
+
 							displayHandler.pRGBBuffer = ByteBuffer
 									.allocate((tmpwidht + 10) * tmpheight << 1);
 						} else {
@@ -493,6 +536,8 @@ public class MyVideoDecodeThread extends Thread {
 								displayHandler.pRGBBuffer = ByteBuffer
 										.allocate((tmpwidht + 10) * tmpheight << 2);
 							} else {
+								decodeDisplay.pYuvBuffer = ByteBuffer
+										.allocate((tmpwidht * tmpheight * 3) >> 1);
 								displayHandler.pRGBBuffer = ByteBuffer
 										.allocate((tmpwidht + 10) * tmpheight << 1);
 							}
@@ -513,20 +558,92 @@ public class MyVideoDecodeThread extends Thread {
 			// 20141024*************************
 			LastDecodeVideoWidth = tmpwidht;
 			LastDecodeVideoHeight = tmpheight;
-			if (myH264Decode != null)// 尺寸改变了重置解码器
-			{
-				synchronized (myH264Decode) {
-					if (myH264Decode != null)
-						myH264Decode.destroy();
-					myH264Decode = null;
-					System.gc();
-					myH264Decode = new LysH264Decode();
-					myH264Decode.initEx(lastvideoencode);
-				}
-			}
-			return false;
+			// if (myH264Decode != null)// 尺寸改变了重置解码器
+			// {
+			// synchronized (myH264Decode) {
+			// if (myH264Decode != null)
+			// myH264Decode.destroy();
+			// myH264Decode = null;
+			// System.gc();
+			// myH264Decode = new LysH264Decode();
+			// myH264Decode.initEx(lastvideoencode);
+			// }
+			// }
+			return true;
 			// ******************************************
 		}
 		return true;
 	}
+
+	@Override
+	public long getDisplayTimeStamps() {
+		return 0;
+	}
+
+	/**
+	 * @param startDecodeTime 解码开始时间戳
+	 * @param endDecodeTime   解码结束时间戳
+	 * @param leftVideoFrames 剩余帧数
+	 * @return
+	 */
+	long getNextSleepTime(long startDecodeTime, long endDecodeTime, int leftVideoFrames) {
+
+		int Multiple = 0;    //倍数
+		int Remainder = 0;    //余数
+		int Rote = 0;
+		int Time = 0;      //休眠时间
+
+		Multiple = leftVideoFrames / 25;
+		Remainder = leftVideoFrames % 25;
+		switch (Multiple) {
+			case 0:
+				switch (Remainder) {
+					case 0:
+					case 1:
+					case 2:
+						Rote = 9;
+						break;
+					case 3:
+					case 4:
+						Rote = 11;
+						break;
+					case 5:
+					case 6:
+						Rote = 13;
+						break;
+					case 7:
+					case 8:
+						Rote = 15;
+						break;
+					default:
+						Rote = Remainder + 15;
+						break;
+				}
+				break;
+			case 1:
+				Rote = (int) (1.5 * 25);
+				break;
+			case 2:
+				Rote = (int) (1.75 * 25);
+				break;
+			case 3:
+				Rote = 2 * 25;
+				break;
+			case 4:
+				Rote = (int) (2.25 * 25);
+				break;
+			default:
+				Rote = 5 * 25;
+				break;
+		}
+
+		Time = GetFrameTime(Rote);
+		long tempTime = (Time - (endDecodeTime - startDecodeTime));
+		// Log.d("getNextSleepTime", "leftVideoFrames:" + leftVideoFrames + ",tempTime:" + tempTime);
+		if (tempTime > 0) {
+			return tempTime;
+		} else
+			return 1;
+	}
 }
+

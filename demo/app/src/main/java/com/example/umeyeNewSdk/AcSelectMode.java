@@ -1,11 +1,5 @@
 package com.example.umeyeNewSdk;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -23,31 +17,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.Player.Source.LogLisenter;
 import com.Player.Source.LogOut;
 import com.Player.web.response.DevItemInfo;
 import com.Player.web.response.ResponseCommon;
 import com.Player.web.response.ResponseDevList;
-import com.Player.web.response.ResponseQueryUserInfo;
 import com.Player.web.response.UserInfo;
 import com.Player.web.websocket.ClientCore;
-import com.Player.web.websocket.IoTTokenInvalidListener;
-import com.example.umeyesdk.AcLogo;
-import com.example.umeyesdk.PlayM3u8Activity;
-import com.example.umeyesdk.utils.Errors;
-import com.getui.demo.AlarmUtils;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.MainActivity;
+import com.example.umeyesdk.PlayM3u8Activity;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.api.WebSdkApi;
 import com.example.umeyesdk.entity.PlayNode;
 import com.example.umeyesdk.utils.Constants;
+import com.example.umeyesdk.utils.Errors;
 import com.example.umeyesdk.utils.Show;
 import com.example.umeyesdk.utils.Utility;
-import com.stream.NewAllStreamParser;
-import com.video.h264.Streamtomp4;
+import com.getui.demo.AlarmUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AcSelectMode extends Activity {
     public ClientCore clientCore;
@@ -167,6 +158,7 @@ public class AcSelectMode extends Activity {
         setContentView(R.layout.ac_select_mod);
         context = this;
         clientCore = ClientCore.getInstance();
+
         appMain = (AppMain) getApplication();
         editUser = (EditText) findViewById(R.id.et_user);
         editServer = (EditText) findViewById(R.id.et_server);
@@ -340,8 +332,8 @@ public class AcSelectMode extends Activity {
 
 
     public void playm3u8(View v) {
-         Intent intent =  new Intent(this, PlayM3u8Activity.class);
-         startActivity(intent);
+        Intent intent = new Intent(this, PlayM3u8Activity.class);
+        startActivity(intent);
     }
 
 

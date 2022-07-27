@@ -33,6 +33,7 @@ import com.Player.Source.SDKError;
 import com.Player.Source.TAlarmFrame;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.PermissionUtils;
+import com.audio2.AacDecode;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.api.WebSdkApi;
@@ -72,7 +73,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     public static final byte SHOW_STATE = 0;
 
     public static final byte ALARM_STATE = 1;
-    private PlayerCore pc;
+    private PlayerCore playerCore;
     private String id = "";
     private ImageView img;
     private TextView txtState, txtRec;
@@ -133,7 +134,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
     public void savaStream() {
 
-        pc.setAudioDecodeListener(new AudioDecodeListener() {
+        playerCore.setAudioDecodeListener(new AudioDecodeListener() {
 
             @Override
             public void StartTalk(PlayerCore playercore) { // TODO
@@ -165,11 +166,12 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     }
 
     public void initePlayCore() {
-        pc = new PlayerCore(this);
-        pc.InitParam("", -1, img);
-        pc.SetPPtMode(false);
-        pc.isQueryDevInfo = true;
+        playerCore = new PlayerCore(this);
+        playerCore.InitParam("", -1, img);
+        playerCore.SetPPtMode(false);
+        playerCore.isQueryDevInfo = true;
 //		pc.SetVideorecordtime(10, true);
+       // aacDecode.openFFmpegLog(1);
     }
 
     public void EditEditetext() {
@@ -252,11 +254,11 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                     || command == MD_RIGHT) {
                 int length = 4;
                 System.out.println("发送云台命令：" + command + ",云台步长：" + length);
-                if (pc.GetPlayerState() == SDKError.Statue_PLAYING)
-                    pc.SetPtz(command, length);
+                if (playerCore.GetPlayerState() == SDKError.Statue_PLAYING)
+                    playerCore.SetPtz(command, length);
             } else {
-                if (pc.GetPlayerState() == SDKError.Statue_PLAYING)
-                    pc.SetPtz(command, 0);
+                if (playerCore.GetPlayerState() == SDKError.Statue_PLAYING)
+                    playerCore.SetPtz(command, 0);
                 System.out.println("发送云台命令：" + command + ",云台步长：" + 0);
             }
 
@@ -264,8 +266,8 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
             btn.setBackgroundResource(bg0);
             isStopCloudCommand = true;
-            if (pc.GetPlayerState() == SDKError.Statue_PLAYING)
-                pc.SetPtz(MD_STOP, 0);
+            if (playerCore.GetPlayerState() == SDKError.Statue_PLAYING)
+                playerCore.SetPtz(MD_STOP, 0);
 
         }
     }
@@ -286,15 +288,15 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                     Thread.sleep(1000);
                     Message msg = new Message();
                     msg.what = SHOW_STATE;
-                    msg.arg1 = pc.PlayCoreGetCameraPlayerState();
-                    if (pc.GetIsSnapVideo()) {
+                    msg.arg1 = playerCore.PlayCoreGetCameraPlayerState();
+                    if (playerCore.GetIsSnapVideo()) {
                         msg.arg2 = 1;
                     }
                     Log.w("state", "state: " + msg.arg1 + ",pc.GetIsPPT():"
-                            + pc.GetIsPPT());
+                            + playerCore.GetIsPPT());
                     handler.sendMessage(msg);
 
-                    TAlarmFrame tAlarmFrame = pc.CameraGetAlarmInfo();
+                    TAlarmFrame tAlarmFrame = playerCore.CameraGetAlarmInfo();
                     if (tAlarmFrame != null) {
                         handler.sendMessage(Message.obtain(handler,
                                 ALARM_STATE, tAlarmFrame));
@@ -314,8 +316,8 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     }
 
     public void Stop(final Handler handler) {
-        if (pc.GetIsPPT()) {
-            pc.StopPPTAudio();
+        if (playerCore.GetIsPPT()) {
+            playerCore.StopPPTAudio();
             btnTalk.setBackgroundResource(R.drawable.ch_talk);
         }
 //		new Thread() {
@@ -329,7 +331,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 //			}
 //		}.start();
 
-        pc.StopAsync();
+        playerCore.StopAsync();
     }
 
     int stream = 1;
@@ -342,7 +344,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 selectChannel();
                 break;
             case R.id.btnPause:
-                pc.StopPPTAudio();
+                playerCore.StopPPTAudio();
                 Stop();
                 //
 
@@ -357,7 +359,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 //			 pc.SetSnapPicture(SnapPicture, TempFilenamePrefix),截图
                 // pc.SetVideoPath(TempVIDEO_PATH)
                 // if (pc.GetPlayerState() == SDKError.Statue_PLAYING)
-                pc.SetSnapPicture(true);
+                playerCore.SetSnapPicture(true);
                 // new SetWIFIRunable("HSKJ-Develope2", "h123h123",
                 // "192.168.10.103","",34567, playClient, handler).start();
 
@@ -372,11 +374,11 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 // 判断SDCard
                 // .......
 
-                if (pc.GetIsSnapVideo()) {
-                    pc.SetSnapVideo(false);
+                if (playerCore.GetIsSnapVideo()) {
+                    playerCore.SetSnapVideo(false);
                 } else {
-                    if (pc.GetPlayerState() == SDKError.Statue_PLAYING)
-                        pc.SetSnapVideo(true);
+                    if (playerCore.GetPlayerState() == SDKError.Statue_PLAYING)
+                        playerCore.SetSnapVideo(true);
                 }
 
                 // setWifi();
@@ -437,10 +439,10 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                  * 开锁 参数是8位数的密码
                  */
                 // pc.SendOpenLockCmd("88888888");
-                if (!pc.GetIsVoicePause()) {
-                    pc.CloseAudio();
+                if (!playerCore.GetIsVoicePause()) {
+                    playerCore.CloseAudio();
                 } else {
-                    pc.OpenAudio();
+                    playerCore.OpenAudio();
                 }
                 break;
             case R.id.logout:
@@ -462,11 +464,11 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
 
     private void ppt() {
-        if (pc.GetIsPPT()) {
-            pc.StopPPTAudio();
+        if (playerCore.GetIsPPT()) {
+            playerCore.StopPPTAudio();
             btnTalk.setBackgroundResource(R.drawable.ch_talk);
         } else {
-            pc.StartPPTAudio();
+            playerCore.StartPPTAudio();
             btnTalk.setBackgroundResource(R.drawable.ch_talk_h);
         }
     }
@@ -664,7 +666,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 //				}
 //			}).start();
 
-            pc.StopAsync();
+            playerCore.StopAsync();
             finish();
 
             return true;
@@ -708,8 +710,10 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 //					}
 //				});
 
-                pc.StopAsync();
-                pc.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 1);
+                playerCore.StopAsync();
+                playerCore.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 0);
+//                playerCore.PlayAddress(1009, "122.160.147.3", 5800, "admin","", 0, 1);
+
 
             }
         }).setNegativeButton(R.string.negative, null).show();

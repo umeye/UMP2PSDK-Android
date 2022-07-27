@@ -7,10 +7,7 @@ public class Constants {
 	/**
 	 * 服务器
 	 */
-	public static String server = "cam.suning.com";// api.qvcloud.net,指定域名v4.api.umeye.com
-	// v0.api.umeye.com
-	// v4.api.umeye.com
-	// 121.40.110.250
+	public static String server = "v0.api.umeye.com";//v4iot.umeye.com
 
 	public static final int port = 8300;// 端口
 	/**
@@ -31,11 +28,7 @@ public class Constants {
 	/**
 	 * umid直连模式 默认设备UMID
 	 */
-	public static String UMID = "02et3p3adveh";// wjks02kywj2u xmksit5p4dfu//e528c2b5944f502c //KANR7T38030486211B
-	// umks922mj9e2
-	// //ea9b6c781fb3ba2a
-	// //umksguyuvxrj umksca0vafs9
-	//auetxv50niq9
+	public static String UMID = "02et3p3adveh";
 	/**
 	 * umid直连模式 默认设备名
 	 */
@@ -43,7 +36,7 @@ public class Constants {
 	/**
 	 * umid直连模式 默认设备密码
 	 */
-	public static String password = "pLSyPV56";// 设备密码
+	public static String password = "";// 设备密码
 	//zd1234
 
 	/**

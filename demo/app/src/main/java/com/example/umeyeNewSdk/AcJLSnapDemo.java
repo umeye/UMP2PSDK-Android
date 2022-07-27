@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.Player.Core.PlayerClient;
 import com.Player.Core.PlayerCore;
-import com.Player.Core.CoustomFun.Entity.CFResponse;
+import com.Player.Core.CoustomFun.Entity.DevResponse;
 import com.Player.Core.UserImg.UserImgEntity.AddImgStruct;
 import com.Player.Core.UserImg.UserImgEntity.DelImgStruct;
 import com.Player.Core.UserImg.UserImgEntity.UserImgCompareInfo;
@@ -189,7 +189,7 @@ public class AcJLSnapDemo extends Activity{
 					}
 
 					//参数设置，设备布撤防都用此接口，请求内容参考具体设备通讯协议
-					CFResponse cfResponse = pc.CallCustomFuncExExHaveConnect(conn_parm, JL_JSON_GET_CONFIG,new String("{\"Name\":\"SmartFace.Param\"}").getBytes());//传入自定义json数据
+					DevResponse cfResponse = pc.CallCustomFuncExExHaveConnect(conn_parm, JL_JSON_GET_CONFIG,new String("{\"Name\":\"SmartFace.Param\"}").getBytes());//传入自定义json数据
 					if(cfResponse.ret == 0){
 						Log.i(TAG,"获取成功");
 						Log.i(TAG,cfResponse.responseJson);

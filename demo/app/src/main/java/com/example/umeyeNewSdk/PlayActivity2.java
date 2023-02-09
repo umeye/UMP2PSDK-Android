@@ -129,7 +129,7 @@ public class PlayActivity2  extends Activity implements OnTouchListener,
         initePlayCore();
         EditEditetext();
         //savaStream();
-        customDecode();
+        //customDecode();
     }
 
     /**
@@ -760,7 +760,7 @@ public class PlayActivity2  extends Activity implements OnTouchListener,
 //				});
 
                 playerCore.StopAsync();
-                playerCore.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 0);
+                playerCore.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 1);
 //                playerCore.PlayAddress(1009, "122.160.147.3", 5800, "admin","", 0, 1);
 
 

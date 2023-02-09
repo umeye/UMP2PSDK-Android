@@ -28,7 +28,7 @@ public class Constants {
 	/**
 	 * umid直连模式 默认设备UMID
 	 */
-	public static String UMID = "xmkswqaxurj9";
+	public static String UMID = "umkskgxa8vq9";
 	/**
 	 * umid直连模式 默认设备名
 	 */

@@ -46,7 +46,7 @@ import com.example.umeyesdk.utils.SaveStreamThread;
 import com.example.umeyesdk.utils.ShowProgress;
 import com.video.h264.DecodeDisplay;
 
-public class PlayActivity2 extends Activity implements OnTouchListener,
+public class PlayActivity2  extends Activity implements OnTouchListener,
         OnClickListener {
 
     public static final int CREATE_CILENT = 0x123;
@@ -129,11 +129,11 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         initePlayCore();
         EditEditetext();
         //savaStream();
-        //customDecode();
+        customDecode();
     }
 
     /**
-     *保存音频、视频流到文件
+     * 保存音频、视频流到文件
      */
     public void savaStream() {
 
@@ -146,8 +146,12 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 myRecoredThread.start();
             }
 
+            /**
+             *    音频解码播放线程
+             */
+
             @Override
-            public void StartAudioDecode(PlayerCore playercore, DecodeDisplay decodeDisplay) { // TODO Auto-generated method stub //音频解码播放线程
+            public void StartAudioDecode(PlayerCore playercore, DecodeDisplay decodeDisplay) { // TODO Auto-generated method stub
 //                MyAudioDecodeThread AudioThreadDecode = new MyAudioDecodeThread(playercore, decodeDisplay);
 //                AudioThreadDecode.start();
                 SaveAudioStreamThread
@@ -155,8 +159,12 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 saveStreamThread.start();
             }
 
+            /**
+             *       视频解码线程
+             */
+
             @Override
-            public void startVideoDecode(DecodeDisplay arg0) { // 视频解码线程
+            public void startVideoDecode(DecodeDisplay arg0) {
 //                MyVideoDecodeThread
 //                        defualtVideoDecodeThread = new MyVideoDecodeThread(arg0);
 //                defualtVideoDecodeThread.start();
@@ -170,8 +178,9 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         });
 
     }
+
     /**
-     *自定义解码音视频
+     * 自定义解码音视频
      */
     public void customDecode() {
 
@@ -203,14 +212,15 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         });
 
     }
+
     public void initePlayCore() {
         playerCore = new PlayerCore(this);
         playerCore.InitParam("", -1, img);
         playerCore.SetPPtMode(false);
         playerCore.isQueryDevInfo = true;
-        playerCore.openWebRtcNs=true;
+        playerCore.openWebRtcNs = true;
 //		pc.SetVideorecordtime(10, true);
-       // aacDecode.openFFmpegLog(1);
+        // aacDecode.openFFmpegLog(1);
     }
 
     public void EditEditetext() {

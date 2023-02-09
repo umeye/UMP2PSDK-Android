@@ -129,7 +129,7 @@ public class PlayActivity2  extends Activity implements OnTouchListener,
         initePlayCore();
         EditEditetext();
         //savaStream();
-        //customDecode();
+        customDecode();
     }
 
     /**

@@ -41,6 +41,7 @@ import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.MyAudioDecodeThread;
 import com.example.umeyesdk.utils.MyRecoredThread;
 import com.example.umeyesdk.utils.MyVideoDecodeThread;
+import com.example.umeyesdk.utils.SaveAudioStreamThread;
 import com.example.umeyesdk.utils.SaveStreamThread;
 import com.example.umeyesdk.utils.ShowProgress;
 import com.video.h264.DecodeDisplay;
@@ -125,13 +126,15 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         initeView();
         appMain = (AppMain) this.getApplicationContext();
         playClient = appMain.getPlayerclient();
-        PlayerCore.isNewRecordMode = true;
         initePlayCore();
         EditEditetext();
         //savaStream();
-        Log.e("测试", "ceshi");
+        //customDecode();
     }
 
+    /**
+     *保存音频、视频流到文件
+     */
     public void savaStream() {
 
         playerCore.setAudioDecodeListener(new AudioDecodeListener() {
@@ -145,8 +148,11 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
 
             @Override
             public void StartAudioDecode(PlayerCore playercore, DecodeDisplay decodeDisplay) { // TODO Auto-generated method stub //音频解码播放线程
-                MyAudioDecodeThread AudioThreadDecode = new MyAudioDecodeThread(playercore, decodeDisplay);
-                AudioThreadDecode.start();
+//                MyAudioDecodeThread AudioThreadDecode = new MyAudioDecodeThread(playercore, decodeDisplay);
+//                AudioThreadDecode.start();
+                SaveAudioStreamThread
+                        saveStreamThread = new SaveAudioStreamThread(playercore, null);
+                saveStreamThread.start();
             }
 
             @Override
@@ -164,12 +170,45 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
         });
 
     }
+    /**
+     *自定义解码音视频
+     */
+    public void customDecode() {
 
+        playerCore.setAudioDecodeListener(new AudioDecodeListener() {
+
+            @Override
+            public void StartTalk(PlayerCore playercore) { // TODO
+                // 对讲、录音线程
+                MyRecoredThread myRecoredThread = new MyRecoredThread(playercore);
+                myRecoredThread.start();
+            }
+
+            @Override
+            public void StartAudioDecode(PlayerCore playercore, DecodeDisplay decodeDisplay) { // TODO Auto-generated method stub //音频解码播放线程
+                MyAudioDecodeThread AudioThreadDecode = new MyAudioDecodeThread(playercore, decodeDisplay);
+                AudioThreadDecode.start();
+
+            }
+
+            @Override
+            public void startVideoDecode(DecodeDisplay arg0) { // 视频解码线程
+                MyVideoDecodeThread
+                        defualtVideoDecodeThread = new MyVideoDecodeThread(arg0);
+                defualtVideoDecodeThread.start();
+
+
+            }
+
+        });
+
+    }
     public void initePlayCore() {
         playerCore = new PlayerCore(this);
         playerCore.InitParam("", -1, img);
         playerCore.SetPPtMode(false);
         playerCore.isQueryDevInfo = true;
+        playerCore.openWebRtcNs=true;
 //		pc.SetVideorecordtime(10, true);
        // aacDecode.openFFmpegLog(1);
     }

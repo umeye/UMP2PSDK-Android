@@ -174,6 +174,7 @@ public class AcMenu extends Activity implements OnClickListener {
 	 * 如果1分钟超时返回，请确认设备是否有对接修改设备密码协议
 	 */
 	public void changeDevPassword() {
+
 		new Thread() {
 
 			@Override

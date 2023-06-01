@@ -46,6 +46,9 @@ import com.example.umeyesdk.utils.SaveStreamThread;
 import com.example.umeyesdk.utils.ShowProgress;
 import com.video.h264.DecodeDisplay;
 
+/**
+ * 自定义解码线程播放界面
+ */
 public class PlayActivity2  extends Activity implements OnTouchListener,
         OnClickListener {
 

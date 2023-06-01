@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp" >
@@ -14,132 +14,132 @@
 
         <Button
             android:id="@+id/btn_photo"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="本地图片" >
         </Button>
 
         <Button
             android:id="@+id/btn_video"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="本地录像" >
         </Button>
 
         <Button
             android:id="@+id/btn_door_settings"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="门铃密码设置" >
         </Button>
 
         <Button
             android:id="@+id/btn_search_wifi"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="搜索WIFI" >
         </Button>
 
         <Button
             android:id="@+id/btn_motion"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="移动侦测" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_alarm_push"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备布防" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_dis_alarm_push"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备撤防" >
         </Button>
 
         <Button
             android:id="@+id/btn_remote_video"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="远程回放" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_ip"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备Ip配置" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_ip_1"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备Ip配置-json格式定制接口" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_time"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备时间" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_storage"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备储存信息" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_code"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="设备储存编码信息" >
         </Button>
 
         <Button
             android:id="@+id/btn_download_video"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="下载录像回放，适用mp4，3gp文件" >
         </Button>
 
         <Button
             android:id="@+id/btn_download_img"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="下载图片文件" >
         </Button>
 
         <Button
             android:id="@+id/btn_MultiCh"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/multiCh" >
         </Button>
 
         <Button
             android:id="@+id/btn_smartLink"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/smartLink" >
         </Button>
 
         <Button
             android:id="@+id/btn_change_dev_pwd"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/change_dev_pwd" >
         </Button>
         <Button
             android:id="@+id/btn_img_setting"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/img_setting" >
         </Button>

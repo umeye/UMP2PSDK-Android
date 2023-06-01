@@ -5,15 +5,17 @@ import com.Player.web.websocket.ClientCore;
 
 public class Constants {
 	/**
-	 * 服务器
+	 * 服务器/**
+	 *     public static String APP_CUSTOM_ID = "1000000278";
+	 *     public static String WEB_HOST = "v4umh.kdzn.top";
 	 */
-	public static String server = "v0.api.umeye.com";//v4iot.umeye.com
+	public static String server = "v0.api.umeye.com";//v4iot.umeye.com  v0.api.umeye.com
 
 	public static final int port = 8300;// 端口
 	/**
 	 * 客户端标识 ，由服务器生成，如需推送功能， 需后台绑定第三方推送的PUSH_APPID，PUSH_APPKEY，PUSH_APPSECRET。
 	 */
-	public static final String custom_flag = "1000000053";
+	public static final String custom_flag = "1000000053";//1000000053 1000000278
 	/**
 	 * 登录模式 默认用户名
 	 */
@@ -28,7 +30,7 @@ public class Constants {
 	/**
 	 * umid直连模式 默认设备UMID
 	 */
-	public static String UMID = "umkskgxa8vq9";
+	public static String UMID = "rjph4ank90jh";//umkskgxa8vq9
 	/**
 	 * umid直连模式 默认设备名
 	 */
@@ -36,7 +38,7 @@ public class Constants {
 	/**
 	 * umid直连模式 默认设备密码
 	 */
-	public static String password = "";// 设备密码
+	public static String password = "kdzn123";// 设备密码
 	//zd1234
 
 	/**

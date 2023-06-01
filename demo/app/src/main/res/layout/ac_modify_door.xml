@@ -7,7 +7,7 @@
     tools:context="com.HkstreamNatNew.AcAddP2PDevice" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/top_backgroud"
         android:paddingLeft="10dp"
@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/title_name"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/device_option"
@@ -31,18 +31,18 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:orientation="vertical" >
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp" >
 
             <EditText
                 android:id="@+id/et_door_pwd"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/input_bg_selecter"
                 android:inputType="text"
@@ -75,12 +75,12 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp" >
 
             <EditText
                 android:id="@+id/et_lock_pwd"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/input_bg_selecter"
                 android:digits="1234567890"
@@ -115,7 +115,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_bg_selecter" >
 
@@ -145,7 +145,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_pir_time"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_bg_selecter"
             android:visibility="gone" >
@@ -178,7 +178,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_power_mode"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_bg_selecter" >
 
@@ -209,13 +209,13 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:visibility="gone" >
 
             <Spinner
                 android:id="@+id/sp_alarm"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/input_bg_selecter"
                 android:entries="@array/open_array"
@@ -240,7 +240,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_bg_selecter"
             android:visibility="visible" >
@@ -274,7 +274,7 @@
 
         <Button
             android:id="@+id/btn_add_device"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:gravity="center"

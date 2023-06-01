@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="0dp"
     android:background="@color/backgroud_color"
     android:orientation="vertical" >
@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/rlTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/top_backgroud"
         android:padding="5dip" >
@@ -53,7 +53,7 @@
 
     <RelativeLayout
         android:id="@+id/rlHead"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@id/rlTitle"
         android:layout_marginTop="1dp"
@@ -92,8 +92,8 @@
 
     <ListView
         android:id="@+id/lvResult"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/rlHead"
         android:layout_marginBottom="0dp"
           android:divider="@color/front_black"

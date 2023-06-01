@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <!-- 这里是标题 -->
 
     <RelativeLayout
         android:id="@+id/rlTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:padding="5dip" >
 
@@ -42,8 +42,8 @@
 
     <ListView
         android:id="@+id/lvLive"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@id/rlTitle"
         android:cacheColorHint="@android:color/transparent" />

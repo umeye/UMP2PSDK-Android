@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#333333" >
 
     <!-- 标题部分 -->
 
     <RelativeLayout
         android:id="@+id/rlTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_alignParentTop="true"
         android:background="@drawable/top_backgroud"
@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
@@ -38,7 +38,7 @@
 
     <RelativeLayout
         android:id="@+id/rlBottom"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/playview_tool_bar_bg" >
@@ -46,7 +46,7 @@
         <LinearLayout
             android:id="@+id/layout_bottom"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:padding="5dp"
             android:layout_centerInParent="true"
             android:orientation="horizontal" >
@@ -54,7 +54,7 @@
             <Button
                 android:id="@+id/btnBackward"
                 android:layout_width="60dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/back_btn"
                 
                 android:visibility="invisible" />
@@ -90,14 +90,14 @@
 
     <RelativeLayout
         android:id="@+id/rlControl"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@id/rlBottom"
         android:layout_below="@id/rlTitle" >
 
         <LinearLayout
             android:id="@+id/rlState"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/remote_seek_bg"
@@ -107,7 +107,7 @@
             android:paddingRight="5dp" >
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TextView
@@ -131,7 +131,7 @@
 
             <SeekBar
                 android:id="@+id/sbProgress"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:maxHeight="8dp"
@@ -142,8 +142,8 @@
 
         <ImageView
             android:id="@+id/imgVod"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_above="@id/rlState"
             android:scaleType="fitCenter" />
     </RelativeLayout>

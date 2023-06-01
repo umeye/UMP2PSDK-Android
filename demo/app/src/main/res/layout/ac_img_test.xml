@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
      <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/top_backgroud"
         android:paddingLeft="10dp"
@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/title_name"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/device_option"

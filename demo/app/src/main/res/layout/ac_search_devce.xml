@@ -5,14 +5,14 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/top_backgroud"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/add_search_local_device"
@@ -37,7 +37,7 @@
 
     <ListView
         android:id="@+id/lvLive"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/input_bg"

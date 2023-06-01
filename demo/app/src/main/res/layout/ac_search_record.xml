@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/backgroud_color" >
 
     <RelativeLayout
         android:id="@+id/rlTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@drawable/top_backgroud"
         android:padding="5dip" >
@@ -51,7 +51,7 @@
 
     <RelativeLayout
         android:id="@+id/rlContainer"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlTitle"
         android:layout_marginTop="25dp" >

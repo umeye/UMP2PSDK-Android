@@ -145,12 +145,12 @@ public class PlayM3u8Activity extends Activity {
 //        player.SetOpenFFmpegLog(true);
         // player.InitParam("https://video.kssznuu.cn/20200807/TiqZwGQt/index.m3u8", imgLive);
 
-        String url = "http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8";
+        String url = "https://umsz.oss-cn-shenzhen.aliyuncs.com/m3u8/2023/5/18/1684406282207.m3u8?Expires=1684492682&OSSAccessKeyId=LTAI5tQw1hJbTrZXsA7s85HH&Signature=hJnf2Fe%2BKKJg%2FN7S%2BxwDTxo3wUQ%3D";
 
         //String url = "https://camplat.suning.com/camplat-web/app/play.do?playCode=ffe4e50f96162cbe9350801bd68594794f6787d7&startTime=1638201600000&endTime=1638205201621&eventType=6";
         //String url = "https://sod.bunediy.com/20211112/L57EDNF2/index.m3u8";
         player.InitParam(url, imgLive);
-        player.SetOpenLog(false);
+        player.SetOpenLog(true);
         player.OpenAudio();
         player.Play();
 

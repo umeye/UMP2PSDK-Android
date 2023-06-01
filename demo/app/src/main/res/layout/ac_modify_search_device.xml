@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/title_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/top_backgroud"
         android:paddingLeft="10dp"
@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/title_name"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:textColor="@color/front_white"
@@ -30,7 +30,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -42,7 +42,7 @@
 
         <RelativeLayout
             android:id="@+id/layout_m_ip"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" >
 
@@ -65,14 +65,14 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/more_divider" >
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/layout_m_name"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" >
 
@@ -95,14 +95,14 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/more_divider" >
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/layout_m_pass"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" >
 

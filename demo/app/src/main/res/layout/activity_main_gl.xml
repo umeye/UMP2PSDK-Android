@@ -1,17 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         android:id="@+id/llr_show_trans"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlTitle" >
 
         <com.yuv.glDisplay.GLFrameSurface
             android:id="@+id/imgLive"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_margin="5dp"/>
 
@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/txt_state"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/llr_show_trans"
         android:layout_margin="5dp"

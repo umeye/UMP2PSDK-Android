@@ -8,14 +8,14 @@
     <!-- 顶部 -->
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/top_backgroud"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/alarm_move"
@@ -31,14 +31,14 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp" >
 
         <RelativeLayout
             android:id="@+id/rl_action_toggle"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_bg" >
 
@@ -66,7 +66,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_sensor_level"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_bg" >
 
@@ -99,15 +99,15 @@
 
     <LinearLayout
         android:id="@+id/fragment_content"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:visibility="gone" >
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_alert_setting"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="10dp"
@@ -118,7 +118,7 @@
 
     <Button
         android:id="@+id/save_btn"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

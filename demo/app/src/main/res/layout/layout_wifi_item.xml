@@ -6,7 +6,7 @@
     android:padding="2dp" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/input_bg_selecter"
         android:paddingLeft="10dp"

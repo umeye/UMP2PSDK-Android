@@ -19,6 +19,7 @@ import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.IoTTokenInvalidListener;
 import com.Player.web.websocket.PermissionUtils;
 import com.audio2.AacEncode;
+import com.example.umeyeNewSdk.DualScreenActivity;
 import com.example.umeyeNewSdk.PlayActivity2;
 import com.example.umeyesdk.utils.Errors;
 import com.getui.demo.AlarmUtils;
@@ -170,9 +171,9 @@ public class AcLogo extends Activity {
      */
     public void authUstServerAtUserId(final ClientCore clientCore) {
         int language = Utility.isZh(this) ? 2 : 1;
+        ClientCore.setHttps(null);
 //		ClientCore.isAPLanMode = true;//ap mode方式
-
-        clientCore.setupHost(Constants.server, 0, Utility.getImsi(this),
+        clientCore.setupHost(Constants.server, 6203, Utility.getImsi(this),
                 language, Constants.custom_flag,
                 String.valueOf(Utility.GetVersionCode(this)), "", "");// 添加备用服务器参数,默认为空
        // ClientCore.setClientCustomFlag("20000079",1);
@@ -187,6 +188,7 @@ public class AcLogo extends Activity {
                     if (responseServer.h.e == Errors.UM_WEB_API_SUCCESS) {
                         Show.toast(AcLogo.this,
                                 "获取服务器:" + responseServer.b.toJsonString());
+                        Log.e("getCurrentBestServer", "获取服务器:" + responseServer.b.toJsonString());
                         String[] server = clientCore.getCurrentServer();
 
                     } else {

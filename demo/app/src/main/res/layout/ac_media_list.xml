@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/white" >
 
     <!-- 标题部分 -->
 
     <RelativeLayout
         android:id="@+id/llTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:background="@drawable/top_backgroud"
@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
@@ -82,7 +82,7 @@
 
     <RelativeLayout
         android:id="@+id/bottom"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:visibility="gone" >
@@ -98,8 +98,8 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@id/bottom"
         android:layout_below="@id/llTitle"
         android:divider="@color/list_seperator_gray"

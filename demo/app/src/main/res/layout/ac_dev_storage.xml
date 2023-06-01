@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/title_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/top_backgroud"
         android:paddingLeft="10dp"
@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/dev_storage"
@@ -30,14 +30,14 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_layout"
         android:orientation="vertical"
         android:padding="10dp" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
@@ -72,14 +72,14 @@
 
         <ListView
             android:id="@+id/listView"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="@android:color/transparent" >
         </ListView>
 
         <Button
             android:id="@+id/btn_formate"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="格式化SD卡或者硬盘"
@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/tv_log"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/front_black"
             android:textSize="16sp" />

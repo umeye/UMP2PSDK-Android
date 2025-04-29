@@ -36,7 +36,7 @@ public class AppMain extends HsUmApplication {
 		ClientCore.getInstance().init(this);
 		PlayerCore.isNewRecordMode = true;
 //		PlayerCore.isFFMPEG_2_8_15 = false;
-//		CommenUtil.isAcceptTargetQFileStorage = true;//是否使用androidQ兼容方案，如果不使用，在targetsdk=29时候须设置android:requestLegacyExternalStorage="true"
+		CommenUtil.isAcceptTargetQFileStorage = true;//是否使用androidQ兼容方案，如果不使用，在targetsdk=29时候须设置android:requestLegacyExternalStorage="true"
 
 //		ClientCore.ver_api = "1.0.1";
 		// 设置免登陆支持报警，如果服务器不支持，必须 设置ClientCore.isSuportLocalAlarmPush=false；

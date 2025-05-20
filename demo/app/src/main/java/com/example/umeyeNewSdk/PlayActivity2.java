@@ -33,6 +33,7 @@ import com.Player.Source.SDKError;
 import com.Player.Source.TAlarmFrame;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.PermissionUtils;
+import com.Player.web.websocket.SharedPrefsUtil;
 import com.audio2.AacDecode;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.R;
@@ -44,12 +45,13 @@ import com.example.umeyesdk.utils.MyVideoDecodeThread;
 import com.example.umeyesdk.utils.SaveAudioStreamThread;
 import com.example.umeyesdk.utils.SaveStreamThread;
 import com.example.umeyesdk.utils.ShowProgress;
+import com.mp4.maker.OWSPUtil;
 import com.video.h264.DecodeDisplay;
 
 /**
  * 自定义解码线程播放界面
  */
-public class PlayActivity2  extends Activity implements OnTouchListener,
+public class PlayActivity2 extends Activity implements OnTouchListener,
         OnClickListener {
 
     public static final int CREATE_CILENT = 0x123;
@@ -227,7 +229,9 @@ public class PlayActivity2  extends Activity implements OnTouchListener,
     }
 
     public void EditEditetext() {
-
+        Constants.UMID = SharedPrefsUtil.getValue(this, "umid", "");
+        Constants.user = SharedPrefsUtil.getValue(this, "user", "admin");
+        Constants.password = SharedPrefsUtil.getValue(this, "password", "");
         user.setText(Constants.user);
         password.setText(Constants.password);
         umid.setText(Constants.UMID);
@@ -237,6 +241,7 @@ public class PlayActivity2  extends Activity implements OnTouchListener,
     protected void onResume() {
         // TODO Auto-generated method stub
         isRun = true;
+
         umid.setText(Constants.UMID);
         new StateThread().start();
         super.onResume();
@@ -765,7 +770,9 @@ public class PlayActivity2  extends Activity implements OnTouchListener,
                 playerCore.StopAsync();
                 playerCore.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 1);
 //                playerCore.PlayAddress(1009, "122.160.147.3", 5800, "admin","", 0, 1);
-
+                SharedPrefsUtil.putValue(PlayActivity2.this, "umid", Constants.UMID);
+                SharedPrefsUtil.putValue(PlayActivity2.this, "user", Constants.user);
+                SharedPrefsUtil.putValue(PlayActivity2.this, "password", Constants.password);
 
             }
         }).setNegativeButton(R.string.negative, null).show();

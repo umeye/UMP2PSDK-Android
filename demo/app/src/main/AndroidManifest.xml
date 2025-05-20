@@ -226,6 +226,7 @@
         <activity
             android:name="com.example.umeyeNewSdk.AcModifyDoorSetting"
             android:screenOrientation="portrait"></activity>
+        <activity android:name="com.example.umeyeNewSdk.PlaybackActivity" />
         <!-- 配置的第三方参数属性 -->
         <meta-data
             android:name="PUSH_APPID"

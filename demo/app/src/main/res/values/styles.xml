@@ -2,7 +2,12 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
+
+
     -->
     <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <!--
@@ -72,5 +77,13 @@
         <item name="android:layout_width">100dp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="tsstl0723_tab_button_style">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">@color/front_black</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">35.0dip</item>
+        <item name="android:layout_marginStart">2.0dip</item>
+        <item name="android:layout_marginEnd">2.0dip</item>
     </style>
 </resources>

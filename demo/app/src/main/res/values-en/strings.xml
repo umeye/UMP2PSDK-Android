@@ -10,5 +10,13 @@
     <string name="login_success">Login Success</string>
     <string name="play_m3u8">Play M3U8</string>
     <string name="NPC_D_MPI_MON_ERROR_USER_PWD_ERROR"> User name or password error </string>
-
+    <string name="playback">Playback</string>
+    <string name="select_channel">Select channel</string>
+    <string name="snap">Snap</string>
+    <string name="local_image">Local Images</string>
+    <string name="local_video">Local Videos</string>
+    <string name="search_wifi">搜索WIFI</string>
+    <string name="alarm_setting">Alarm setting</string>
+    <string name="pause">Pause</string>
+    <string name="playing">Playing..</string>
 </resources>

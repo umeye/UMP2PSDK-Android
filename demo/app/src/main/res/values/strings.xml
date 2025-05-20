@@ -202,8 +202,17 @@
     <string name="order_list">订单列表</string>
     <string name="ys_statement">云存储服务说明</string>
     <string name="fail_to_getcloud_service">获取云存储服务失败！</string>
-    
-    
+    <string name="playback">回放</string>
+    <string name="start_bes_low_current">The start time must be less than the current time</string>
+    <string name="select_channel">Select channel</string>
+    <string name="snap">Snap</string>
+    <string name="local_image">本地图片</string>
+    <string name="local_video">本地录像</string>
+    <string name="search_wifi">搜索WIFI</string>
+    <string name="door_pwd_setting">门铃密码设置</string>
+    <string name="motion">移动侦测</string>
+    <string name="alarm_setting">设备布防</string>
+
     <string-array name="pir_time">
         <item>1s</item>
         <item>5s</item>

@@ -16,42 +16,42 @@
             android:id="@+id/btn_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="本地图片" >
+            android:text="@string/local_image" >
         </Button>
 
         <Button
             android:id="@+id/btn_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="本地录像" >
+            android:text="@string/local_video" >
         </Button>
 
         <Button
             android:id="@+id/btn_door_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="门铃密码设置" >
+            android:text="@string/door_pwd_setting" >
         </Button>
 
         <Button
             android:id="@+id/btn_search_wifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="搜索WIFI" >
+            android:text="@string/search_wifi" >
         </Button>
 
         <Button
             android:id="@+id/btn_motion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="移动侦测" >
+            android:text="@string/motion" >
         </Button>
 
         <Button
             android:id="@+id/btn_dev_alarm_push"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="设备布防" >
+            android:text="@string/alarm_setting" >
         </Button>
 
         <Button
@@ -65,7 +65,7 @@
             android:id="@+id/btn_remote_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="远程回放" >
+            android:text="@string/playback" >
         </Button>
 
         <Button

@@ -346,6 +346,9 @@ public class SeekTimeBar extends View {
                 + tvideFile.esecond;
         // int stime = 9 * 3600 + 35 * 60 + 40;
         // int etime = 12 * 3600 + 35 * 60 + 50;
+        //如果不同日期，说明跨天了
+        if (tvideFile.sday != tvideFile.eday)
+            etime = 23 * 3600 + 59 * 60 + 59;
         double sIndex = 1.0f * scaleLong * stime / DAY_TIME_MILLES;
         double eIndex = 1.0f * scaleLong * etime / DAY_TIME_MILLES;
         // canvas.drawRect((float) sIndex, txtPaintHeight + PANDDING_TOP,

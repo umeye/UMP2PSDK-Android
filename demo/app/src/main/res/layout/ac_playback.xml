@@ -88,7 +88,7 @@
                 android:orientation="horizontal"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
-                android:weightSum="6.0">
+                android:weightSum="7.0">
 
 
                 <LinearLayout
@@ -171,6 +171,7 @@
                         android:textSize="14sp"
                         android:visibility="gone" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0.0dip"
                     android:layout_height="wrap_content"
@@ -186,6 +187,16 @@
                         android:src="@drawable/baseline_fast_rewind_24" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvSpeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1X" />
+
+
                 <LinearLayout
                     android:layout_width="0.0dip"
                     android:layout_height="wrap_content"

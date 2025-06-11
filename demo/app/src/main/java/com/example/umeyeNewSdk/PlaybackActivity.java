@@ -55,11 +55,13 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
             PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_TWO,
             PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_FOUR,
             PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_EIGTH};
+
+    private final String[] speeds = {"-8x", "-4x", "-2x", "1X", "2X", "4X", "8X"};
     public static final byte SHOW_STATE = 0;
     private PlayerCore playerCore;
     private String id = "";
     private ImageView img;
-    private TextView txtState, txtRec;
+    private TextView txtState, txtRec, tvSpeed;
     private ImageButton btnPlay, btnSound, btnSnap, btnVideo;
     public static boolean isRun = true;
     AppMain appMain;
@@ -146,6 +148,7 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
         btnSnap = (ImageButton) findViewById(R.id.btnSnap);
         btnVideo = (ImageButton) findViewById(R.id.btnRecord);
         btnSound = (ImageButton) findViewById(R.id.btnSound);
+        tvSpeed = findViewById(R.id.tvSpeed);
         // 初始化其他控件
         for (int i = 0; i < btnSeekIds.length; i++) {
             btnSeek[i] = findViewById(btnSeekIds[i]);
@@ -225,6 +228,8 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
             Log.d("PlayTimeFile",
                     "PlayBack 不带参数---------->" + startTime.toString() + "\n"
                             + endTime.toString());
+            speedIndex = 3;
+            tvSpeed.setText(speeds[speedIndex]);
             playerCore.PlayTimeFile(startTime, endTime, 0);
         }
     }
@@ -265,6 +270,7 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
     }
 
     public void Stop() {
+        speedIndex = 3;
         Stop(null);
     }
 
@@ -328,6 +334,12 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
                     public void run() {
                         if (speedIndex > 0) {
                             speedIndex--;
+                            tvSpeed.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvSpeed.setText(speeds[speedIndex]);
+                                }
+                            });
                             Log.d("SetPlayBackSpeed", "speedIndex:" + speedIndex);
                             playerCore.SetPlayBackSpeed(speedType[speedIndex], speedValues[speedIndex]);
                         }
@@ -342,6 +354,13 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
                             if (speedIndex < speedType.length - 1) {
                                 speedIndex++;
                                 Log.d("SetPlayBackSpeed", "speedIndex:" + speedIndex);
+                                tvSpeed.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvSpeed.setText(speeds[speedIndex]);
+                                    }
+                                });
+
                                 playerCore.SetPlayBackSpeed(speedType[speedIndex], speedValues[speedIndex]);
                             }
                         }

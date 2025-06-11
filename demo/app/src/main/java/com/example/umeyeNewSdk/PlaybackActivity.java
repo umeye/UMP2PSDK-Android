@@ -33,11 +33,28 @@ import com.example.umeyesdk.utils.ShowProgress;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @SuppressLint("HandlerLeak")
 public class PlaybackActivity extends Activity implements View.OnClickListener {
 
-
+    private final int[] speedType = {
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_TYPE_SLOW,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_TYPE_SLOW,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_TYPE_SLOW,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_NORMAL,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_TYPE_FAST,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_TYPE_FAST,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_TYPE_FAST};
+    private final int[] speedValues = {
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_EIGTH,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_FOUR,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_TWO,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_NORMAL,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_TWO,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_FOUR,
+            PlayerCore.NPC_D_MON_CSD_PLAYBACK_SPEED_EIGTH};
     public static final byte SHOW_STATE = 0;
     private PlayerCore playerCore;
     private String id = "";
@@ -102,7 +119,7 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
     public void initePlayCore() {
         playerCore = new PlayerCore(this);
         String curConnectParam = DevItemInfo
-                .toConnectParams(1009, Constants.UMID, "", 0, Constants.user, Constants.password, 1, 0, 0);
+                .toConnectParams(1009, Constants.UMID, "", 0, Constants.user, Constants.password, 1, Constants.iChNo, 0);
         playerCore.InitParam(curConnectParam, -1, img);
         playerCore.SetOpenLog(false);
         playerCore.isQueryDevInfo = true;
@@ -139,7 +156,8 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
         btnVideo.setOnClickListener(this);
         findViewById(R.id.btnSelectCh).setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
-
+        findViewById(R.id.btnFast).setOnClickListener(this);
+        findViewById(R.id.btnSlow).setOnClickListener(this);
         btnSound.setOnClickListener(this);
 
     }
@@ -301,12 +319,43 @@ public class PlaybackActivity extends Activity implements View.OnClickListener {
                 } else {
                     playerCore.CloseAudio();
                 }
+
+                playerCore.SetPlayBackSpeed(speedType[speedIndex], speedValues[speedIndex]);
+                break;
+            case R.id.btnSlow:
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (speedIndex > 0) {
+                            speedIndex--;
+                            Log.d("SetPlayBackSpeed", "speedIndex:" + speedIndex);
+                            playerCore.SetPlayBackSpeed(speedType[speedIndex], speedValues[speedIndex]);
+                        }
+                    }
+                });
+                break;
+            case R.id.btnFast:
+                if (playerCore.isPlayed()) {
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (speedIndex < speedType.length - 1) {
+                                speedIndex++;
+                                Log.d("SetPlayBackSpeed", "speedIndex:" + speedIndex);
+                                playerCore.SetPlayBackSpeed(speedType[speedIndex], speedValues[speedIndex]);
+                            }
+                        }
+                    });
+
+                }
                 break;
             default:
                 break;
         }
     }
 
+    Executor executor = Executors.newSingleThreadExecutor();
+    int speedIndex = 3;
 
     @Override
     protected void onPause() {

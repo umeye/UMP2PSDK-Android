@@ -26,18 +26,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Player.Core.CoustomFun.Entity.DevResponse;
 import com.Player.Core.PlayerClient;
 import com.Player.Core.PlayerCore;
 import com.Player.Source.AudioDecodeListener;
 import com.Player.Source.SDKError;
 import com.Player.Source.TAlarmFrame;
+import com.Player.web.response.DevItemInfo;
 import com.Player.web.websocket.ClientCore;
 import com.Player.web.websocket.PermissionUtils;
 import com.Player.web.websocket.SharedPrefsUtil;
-import com.audio2.AacDecode;
+import com.alibaba.fastjson.JSON;
 import com.example.umeyesdk.AppMain;
 import com.example.umeyesdk.R;
 import com.example.umeyesdk.api.WebSdkApi;
+import com.example.umeyesdk.entity.DevAbilityLevel;
+import com.example.umeyesdk.entity.ReqDevAbilityLevel;
 import com.example.umeyesdk.utils.Constants;
 import com.example.umeyesdk.utils.MyAudioDecodeThread;
 import com.example.umeyesdk.utils.MyRecoredThread;
@@ -45,8 +49,10 @@ import com.example.umeyesdk.utils.MyVideoDecodeThread;
 import com.example.umeyesdk.utils.SaveAudioStreamThread;
 import com.example.umeyesdk.utils.SaveStreamThread;
 import com.example.umeyesdk.utils.ShowProgress;
-import com.mp4.maker.OWSPUtil;
 import com.video.h264.DecodeDisplay;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * 自定义解码线程播放界面
@@ -93,7 +99,7 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     PlayerClient playClient;
     private EditText server, port, umid, user, password;
     AppMain appMain;
-
+    Executor executor = Executors.newSingleThreadExecutor();
     // private boolean isStart = false;
 
     private Handler handler = new Handler() {
@@ -377,18 +383,17 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
             playerCore.StopPPTAudio();
             btnTalk.setBackgroundResource(R.drawable.ch_talk);
         }
-//		new Thread() {
-//			@Override
-//			public void run() {
+        new Thread() {
+            @Override
+            public void run() {
+                playerCore.Stop();
+                if (handler != null) {
+                    handler.sendEmptyMessage(0);
+                }
+            }
+        }.start();
 
-//				pc.Stop();
-//				if (handler != null) {
-//					handler.sendEmptyMessage(0);
-//				}
-//			}
-//		}.start();
-
-        playerCore.StopAsync();
+//        playerCore.StopAsync();
     }
 
     int stream = 1;
@@ -740,12 +745,53 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
     }
 
     public void selectChannel() {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Query device capability level
+                PlayerClient playerClient = new PlayerClient();
+                ReqDevAbilityLevel reqDevAbilityLevel = new ReqDevAbilityLevel();
+                reqDevAbilityLevel.setValue(new ReqDevAbilityLevel.ValueBean());
+                String connParm = DevItemInfo
+                        .toConnectParams(1009, Constants.UMID, "", 0, Constants.user, Constants.password, 1, Constants.iChNo, 1);
+                final DevResponse devResponse = playerClient.CallCustomFuncExExHaveConnect(connParm, 0x010203, JSON.toJSONString(reqDevAbilityLevel).getBytes());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Log.d("CallCustomFunc", "CallCustomFunc:" + devResponse.responseJson);
+                            if (devResponse.ret != -1) {
+                                DevAbilityLevel devAbilityLevel = JSON.parseObject(devResponse.responseJson, DevAbilityLevel.class);
+                                if (devAbilityLevel.getValue() != null && devAbilityLevel.getValue().funcs != null) {
+                                    //Show NVR channel name
+                                    String[] ch_names = devAbilityLevel.getValue().funcs.ch_names;
+                                    if (ch_names != null && ch_names.length > 0) {
+                                        for (int i = 0; i < ch_names.length; i++) {
+                                            ch_names[i] = "CH" + i + "(" + ch_names[i] + ")";
+                                        }
+                                        playChannel(ch_names);
+                                    }
+                                }
+
+                            } else {
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+                playerClient.CameraDisconnect();
+            }
+        });
+
+    }
+
+    void playChannel(String[] items) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(
                 PlayActivity2.this);
-        String[] items = new String[16];
-        for (int i = 0; i < items.length; i++) {
-            items[i] = "播放" + (i + 1) + "通道";
-        }
         alertBuilder.setItems(items, new DialogInterface.OnClickListener() {
 
             @Override
@@ -755,24 +801,19 @@ public class PlayActivity2 extends Activity implements OnTouchListener,
                 Constants.user = user.getText().toString();
                 Constants.password = password.getText().toString();
                 Constants.iChNo = which;
-//				Stop(new Handler() {
-//
-//					@Override
-//					public void handleMessage(Message msg) {
-//						// TODO Auto-generated method stub
-
-//						pc.PlayP2P(Constants.UMID, Constants.user,Constants.password, Constants.iChNo, 1);
-//						pc.PlayAddress(1009, "192.168.10.247", 5800, "admin","", 0, 1);
-//						super.handleMessage(msg);
-//					}
-//				});
-
-                playerCore.StopAsync();
-                playerCore.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 1);
-//                playerCore.PlayAddress(1009, "122.160.147.3", 5800, "admin","", 0, 1);
                 SharedPrefsUtil.putValue(PlayActivity2.this, "umid", Constants.UMID);
                 SharedPrefsUtil.putValue(PlayActivity2.this, "user", Constants.user);
                 SharedPrefsUtil.putValue(PlayActivity2.this, "password", Constants.password);
+
+                Stop(new Handler() {
+
+                    @Override
+                    public void handleMessage(Message msg) {
+                        playerCore.PlayP2P(Constants.UMID, Constants.user, Constants.password, Constants.iChNo, 1);
+                        //playerCore.PlayAddress(1009, "122.160.147.3", 5800, "admin","", 0, 1);
+                    }
+                });
+
 
             }
         }).setNegativeButton(R.string.negative, null).show();
